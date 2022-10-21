@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="district" class="input-field">
+    <label for="numDistrict" class="form-label m-0">Район</label>
+    <select id="numDistrict" name="numDistrict" class="selectized" tabindex="-1" placeholder="Выберите район">
+        <option value="" selected="selected"></option>
+        <option
+                th:each="d : ${district}"
+                th:text="${d.name}"
+                th:value="${d.kod}"
+        ></option>
+    </select>
+</div>
+
+<div class="align-self-end" th:fragment="mounth">
+    <label for="mounth" class="form-label m-0">месяц</label>
+    <select id="mounth" name="mounth" class="selectized" tabindex="-1" placeholder="Выберите месяц">
+        <option th:text="'Январь'"
+                value="1"></option>
+        <option th:text="'Февраль'"
+                value="2"></option>
+        <option th:text="'Март'"
+                value="3"></option>
+        <option th:text="'Апрель'"
+                value="4"></option>
+        <option th:text="'Май'"
+                value="5"></option>
+        <option th:text="'Июнь'"
+                value="6"></option>
+        <option th:text="'Июль'"
+                value="7"></option>
+        <option th:text="'Август'"
+                value="8"></option>
+        <option th:text="'Сентябрь'"
+                value="9"></option>
+        <option th:text="'Октябрь'"
+                value="10"></option>
+        <option th:text="'Ноябрь'"
+                value="11"></option>
+        <option th:text="'Декабрь'"
+                value="12"></option>
+    </select>
+</div>
+
+<!--todo-->
+<div class="align-self-end" th:fragment="structuralSubdivision">
+    <label for="structuralSubdivision" class="form-label m-0">структурное подразделение</label>
+    <select id="structuralSubdivision" name="structuralSubdivision" class="selectized" tabindex="-1" placeholder="Выберите структурное подразделение">
+        <option value="" selected="selected"></option>
+        <option
+                th:each="d : ${department}"
+                th:text="${d.name}"
+                th:value="${d.id}"
+        ></option>
+    </select>
+</div>
+<!--todo-->
+<div th:fragment="reasonsForOverpayments" class="input-field">
+    <label for="selectReasonsForOverpayments" class="form-label m-0">Причина переплаты</label>
+    <select id="selectReasonsForOverpayments" name="reasonsForOverpayments" class="selectized" tabindex="-1" placeholder="Выберите причину переплаты">
+        <option value="" selected="selected"></option>
+        <option
+                th:each="r : ${selectReasonsForOverpayments}"
+                th:text="${r.reasonsForOverpayments}"
+                th:value="${r.id}"
+        ></option>
+    </select>
+</div>
+<!--todo-->
+<div th:fragment="specificationOfTheReasonsForOverpayments" class="input-field">
+    <label for="selectSpecificationOfTheReasonsForOverpayments" class="form-label m-0">Конкретизация причины переплаты</label>
+    <select id="selectSpecificationOfTheReasonsForOverpayments" name="selectSpecificationOfTheReasonsForOverpayments" class="selectized" tabindex="-1" placeholder="Выберите конкретизацияю причины переплаты">
+        <option value="" selected="selected"></option>
+        <option
+                th:each="r : ${selectSpecificationOfTheReasonsForOverpayments}"
+                th:text="${r.specificationOfTheReasonsForOverpayments}"
+                th:value="${r.id}"
+        ></option>
+    </select>
+</div>
+
+
+</body>
+</html>

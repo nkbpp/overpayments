@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+</head>
+<body>
+
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/overpayment/index}">Главная</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-trigger"
+                       href="#"
+                       id="menuFindCitizen"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"
+                    >
+                        Поиск гражданина
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menuFindCitizen">
+                        <li><a class="dropdown-item"
+                               href="/overpayment/vievFindCitizenBySnils"
+                               id="vievFindBySnils">Поиск по СНИЛС</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/vievFindCitizenByFio"
+                               id="vievFindByFio">Поиск по ФИО</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/vievFindCitizenByDistrict"
+                               id="vievFindByDistrict">Поиск по району</a></li>
+                    </ul>
+                </li>
+
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link" aria-current="page"
+                       href="/overpayment/menuAddCitizen"
+                       id="menuAddCitizen">
+                        Добавить гражданина (old)
+                    </a>
+                </li>-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" aria-current="page"
+                       href="/overpayment/menuAddCitizen"
+                       id="menuAddCitizen">
+                        Добавить гражданина
+                    </a>
+                </li>
+
+                <!--<li class="nav-item">
+                    <a class="nav-link"
+                       aria-current="page"
+                       href="/overpayment/vievInformationOverpayments">Информация по делу с переплатами</a>
+                </li>-->
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       aria-current="page"
+                       href="/overpayment/vievControlOnAccount16">Переплаты для контроля по 16 счету</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page"
+                       href="#"
+                       id="menuControl">
+                        Контроль
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page"
+                       href="/overpayment/statistics"
+                       id="menuStatistics">
+                        Статистика
+                    </a>
+                </li>
+                <li class="nav-item dropdown" >
+                    <a class="nav-link dropdown-trigger"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"
+                       id="menuReferenceBook"
+                    >
+                        Справочник
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menuReferenceBook">
+                        <!--<li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievReferenceBookDataForNotificationLetters">Должности, ФИО, телефоны</a></li>-->
+                        <li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievReferenceBookRequisitesForRedemption">Реквизиты для погашения переполученных сумм выплат</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievReferenceBookReasonsForOverpayments">Причины переплат</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievReferenceBookSpecificationOfTheReasonsForOverpayments">Конкретизация причин переплат</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievDepartment">Управления</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievDistrict">Районы</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <form
+                    class="d-flex"
+                    id="logout"
+                    name="logout"
+                    th:action="@{/logout}"
+                    method="post"
+            >
+                <div class="text-center text-success align-self-center mx-2">Пользователь:
+                    <!--todo sec:authorize="isAuthenticated()"  sec:authentication="principal.login"-->
+                    <span >Пользователь</span>
+                </div>
+                <button class="btn btn-outline-success" type="submit">Выйти</button>
+
+            </form>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
