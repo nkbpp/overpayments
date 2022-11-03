@@ -9,6 +9,8 @@ import ru.pfr.overpayments.model.overpayment.dto.DistrictDto;
 import ru.pfr.overpayments.model.overpayment.mapper.DistrictMapper;
 import ru.pfr.overpayments.service.overpayment.DistrictService;
 
+import java.util.stream.Collectors;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/overpayment/referenceBook")
@@ -82,7 +84,12 @@ public class DistrictControllerRest {
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
                                     @RequestParam(defaultValue = "1") Integer pagination) {
         try {
-            return new ResponseEntity<>(districtService.findAll(pagination, col), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    districtService.findAll(pagination, col)
+                            .stream()
+                            .map(districtMapper::toDto)
+                            .collect(Collectors.toList()),
+                    HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

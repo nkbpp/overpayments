@@ -9,6 +9,8 @@ import ru.pfr.overpayments.model.overpayment.dto.referenceBook.ReasonsForOverpay
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.ReasonsForOverpaymentsMapper;
 import ru.pfr.overpayments.service.overpayment.referenceBook.ReasonsForOverpaymentsService;
 
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -82,7 +84,12 @@ public class ReferenceBookControllerRest {
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
                                     @RequestParam(defaultValue = "1") Integer pagination) {
         try {
-            return new ResponseEntity<>(reasonsForOverpaymentsService.findAll(pagination, col), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    reasonsForOverpaymentsService.findAll(pagination, col)
+                            .stream()
+                            .map(reasonsForOverpaymentsMapper::toDto)
+                            .collect(Collectors.toList()),
+                    HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

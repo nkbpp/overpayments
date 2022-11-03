@@ -33,4 +33,8 @@ public class UderRosDto {
 
     private Double uderPercent; //процент удержания с твердой суммы
 
+    private Double summa; //сумма которую я получил
+
+    private Double summaP; //сумма погашение
+
 }

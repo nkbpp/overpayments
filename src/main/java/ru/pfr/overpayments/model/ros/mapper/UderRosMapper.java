@@ -17,6 +17,8 @@ public class UderRosMapper {
                 .uderPercent(obj.getUderPercent())
                 .uSddpm(obj.getUSddpm())
                 .ouSddpm(obj.getOuSddpm())
+                .summa(obj.getSumma())
+                .summaP(obj.getSummaP())
                 .build();
     }
 
@@ -30,6 +32,8 @@ public class UderRosMapper {
                 .us(dto.getUs())
                 .uSddpm(dto.getUSddpm())
                 .ouSddpm(dto.getOuSddpm())
+                .summa(dto.getSumma())
+                .summaP(dto.getSummaP())
                 .build();
     }
 

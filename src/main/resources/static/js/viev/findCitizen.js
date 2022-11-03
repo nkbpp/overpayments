@@ -104,17 +104,7 @@ function findPensioner(howFind) {
     let json = JSON.stringify(object);
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationFindPensioner");
 
-    $('#tablefindresult tbody').html('<tr>' +
-        '<th>' + getSpinner() + '</th>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '</tr>');
+    getSpinnerTable("tablefindresult");
     $.ajax({
         url: "/overpayment/findPensioner" + howFind + "?" + params,
         data: json,

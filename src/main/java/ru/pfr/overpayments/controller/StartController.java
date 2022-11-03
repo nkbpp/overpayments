@@ -1,7 +1,8 @@
 package ru.pfr.overpayments.controller;
 
+import org.opfr.springbootstarterauthsso.security.UserInfo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,14 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StartController {
     @GetMapping
     public String startIndex(
-            //@AuthenticationPrincipal User user,
-            Model model
+            //@AuthenticationPrincipal UserInfo user
     ){
         return "index";
     }
-
-
-
-
 
 }

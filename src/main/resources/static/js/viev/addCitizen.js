@@ -27,7 +27,9 @@ $(document).ready(function () {
             $('#tableOverpayments tbody').html("");
             $('#btnAddCitizen').removeAttr("name");
             //поиск
+            $('#btnAddCitizen').attr("disabled","true");
             findCitizen();
+
         }
 
 
@@ -40,7 +42,7 @@ $(document).ready(function () {
             let object = {};
             fd.forEach((value, key) => object[key] = value);
             let arrCarer = [];
-            object['id'] = id_ros;
+            object['id_ros'] = id_ros;
             let data = JSON.stringify(object);
             //console.log(data)
             $.ajax({
@@ -70,6 +72,7 @@ $(document).ready(function () {
 function findCitizen() {
     let snils = $("#snils").val();
     let json = JSON.stringify({'snils': snils});
+
 
     $.ajax({
         url: "/overpayment/ros/findPensionerBySnils",
@@ -111,6 +114,8 @@ function findCitizen() {
                 $("#adrreg").val(response[0].adrreg);
                 $("#tel").val(response[0].tel);
 
+                //$('#tableOverpayments tbody').html('<tr><th>' + getSpinner() + '</th><td></td><td></td><td></td><td></td><td></td></tr>');//спинер
+                getSpinnerTable("tableOverpayments")
                 findOverpayments(response[0].id);
             } else {
                 alert("Нет результатов")
@@ -153,6 +158,7 @@ function findOverpayments(id) {
             });
             $('#tableOverpayments tbody').append(trHTML);
             $('#btnAddCitizen').attr("name", id);
+            $('#btnAddCitizen').removeAttr("disabled");
         },
         error: function (jqXHR, textStatus) {
             alert("ERROR");

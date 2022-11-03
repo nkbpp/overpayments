@@ -13,6 +13,21 @@ $(document).ready(function () {
         findLink = "findPensionerByIdRos";
     }
 
+    //Чистка select
+    $("body").on('click', 'button', function () {
+        if ($(this).attr('id') === "clearReasonsForOverpayments") {
+            ARRSELECTIZE[0].selectize.clear();
+        }
+        if ($(this).attr('id') === "clearSelectSpecificationOfTheReasonsForOverpayments") {
+            ARRSELECTIZE[1].selectize.clear();
+        }
+        if ($(this).attr('id') === "clearStructuralSubdivision") {
+            ARRSELECTIZE[2].selectize.clear();
+        }
+    });
+
+    $('#nav-OverpaymentData-tab').attr("disabled","true").addClass("text-muted");
+
     //первоначальная загрузка данных о пенсионере
     $.ajax({
         url: "/overpayment/" + findLink + "/" + ID,
@@ -33,6 +48,8 @@ $(document).ready(function () {
             $("#patronymic").val(response.patronymic);
             $("#adrreg").val(response.adrreg);
             $("#tel").val(response.tel);
+
+            $('#nav-OverpaymentData-tab').removeAttr("disabled").removeClass("text-muted");
         },
         error: function (jqXHR, textStatus) {
             alert("ERROR");
@@ -47,7 +64,6 @@ $(document).ready(function () {
             let fd = new FormData(updatePensioner);
             let object = {};
             fd.forEach((value, key) => object[key] = value);
-            let arrCarer = [];
             object['id'] = id;
             let data = JSON.stringify(object);
             $.ajax({
@@ -74,6 +90,7 @@ $(document).ready(function () {
         //загрузка переплат
         if($(this).attr("id") === "nav-OverpaymentData-tab"){
             let id = $("#nav-CitizenData-tab").attr("data-id-ros");
+            getSpinnerTable("tableOverpayments");
             $.ajax({
                 url: "/overpayment/ros/overpayments/" + id,
                 cache: false,
@@ -101,10 +118,9 @@ $(document).ready(function () {
                             '</tr>';
                     });
                     tableBody.append(trHTML);
-                    $("#formFindCarer button.btnFindCitizenSNILS").removeClass("d-none");
-
                     $("#formOverpaymentData").addClass("d-none");
                     $("#formFindCarer").addClass("d-none");
+                    $("#formFindCarer button.btnFindCitizenSNILS").removeClass("d-none");
                     $("#formFindCarer #snils").val('');
                     $('#formFindCarer .btnFindCitizenSNILS').removeAttr("name");
                 },
@@ -171,6 +187,7 @@ $(document).ready(function () {
                         $("#btnSaveOverpaymentData").text("Изменить").attr("data-type","update");
                     }
 
+                    getSpinnerTable("tableUder");
                     //данные из базы рос
                     $.ajax({
                         url: "/overpayment/ros/overpayment/" + idIs,
@@ -190,24 +207,31 @@ $(document).ready(function () {
                             $("#dateOfDetectionOfOverpayment").val(response.docdv);
 
                             let trUderHTML="";
+                            let zad = +response.spe;
                             $.each(response.uderRosDto, function (i, uder) {
+                                zad = (+zad - (+uder.summa + +uder.summaP)).toFixed(2);
                                 trUderHTML +=
                                     '<tr>' +
                                     '<th>' + (+i + 1) + '</th>' +
+                                    '<td>' + replaceNull(response.doc) + '</td>' +
                                     '<td>' + replaceNull(uder.god) + '</td>' +
                                     '<td>' + replaceNull(uder.mes) + '</td>' +
+                                    '<td>' + replaceNull(response.spe) + '</td>' +
                                     //'<td>' + replaceNull(uder.usddpm) + '</td>' +
-                                    '<td>' + (replaceNullDecimal(uder.us) +
+/*                                    '<td>' + (replaceNullDecimal(uder.us) +
                                         replaceNullDecimal(uder.ub) +
                                         replaceNullDecimal(uder.usddpm)) +
                                     '</td>' +
                                     '<td>' + replaceNull(uder.ouSddpm) + '</td>' +
-                                    '<td>' + replaceNull(uder.uderPercent) + '</td>' +
+                                    '<td>' + replaceNull(uder.uderPercent) + '</td>' +*/
+                                    '<td>' + +replaceNull(uder.summa) + '</td>' +
+                                    '<td>' + +replaceNull(uder.summaP) + '</td>' +
+                                    '<td>' + replaceNull(zad) + '</td>' +
                                     '</tr>';
                             });
                             $("#tableUder tbody").html(trUderHTML);
 
-                            let trVozHTML="";
+/*                            let trVozHTML="";
 
                             $.each(response.vozPereRosDto, function (i, voz) {
                                 trVozHTML +=
@@ -219,7 +243,7 @@ $(document).ready(function () {
                                     '<td>' + replaceNullDecimal(voz.s) + '</td>' +
                                     '</tr>';
                             });
-                            $("#tableVoz tbody").html(trVozHTML);
+                            $("#tableVoz tbody").html(trVozHTML);*/
 
                             $("#paymentType").val(response.vidVpl.name);
 

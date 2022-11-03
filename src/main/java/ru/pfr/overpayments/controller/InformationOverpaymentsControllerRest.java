@@ -9,6 +9,7 @@ import ru.pfr.overpayments.model.overpayment.dto.OverpaymentDto;
 import ru.pfr.overpayments.model.overpayment.entity.Overpayment;
 import ru.pfr.overpayments.model.overpayment.mapper.OverpaymentMapper;
 import ru.pfr.overpayments.service.overpayment.OverpaymentService;
+import ru.pfr.overpayments.service.ros.UderRosService;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +18,8 @@ public class InformationOverpaymentsControllerRest {
 
     private final OverpaymentService overpaymentService;
     private final OverpaymentMapper overpaymentMapper;
+
+    private final UderRosService uderRosService;
 
     /**
      * Найти IDIS

@@ -14,6 +14,7 @@ import ru.pfr.overpayments.model.overpayment.dto.referenceBook.SpecificationOfTh
 @Builder
 public class OverpaymentDto {
     private Long idPensioner;
+    private String idRos;
     private Long idOverpayment;
     private ReasonsForOverpaymentsDto reasonsForOverpaymentsDto;
     private SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto;

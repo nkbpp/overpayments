@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.pfr.overpayments.model.overpayment.dto.referenceBook.SpecificationOfTheReasonsForOverpaymentsDto;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.SpecificationOfTheReasonsForOverpaymentsMapper;
 import ru.pfr.overpayments.service.overpayment.referenceBook.SpecificationOfTheReasonsForOverpaymentsService;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,8 +49,8 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Обновить тут
      */
-    @PutMapping(path ="/specificationOfTheReasonsForOverpayments",
-            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @PutMapping(path = "/specificationOfTheReasonsForOverpayments",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
             @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto) {
         try {
@@ -63,7 +64,7 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Добавление
      */
-    @PostMapping(path ="/specificationOfTheReasonsForOverpayments",
+    @PostMapping(path = "/specificationOfTheReasonsForOverpayments",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
             @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto) {
@@ -83,7 +84,12 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
                                     @RequestParam(defaultValue = "1") Integer pagination) {
         try {
-            return new ResponseEntity<>(specificationOfTheReasonsForOverpaymentsService.findAll(pagination, col), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    specificationOfTheReasonsForOverpaymentsService.findAll(pagination, col)
+                            .stream()
+                            .map(specificationOfTheReasonsForOverpaymentsMapper::toDto)
+                            .collect(Collectors.toList()),
+                    HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

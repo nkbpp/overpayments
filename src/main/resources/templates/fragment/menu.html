@@ -107,6 +107,8 @@
                                href="/overpayment/referenceBook/vievDepartment">Управления</a></li>
                         <li><a class="dropdown-item"
                                href="/overpayment/referenceBook/vievDistrict">Районы</a></li>
+                        <li><a class="dropdown-item"
+                               href="/overpayment/referenceBook/vievDocuments">Шаблоны документов</a></li>
                     </ul>
                 </li>
 
@@ -119,10 +121,9 @@
                     method="post"
             >
                 <div class="text-center text-success align-self-center mx-2">Пользователь:
-                    <!--todo sec:authorize="isAuthenticated()"  sec:authentication="principal.login"-->
-                    <span >Пользователь</span>
+                    <span sec:authorize="isAuthenticated()"  sec:authentication="principal.username">Пользователь</span>
                 </div>
-                <button class="btn btn-outline-success" type="submit">Выйти</button>
+                <!--<button class="btn btn-outline-success" type="submit">Выйти</button>-->
 
             </form>
         </div>

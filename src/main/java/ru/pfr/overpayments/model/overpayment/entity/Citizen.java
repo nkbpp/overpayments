@@ -1,10 +1,12 @@
 package ru.pfr.overpayments.model.overpayment.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import ru.pfr.overpayments.model.annotations.fio.CustomDateSerializerRu;
 import ru.pfr.overpayments.model.annotations.snils.CheckSNILS;
 
 import javax.persistence.*;
@@ -36,10 +38,12 @@ public class Citizen {
 
     private String adrreg;
 
+    @JsonSerialize(using = CustomDateSerializerRu.class)
     private LocalDate rdat;
 
     private String tel;
 
+    @JsonSerialize(using = CustomDateSerializerRu.class)
     private LocalDate dsm; //дата смерти
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)

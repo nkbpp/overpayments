@@ -36,6 +36,7 @@ public class OverpaymentMapper {
     public OverpaymentDto toDto(Overpayment obj) {
         return OverpaymentDto.builder()
                 .idPensioner(obj.getId())
+                .idRos(obj.getIdRos())
                 .idOverpayment(obj.getIsId())
                 .reasonsForOverpaymentsDto(
                         obj.getReasonsForOverpayments() == null ?
