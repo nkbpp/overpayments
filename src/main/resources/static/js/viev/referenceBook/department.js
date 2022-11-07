@@ -1,14 +1,16 @@
 $(document).ready(function () {
 
+    let BODY = $("body");
+
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDepartment");
     ajaxDepartmentAll(params, "");
 
-    $("body").on('change','#col',function(){
+    BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDepartment");
         ajaxDepartmentAll(params, "");
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         //кнопка удалить
         if ($(this).hasClass("deleteDepartmentBtn")) {
@@ -24,7 +26,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                              $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         $("button.deleteDepartmentBtn[name='" + id + "']").parents('tr').remove()
                     },
                     error: function (jqXHR, textStatus) {
@@ -66,7 +68,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                                          $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     //$("#modalDepartment").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDepartment");
                     ajaxDepartmentAll(params);
@@ -79,7 +81,7 @@ $(document).ready(function () {
         }
     });
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //переключатели страниц pagination
         if ($(this).parents("#paginationDepartment").attr("id") === "paginationDepartment") {
             clickPagination($(this), "#paginationDepartment");
@@ -135,7 +137,7 @@ function ajaxDepartmentAll(params){
             });
             $('#tableDepartment').append(trHTML);
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR")
             $('#tableDepartment tbody').html("");
         }

@@ -1,14 +1,16 @@
 $(document).ready(function () {
 
+    let BODY = $("body");
+
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDocuments");
     ajaxDocumentsAll(params, "");
 
-    $("body").on('change','#col',function(){
+    BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDocuments");
         ajaxDocumentsAll(params, "");
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         //кнопка удалить
         if ($(this).hasClass("deleteDocumentsBtn")) {
@@ -24,7 +26,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                              $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         $("button.deleteDocumentsBtn[name='" + id + "']").parents('tr').remove()
                     },
                     error: function (jqXHR, textStatus) {
@@ -76,7 +78,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                                          $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     //$("#modalDocuments").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDocuments");
                     ajaxDocumentsAll(params);
@@ -89,7 +91,7 @@ $(document).ready(function () {
         }
     });
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //переключатели страниц pagination
         if ($(this).parents("#paginationDocuments").attr("id") === "paginationDocuments") {
             clickPagination($(this), "#paginationDocuments");
@@ -124,7 +126,7 @@ function ajaxDocumentsAll(params){
                     '<td>' + item.id + '</td>' +
                     //'<td>' + item.nameFile + '</td>' +
                     '<td>' +
-                    '<a className="btn btn-link" href="/overpayment/documents/download/'+ item.id +'">' + item.nameFile + '</a>' +
+                    '<a class="btn btn-link" href="/overpayment/documents/download/'+ item.id +'">' + item.nameFile + '</a>' +
                     '</td>' +
                     '<td>' +
                     '<div class="btn-group" role="group">' +
@@ -148,7 +150,7 @@ function ajaxDocumentsAll(params){
             });
             $('#tableDocuments').append(trHTML);
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR")
             $('#tableDocuments tbody').html("");
         }

@@ -1,14 +1,16 @@
 $(document).ready(function () {
 
+    let BODY = $("body");
+
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationReasonsForOverpayments");
     ajaxReasonsForOverpaymentsAll(params, "");
 
-    $("body").on('change','#col',function(){
+    BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationReasonsForOverpayments");
         ajaxReasonsForOverpaymentsAll(params, "");
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         //кнопка удалить
         if ($(this).hasClass("deleteReasonsForOverpaymentsBtn")) {
@@ -24,7 +26,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                              $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         $("button.deleteReasonsForOverpaymentsBtn[name='" + id + "']").parents('tr').remove()
                     },
                     error: function (jqXHR, textStatus) {
@@ -66,7 +68,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                                          $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     //$("#modalReasonsForOverpayments").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationReasonsForOverpayments");
                     ajaxReasonsForOverpaymentsAll(params);
@@ -79,7 +81,7 @@ $(document).ready(function () {
         }
     });
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //переключатели страниц pagination
         if ($(this).parents("#paginationReasonsForOverpayments").attr("id") === "paginationReasonsForOverpayments") {
             clickPagination($(this), "#paginationReasonsForOverpayments");
@@ -135,7 +137,7 @@ function ajaxReasonsForOverpaymentsAll(params){
             });
             $('#tableReasonsForOverpayments').append(trHTML);
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR")
             $('#tableReasonsForOverpayments tbody').html("");
         }

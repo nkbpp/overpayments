@@ -6,15 +6,18 @@ $(document).ready(function () {
         //sortField: "text",
     });
 
-    let ID = $("#nav-CitizenData-tab").attr("data-id");
+    let BODY = $("body");
+
+    let citizenData = $("#nav-CitizenData-tab");
+    let ID = citizenData.attr("data-id");
     let findLink = "findPensionerById";
     if (ID === "") {
-        ID = $("#nav-CitizenData-tab").attr("data-id-ros");
+        ID = citizenData.attr("data-id-ros");
         findLink = "findPensionerByIdRos";
     }
 
     //Чистка select
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
         if ($(this).attr('id') === "clearReasonsForOverpayments") {
             ARRSELECTIZE[0].selectize.clear();
         }
@@ -40,8 +43,8 @@ $(document).ready(function () {
                                  $('#_csrf_header').attr('content'));
         },*/
         success: function (response) {
-            $("#nav-CitizenData-tab").attr("data-id", response.id);
-            $("#nav-CitizenData-tab").attr("data-id-ros", response.id_ros);
+            citizenData.attr("data-id", response.id);
+            citizenData.attr("data-id-ros", response.id_ros);
             $("#snils").val(response.snils);
             $("#surname").val(response.surname);
             $("#name").val(response.name);
@@ -51,12 +54,12 @@ $(document).ready(function () {
 
             $('#nav-OverpaymentData-tab').removeAttr("disabled").removeClass("text-muted");
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR");
         }
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         if ($(this).attr('id') === "btnUpdatePensioner") {
             let id = $("#nav-CitizenData-tab").attr("data-id");
@@ -77,7 +80,7 @@ $(document).ready(function () {
                 xhr.setRequestHeader($('#_csrf').attr('content'),
                     $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     alert("Данные изменены")
                     //document.location.href = '/overpayment/vievInformationOverpayments'
                 },
@@ -124,7 +127,7 @@ $(document).ready(function () {
                     $("#formFindCarer #snils").val('');
                     $('#formFindCarer .btnFindCitizenSNILS').removeAttr("name");
                 },
-                error: function (jqXHR, textStatus) {
+                error: function () {
                     alert("ERROR");
                 }
             });
@@ -132,7 +135,7 @@ $(document).ready(function () {
 
     })
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //выбор переплаты
         if($(this).hasClass("pickOverpayment")){
             $('#tableOverpayments tr.table-primary').removeClass("table-primary");
@@ -262,7 +265,7 @@ $(document).ready(function () {
                                     //$("#dateOfDeathOfPensioner").val(response.rdat);
                                     $("#dateOfDeathOfPensioner").val(response.dsm);
                                 },
-                                error: function (jqXHR, textStatus) {
+                                error: function () {
                                     alert("ERROR");
                                 }
                             });
@@ -270,7 +273,7 @@ $(document).ready(function () {
                             $("#formOverpaymentData").removeClass("d-none");
                             $("#formFindCarer").removeClass("d-none");
                         },
-                        error: function (jqXHR, textStatus) {
+                        error: function () {
                             alert("ERROR");
                         }
                     });
@@ -278,7 +281,7 @@ $(document).ready(function () {
                     $("#formOverpaymentData").removeClass("d-none");
                     $("#formFindCarer").removeClass("d-none");
                 },
-                error: function (jqXHR, textStatus) {
+                error: function (jqXHR) {
                     $("#formOverpaymentData").addClass("d-none");
                     $("#formFindCarer").addClass("d-none");
                     alert("Error: " + jqXHR.responseText + " !!! ")
@@ -289,7 +292,7 @@ $(document).ready(function () {
     })
 
     //ухаживающее лицо
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         if ($(this).hasClass("pickPensioner")) {
             $('#formFindCarer #divTableFindPensioner').addClass("d-none");
             let arrTd = $(this).parents('tr').children('td');
@@ -301,7 +304,7 @@ $(document).ready(function () {
             $('#formFindCarer .btnFindCitizenSNILS').attr("name",$(this).attr('id'));
         }
     });
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
         //поиск по снилс
         if ($(this).hasClass("btnFindCitizenSNILS")) {
             //поиск
@@ -325,7 +328,8 @@ $(document).ready(function () {
                     if (response.length > 1) {
 
                         let trHTML = '';
-                        $('#formFindCarer #tableFindPensioner tbody').html("");
+                        let tableFindPensionerBody = $('#formFindCarer #tableFindPensioner tbody');
+                        tableFindPensionerBody.html("");
                         $.each(response, function (i, item) {
                             trHTML +=
                                 '<tr>' +
@@ -339,7 +343,7 @@ $(document).ready(function () {
                                 '<td><a class="pickPensioner" href="#" id="' + item.id + '">Выбрать</a></td>' +
                                 '</tr>';
                         });
-                        $('#formFindCarer #tableFindPensioner tbody').append(trHTML);
+                        tableFindPensionerBody.append(trHTML);
                         $('#formFindCarer #divTableFindPensioner').removeClass("d-none");
 
                     } else if (response.length === 1) {
@@ -355,7 +359,7 @@ $(document).ready(function () {
                     }
 
                 },
-                error: function (jqXHR, textStatus) {
+                error: function () {
                     alert("ERROR");
                 }
             });
@@ -375,8 +379,9 @@ $(document).ready(function () {
             let carerId = "";
             let carerAdrreg = "";
             let carerTel = "";
-            if($("#formFindCarer button.btnFindCitizenSNILS").attr('name') !== undefined){ //есть ухаживающего лица
-                carerId = $("#formFindCarer button.btnFindCitizenSNILS").attr('name');
+            let btnFindCitizenSNILS = $("#formFindCarer button.btnFindCitizenSNILS");
+            if(btnFindCitizenSNILS.attr('name') !== undefined){ //есть ухаживающего лица
+                carerId = btnFindCitizenSNILS.attr('name');
                 carerAdrreg = $("#formFindCarer #adrreg").val();
                 carerTel = $("#formFindCarer #tel").val();
             }
@@ -427,10 +432,10 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                         $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         alert("Данные сохранены")
                     },
-                    error: function (jqXHR, textStatus) {
+                    error: function (jqXHR) {
                         alert("Error: " + jqXHR.responseText + " !!! ")
                     }
                 });
@@ -446,10 +451,10 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                         $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         alert("Данные изменены")
                     },
-                    error: function (jqXHR, textStatus) {
+                    error: function (jqXHR) {
                         alert("Error: " + jqXHR.responseText + " !!! ")
                     }
                 });

@@ -18,7 +18,7 @@ function clickPagination(selA, idpag) {
         $(idpag + " li.active").removeClass("active");
         selA.parent().addClass("active");
         list = selA.text();
-        if (list == 1) {
+        if (list === 1) {
             pag.first().parent().removeClass("disabled").addClass("disabled");
         } else {
             $(idpag + " li.disabled").removeClass("disabled");
@@ -41,9 +41,9 @@ function activeList(idpag) {
 }
 
 function activePagination(selPag,pagId) {
-    if(pagId==1) {
+    if(pagId===1) {
         clearPagination(selPag);
-    } else if (pagId==2) {
+    } else if (pagId===2) {
         selPag.first().parent().removeClass("disabled");
         selPag.eq(1).text("1").parent().removeClass("active");
         selPag.eq(2).text("2").parent().removeClass("active").addClass("active");

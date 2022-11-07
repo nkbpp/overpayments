@@ -1,48 +1,50 @@
 $(document).ready(function () {
 
+    let BODY = $("body");
+
     $("#numDistrict").selectize({
         create: true,
         //sortField: "text",
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         // кнопка поиск по снилс
         if ($(this).attr('id') === "btnFindPensionerSNILS") {
-            if(correctInputs()){findPensioner("SNILS")};
+            if(correctInputs()){findPensioner("SNILS")}
         }
 
         // кнопка поиск по фио
         if ($(this).attr('id') === "btnFindPensionerFIO") {
-            if(correctInputs()){findPensioner("FIO")};
+            if(correctInputs()){findPensioner("FIO")}
         }
 
         // кнопка поиск по району
         if ($(this).attr('id') === "btnFindPensionerDistrict") {
-            if(correctInputs()){findPensioner("District")};
+            if(correctInputs()){findPensioner("District")}
         }
 
     });
 
     //caption в таблице
-    $("body").on('change', '#col', function () {
+    BODY.on('change', '#col', function () {
         // кнопка поиск по снилс
         if ($("#btnFindPensionerSNILS").length > 0) {
-            if(correctInputs()){findPensioner("SNILS")};
+            if(correctInputs()){findPensioner("SNILS")}
         }
 
         // кнопка поиск по фио
         if ($("#btnFindPensionerFIO").length > 0) {
-            if(correctInputs()){findPensioner("FIO")};
+            if(correctInputs()){findPensioner("FIO")}
         }
 
         // кнопка поиск по району
         if ($("#btnFindPensionerDistrict").length > 0) {
-            if(correctInputs()){findPensioner("District")};
+            if(correctInputs()){findPensioner("District")}
         }
     });
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //переключатели страниц pagination
         if ($(this).parents("#paginationFindPensioner").attr("id") === "paginationFindPensioner") {
             if(correctInputs()){
@@ -80,12 +82,12 @@ $(document).ready(function () {
                         xhr.setRequestHeader($('#_csrf').attr('content'),
                                              $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         //поиск добавленного id
 
                         $(".deletePensioner[id=" + id + "]").parents('tr').remove();
                     },
-                    error: function (jqXHR, textStatus) {
+                    error: function () {
                         alert("ERROR");
                     }
                 });
@@ -120,9 +122,10 @@ function findPensioner(howFind) {
             var trHTML = '';
             $('#tablefindresult tbody').html("");
             $.each(response, function (i, item) {
+                let col = $("#col");
                 trHTML +=
                     '<tr>' +
-                    '<th>' + (+$("#col").val() * +activeList("#paginationFindPensioner") - +$("#col").val() + (+i + 1)) + '</th>' +
+                    '<th>' + (+col.val() * +activeList("#paginationFindPensioner") - +col.val() + (+i + 1)) + '</th>' +
                     '<td>' + replaceNull(item.snils) + '</td>' +
                     '<td>' + replaceNull(item.surname) + '</td>' +
                     '<td>' + replaceNull(item.name) + '</td>' +
@@ -135,7 +138,7 @@ function findPensioner(howFind) {
             });
             $('#tablefindresult').append(trHTML);
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR")
             $('#tablefindresult tbody').html("");
         }
@@ -144,9 +147,12 @@ function findPensioner(howFind) {
 
 
 function correctInputs() {
-    if(($("#snils").length===1 && $("#snils").val()!=="") ||
-        ($("#dateOfBirth").length===1 &&  $("#dateOfBirth").val()!=="") ||
-        ($("#numDistrict").length===1 &&  $("#numDistrict").val()!=="")){
+    let snils = $("#snils");
+    let dateOfBirth = $("#dateOfBirth");
+    let numDistrict = $("#numDistrict");
+    if((snils.length===1 && snils.val()!=="") ||
+        (dateOfBirth.length===1 &&  dateOfBirth.val()!=="") ||
+        (numDistrict.length===1 &&  numDistrict.val()!=="")){
         return true;
     }
     else {

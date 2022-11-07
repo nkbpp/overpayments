@@ -68,13 +68,13 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>3.3.1</version>
+            <version>3.6.1</version>
         </dependency>
 
         <dependency>
-            <groupId>org.webjars.bower</groupId>
+            <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.1.3</version>
+            <version>5.2.2</version>
         </dependency>
 
         <dependency>
@@ -95,12 +95,6 @@
             <artifactId>jquery-maskedinput</artifactId>
             <version>1.4.1</version>
         </dependency>
-
-        <!--		<dependency>
-                    <groupId>org.webjars.npm</groupId>
-                    <artifactId>cleave.js</artifactId>
-                    <version>1.6.0</version>
-                </dependency>-->
 
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -152,13 +146,6 @@
         </dependency>
 
     </dependencies>
-
-    <!--<repositories>
-            <repository>
-                <id>debian-central</id>
-                <url>http://sa04100uitwa250.0041.pfr.ru:5001/repository/debian-central</url>
-            </repository>
-        </repositories>-->
 
     <build>
         <plugins>

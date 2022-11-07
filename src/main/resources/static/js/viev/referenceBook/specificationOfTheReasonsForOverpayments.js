@@ -1,14 +1,16 @@
 $(document).ready(function () {
 
+    let BODY = $("body");
+
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationSpecificationOfTheReasonsForOverpayments");
     ajaxSpecificationOfTheReasonsForOverpaymentsAll(params, "");
 
-    $("body").on('change','#col',function(){
+    BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationSpecificationOfTheReasonsForOverpayments");
         ajaxSpecificationOfTheReasonsForOverpaymentsAll(params, "");
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         //кнопка удалить
         if ($(this).hasClass("deleteSpecificationOfTheReasonsForOverpaymentsBtn")) {
@@ -24,7 +26,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                              $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         $("button.deleteSpecificationOfTheReasonsForOverpaymentsBtn[name='" + id + "']").parents('tr').remove()
                     },
                     error: function (jqXHR, textStatus) {
@@ -65,7 +67,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                                          $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     //$("#modalSpecificationOfTheReasonsForOverpayments").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationSpecificationOfTheReasonsForOverpayments");
                     ajaxSpecificationOfTheReasonsForOverpaymentsAll(params);
@@ -77,7 +79,7 @@ $(document).ready(function () {
         }
     });
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //переключатели страниц pagination
         if ($(this).parents("#paginationSpecificationOfTheReasonsForOverpayments").attr("id") === "paginationSpecificationOfTheReasonsForOverpayments") {
             clickPagination($(this), "#paginationSpecificationOfTheReasonsForOverpayments");

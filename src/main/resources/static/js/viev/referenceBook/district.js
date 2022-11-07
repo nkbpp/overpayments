@@ -1,14 +1,16 @@
 $(document).ready(function () {
 
+    let BODY = $("body");
+
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDistrict");
     ajaxDistrictAll(params, "");
 
-    $("body").on('change','#col',function(){
+    BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDistrict");
         ajaxDistrictAll(params, "");
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         //кнопка удалить
         if ($(this).hasClass("deleteDistrictBtn")) {
@@ -24,7 +26,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                              $('#_csrf_header').attr('content'));
                     },*/
-                    success: function (response) {
+                    success: function () {
                         $("button.deleteDistrictBtn[name='" + id + "']").parents('tr').remove()
                     },
                     error: function (jqXHR, textStatus) {
@@ -69,7 +71,7 @@ $(document).ready(function () {
                     xhr.setRequestHeader($('#_csrf').attr('content'),
                                          $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     //$("#modalDistrict").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDistrict");
                     ajaxDistrictAll(params);
@@ -82,7 +84,7 @@ $(document).ready(function () {
         }
     });
 
-    $("body").on('click', 'a', function () {
+    BODY.on('click', 'a', function () {
         //переключатели страниц pagination
         if ($(this).parents("#paginationDistrict").attr("id") === "paginationDistrict") {
             clickPagination($(this), "#paginationDistrict");
@@ -139,7 +141,7 @@ function ajaxDistrictAll(params){
             });
             $('#tableDistrict').append(trHTML);
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR")
             $('#tableDistrict tbody').html("");
         }

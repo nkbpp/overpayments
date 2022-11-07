@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
-    $("body").on('click', 'a', function () {
+    let BODY = $("body");
+
+    BODY.on('click', 'a', function () {
         if ($(this).hasClass("pickPensioner")) {
             $('#divTableFindPensioner').addClass("d-none");
 
@@ -14,7 +16,7 @@ $(document).ready(function () {
         }
     });
 
-    $("body").on('click', 'button', function () {
+    BODY.on('click', 'button', function () {
 
         //поиск по снилс
         if ($(this).hasClass("btnFindCitizenSNILS")) {
@@ -25,9 +27,10 @@ $(document).ready(function () {
             $("#adrreg").val("");
             $("#tel").val("");
             $('#tableOverpayments tbody').html("");
-            $('#btnAddCitizen').removeAttr("name");
+            let btnAddCitizen = $('#btnAddCitizen');
+            btnAddCitizen.removeAttr("name");
             //поиск
-            $('#btnAddCitizen').attr("disabled","true");
+            btnAddCitizen.attr("disabled","true");
             findCitizen();
 
         }
@@ -41,7 +44,6 @@ $(document).ready(function () {
             let fd = new FormData(addPensioner);
             let object = {};
             fd.forEach((value, key) => object[key] = value);
-            let arrCarer = [];
             object['id_ros'] = id_ros;
             let data = JSON.stringify(object);
             //console.log(data)
@@ -56,10 +58,10 @@ $(document).ready(function () {
                 xhr.setRequestHeader($('#_csrf').attr('content'),
                     $('#_csrf_header').attr('content'));
                 },*/
-                success: function (response) {
+                success: function () {
                     document.location.href = '/overpayment/vievInformationOverpayments/IdRos/' + id_ros;
                 },
-                error: function (jqXHR, textStatus) {
+                error: function (jqXHR) {
                     alert("Error: " + jqXHR.responseText + " !!! ")
                 }
             });
@@ -90,7 +92,8 @@ function findCitizen() {
             if (response.length > 1) {
 
                 let trHTML = '';
-                $('#tableFindPensioner tbody').html("");
+                let tableFindPensionerBody = $('#tableFindPensioner tbody');
+                tableFindPensionerBody.html("");
                 $.each(response, function (i, item) {
                     trHTML +=
                         '<tr>' +
@@ -104,7 +107,7 @@ function findCitizen() {
                         '<td><a class="pickPensioner" href="#" id="' + item.id + '">Выбрать</a></td>' +
                         '</tr>';
                 });
-                $('#tableFindPensioner tbody').append(trHTML);
+                tableFindPensionerBody.append(trHTML);
                 $('#divTableFindPensioner').removeClass("d-none");
 
             } else if (response.length === 1) {
@@ -122,7 +125,7 @@ function findCitizen() {
             }
 
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR");
         }
     });
@@ -143,7 +146,8 @@ function findOverpayments(id) {
         },*/
         success: function (response) {
             let trHTML = '';
-            $('#tableOverpayments tbody').html("");
+            let tableOverpaymentsBody = $('#tableOverpayments tbody');
+            tableOverpaymentsBody.html("");
             $.each(response, function (i, item) {
                 trHTML +=
                     '<tr>' +
@@ -156,11 +160,12 @@ function findOverpayments(id) {
                     //'<td><a href="#" id="' + item.id + '">Выбрать</a></td>' +
                     '</tr>';
             });
-            $('#tableOverpayments tbody').append(trHTML);
-            $('#btnAddCitizen').attr("name", id);
-            $('#btnAddCitizen').removeAttr("disabled");
+            tableOverpaymentsBody.append(trHTML);
+            let btnAddCitizen = $('#btnAddCitizen');
+            btnAddCitizen.attr("name", id);
+            btnAddCitizen.removeAttr("disabled");
         },
-        error: function (jqXHR, textStatus) {
+        error: function () {
             alert("ERROR");
         }
     });
