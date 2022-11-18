@@ -40,7 +40,7 @@ public class AddPensionerControllerRest {
         try {
             if(pensionerService.findByIdRos(pensionerDto.getId_ros())!=null){ //уже есть такая запись
                 return new ResponseEntity<>("Такой пенсионер уже добавлен",HttpStatus.BAD_REQUEST);
-            };
+            }
             pensionerService.save(pensionerDto);//todo
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

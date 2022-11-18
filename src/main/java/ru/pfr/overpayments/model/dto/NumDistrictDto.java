@@ -1,7 +1,9 @@
 package ru.pfr.overpayments.model.dto;
 
+import lombok.Data;
 import ru.pfr.overpayments.model.annotations.district.District;
 
+@Data
 public class NumDistrictDto {
 
     /****
@@ -32,20 +34,6 @@ public class NumDistrictDto {
     @District
     private Integer numDistrict;
 
-    public NumDistrictDto() {
-    }
-
-    public NumDistrictDto(Integer numDistrict) {
-        this.numDistrict = numDistrict;
-    }
-
-    public Integer getNumDistrict() {
-        return numDistrict;
-    }
-
-    public void setNumDistrict(Integer numDistrict) {
-        this.numDistrict = numDistrict;
-    }
 }
 
 

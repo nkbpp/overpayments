@@ -5,6 +5,12 @@ $(document).ready(function () {
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDistrict");
     ajaxDistrictAll(params, "");
 
+    //обработка ENTER
+/*    $("#formDistrict").on("submit", function(event){
+        event.preventDefault();
+        $("#formDistrict #updateOrAddDistrict").click()
+    })*/
+
     BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDistrict");
         ajaxDistrictAll(params, "");
@@ -28,8 +34,10 @@ $(document).ready(function () {
                     },*/
                     success: function () {
                         $("button.deleteDistrictBtn[name='" + id + "']").parents('tr').remove()
+                        initialToats("Успешно!", "Данные удалены!" , "success").show();
                     },
-                    error: function (jqXHR, textStatus) {
+                    error: function (response) {
+                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     }
                 });
             }
@@ -74,10 +82,11 @@ $(document).ready(function () {
                 success: function () {
                     //$("#modalDistrict").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDistrict");
+                    initialToats("Успешно!", $("#updateOrAddDistrict").text()==="Изменить"?"Данные изменены!":"Данные сохранены!" , "success").show();
                     ajaxDistrictAll(params);
                 },
-                error: function (jqXHR, textStatus) {
-                    alert("err " + textStatus + " !!! " +  jqXHR)
+                error: function (response) {
+                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     $('#tableDistrict tbody').html("");
                 }
             });
@@ -141,8 +150,8 @@ function ajaxDistrictAll(params){
             });
             $('#tableDistrict').append(trHTML);
         },
-        error: function () {
-            alert("ERROR")
+        error: function (response) {
+            initialToats("Ошибка!", response.responseJSON.message , "err").show();
             $('#tableDistrict tbody').html("");
         }
     });

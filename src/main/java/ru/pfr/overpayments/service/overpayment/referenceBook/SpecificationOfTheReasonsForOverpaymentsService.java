@@ -30,13 +30,25 @@ public class SpecificationOfTheReasonsForOverpaymentsService {
     }
 
     public void update(SpecificationOfTheReasonsForOverpayments specificationOfTheReasonsForOverpayments) {
+        /*var newSpecificationOfTheReasonsForOverpayments = findById(
+                specificationOfTheReasonsForOverpayments.getId()
+        );
+        newSpecificationOfTheReasonsForOverpayments.setSpecificationOfTheReasonsForOverpayments(specificationOfTheReasonsForOverpayments.getSpecificationOfTheReasonsForOverpayments());
+        newSpecificationOfTheReasonsForOverpayments.setDocumentCarer(specificationOfTheReasonsForOverpayments.getDocumentCarer());
+        newSpecificationOfTheReasonsForOverpayments.setDocumentPensioner(specificationOfTheReasonsForOverpayments.getDocumentPensioner());
+        repository.save(newSpecificationOfTheReasonsForOverpayments);*/
         repository.save(specificationOfTheReasonsForOverpayments);
     }
+
     public void save(SpecificationOfTheReasonsForOverpayments specificationOfTheReasonsForOverpayments) {
         repository.save(specificationOfTheReasonsForOverpayments);
     }
 
     public void delete(Long id) {
+        //удалить ссылки на ReasonsForOverpayments
+        var r = findById(id);
+        r.setReasonsForOverpayments(null);
+        save(r);
         repository.deleteById(id);
     }
 
@@ -50,7 +62,6 @@ public class SpecificationOfTheReasonsForOverpaymentsService {
             objs.add(lists.get(i));
         }
         return objs;
-
     }
 
 }

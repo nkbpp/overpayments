@@ -5,6 +5,12 @@ $(document).ready(function () {
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationReasonsForOverpayments");
     ajaxReasonsForOverpaymentsAll(params, "");
 
+    //обработка ENTER
+/*    $("#formReasonsForOverpayments").on("submit", function(event){
+        event.preventDefault();
+        $("#formReasonsForOverpayments #updateOrAddReasonsForOverpayments").click()
+    })*/
+
     BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationReasonsForOverpayments");
         ajaxReasonsForOverpaymentsAll(params, "");
@@ -28,8 +34,10 @@ $(document).ready(function () {
                     },*/
                     success: function () {
                         $("button.deleteReasonsForOverpaymentsBtn[name='" + id + "']").parents('tr').remove()
+                        initialToats("Успешно!", "Данные удалены!" , "success").show();
                     },
-                    error: function (jqXHR, textStatus) {
+                    error: function (response) {
+                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     }
                 });
             }
@@ -71,10 +79,11 @@ $(document).ready(function () {
                 success: function () {
                     //$("#modalReasonsForOverpayments").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationReasonsForOverpayments");
+                    initialToats("Успешно!", $("#updateOrAddReasonsForOverpayments").text()==="Изменить"?"Данные изменены!":"Данные сохранены!" , "success").show();
                     ajaxReasonsForOverpaymentsAll(params);
                 },
-                error: function (jqXHR, textStatus) {
-                    alert("err " + textStatus + " !!! " +  jqXHR)
+                error: function (response) {
+                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     $('#tableReasonsForOverpayments tbody').html("");
                 }
             });
@@ -137,8 +146,8 @@ function ajaxReasonsForOverpaymentsAll(params){
             });
             $('#tableReasonsForOverpayments').append(trHTML);
         },
-        error: function () {
-            alert("ERROR")
+        error: function (response) {
+            initialToats("Ошибка!", response.responseJSON.message , "err").show();
             $('#tableReasonsForOverpayments tbody').html("");
         }
     });

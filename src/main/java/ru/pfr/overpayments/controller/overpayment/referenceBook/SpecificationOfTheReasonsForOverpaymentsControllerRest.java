@@ -24,7 +24,7 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
      * Удалить
      */
     @DeleteMapping("/specificationOfTheReasonsForOverpayments/{id}")
-    public ResponseEntity<?> delette(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         try {
             specificationOfTheReasonsForOverpaymentsService.delete(id);
             return new ResponseEntity<>("Удаление прошло успешно!", HttpStatus.OK);
@@ -54,7 +54,11 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     public ResponseEntity<?> update(
             @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto) {
         try {
-            specificationOfTheReasonsForOverpaymentsService.update(specificationOfTheReasonsForOverpaymentsMapper.fromDto(specificationOfTheReasonsForOverpaymentsDto));
+            specificationOfTheReasonsForOverpaymentsService.update(
+                    specificationOfTheReasonsForOverpaymentsMapper.fromDto(
+                            specificationOfTheReasonsForOverpaymentsDto
+                    )
+            );
             return new ResponseEntity<>("Изменено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -69,7 +73,9 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     public ResponseEntity<?> add(
             @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto) {
         try {
-            specificationOfTheReasonsForOverpaymentsService.save(specificationOfTheReasonsForOverpaymentsMapper.fromDto(specificationOfTheReasonsForOverpaymentsDto));
+            specificationOfTheReasonsForOverpaymentsService.save(
+                    specificationOfTheReasonsForOverpaymentsMapper.fromDto(specificationOfTheReasonsForOverpaymentsDto)
+            );
             return new ResponseEntity<>("Добавлено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -19,13 +19,12 @@ public class Documents {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "namefile", nullable = false /*, length = 400*/)
+    private String nameFile;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "dokument", columnDefinition = "LONGBLOB")
     private byte[] dokument;
-
-    @Column(name = "namefile", nullable = false /*, length = 400*/)
-    private String nameFile;
-
 
 }

@@ -1,8 +1,10 @@
 package ru.pfr.overpayments.model.overpayment.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.pfr.overpayments.model.annotations.fio.CustomDateSerializerRu;
 
 import java.time.LocalDate;
 
@@ -26,12 +28,14 @@ public class CitizenDto {
     //@NotNull(message = "patronymic cannot be null")
     private String patronymic;
 
+    @JsonSerialize(using = CustomDateSerializerRu.class)
     private LocalDate rdat;
 
     private String adrreg;
 
     private String tel;
 
+    @JsonSerialize(using = CustomDateSerializerRu.class)
     private LocalDate dsm; //дата смерти
 
     private DistrictDto districtDto;

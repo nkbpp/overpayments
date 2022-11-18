@@ -7,6 +7,12 @@ $(document).ready(function () {
         //sortField: "text",
     });
 
+    //обработка ENTER
+    $("#formFindPensioner").on("submit", function(event){
+        event.preventDefault();
+        $("#formFindPensioner button").click();
+    })
+
     BODY.on('click', 'button', function () {
 
         // кнопка поиск по снилс
@@ -87,8 +93,8 @@ $(document).ready(function () {
 
                         $(".deletePensioner[id=" + id + "]").parents('tr').remove();
                     },
-                    error: function () {
-                        alert("ERROR");
+                    error: function (response) {
+                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     }
                 });
             }
@@ -138,8 +144,8 @@ function findPensioner(howFind) {
             });
             $('#tablefindresult').append(trHTML);
         },
-        error: function () {
-            alert("ERROR")
+        error: function (response) {
+            initialToats("Ошибка!", response.responseJSON.message , "err").show();
             $('#tablefindresult tbody').html("");
         }
     });
@@ -156,7 +162,7 @@ function correctInputs() {
         return true;
     }
     else {
-        alert("Заполните необходимые поля!");
+        initialToats("Ошибка!", "Заполните необходимые поля!", "err").show();
         return false;
     }
 }

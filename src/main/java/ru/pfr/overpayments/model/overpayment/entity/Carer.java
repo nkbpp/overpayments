@@ -1,13 +1,11 @@
 package ru.pfr.overpayments.model.overpayment.entity;
 
 import lombok.*;
-import ru.pfr.overpayments.model.annotations.snils.CheckSNILS;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 

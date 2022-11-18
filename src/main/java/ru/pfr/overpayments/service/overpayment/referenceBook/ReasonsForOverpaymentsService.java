@@ -11,26 +11,31 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(transactionManager="overpaymentsTransactionManager")
+@Transactional(transactionManager = "overpaymentsTransactionManager")
 public class ReasonsForOverpaymentsService {
 
     private final ReasonsForOverpaymentsRepository repository;
 
-    public ReasonsForOverpayments findById(Long id){
+    public ReasonsForOverpayments findById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public List<ReasonsForOverpayments> findAll(){
+    public List<ReasonsForOverpayments> findAll() {
         return repository.findAll();
     }
 
-    public List<ReasonsForOverpayments> findAll(int pagination, int col){
+    public List<ReasonsForOverpayments> findAll(int pagination, int col) {
         return cutTheList(repository.findAll(), pagination, col);
     }
 
     public void update(ReasonsForOverpayments reasonsForOverpayments) {
+        var old = findById(
+                reasonsForOverpayments.getId()
+        ).getSpecificationOfTheReasonsForOverpayments();
+        reasonsForOverpayments.setAllSpecificationOfTheReasonsForOverpayments(old);
         repository.save(reasonsForOverpayments);
     }
+
     public void save(ReasonsForOverpayments reasonsForOverpayments) {
         repository.save(reasonsForOverpayments);
     }
@@ -42,10 +47,10 @@ public class ReasonsForOverpaymentsService {
     private List<ReasonsForOverpayments> cutTheList(List<ReasonsForOverpayments> lists, int pagination, int col) {
         List<ReasonsForOverpayments> objs = new ArrayList<>();
 
-        int start = col*(pagination-1);
+        int start = col * (pagination - 1);
         int end = start + col;
 
-        for (int i = start; i < end && i<lists.size() ; i++) {
+        for (int i = start; i < end && i < lists.size(); i++) {
             objs.add(lists.get(i));
         }
         return objs;

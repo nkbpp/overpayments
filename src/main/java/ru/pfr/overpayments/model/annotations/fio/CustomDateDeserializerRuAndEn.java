@@ -1,6 +1,5 @@
 package ru.pfr.overpayments.model.annotations.fio;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -27,7 +26,7 @@ public class CustomDateDeserializerRuAndEn extends StdDeserializer<LocalDate> {
     }
 
     @Override
-    public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String date = jsonParser.getText();
         try {
             return LocalDate.parse(date, formatterEn);
@@ -35,7 +34,7 @@ public class CustomDateDeserializerRuAndEn extends StdDeserializer<LocalDate> {
             try {
                 return LocalDate.parse(date, formatterRu);
             } catch (DateTimeParseException e2) {
-                throw new RuntimeException("DateTime parse exception" + date);
+                throw new RuntimeException("LocalDate parse exception " + date);
             }
         }
     }

@@ -39,12 +39,13 @@ public class ReferenceBookControllerRest {
     @GetMapping(path = "/reasonsForOverpayments/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(reasonsForOverpaymentsService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(reasonsForOverpaymentsMapper.toDto(
+                    reasonsForOverpaymentsService.findById(id)
+            ), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 
     /**
      * Обновить
@@ -54,7 +55,9 @@ public class ReferenceBookControllerRest {
     public ResponseEntity<?> update(
             @RequestBody ReasonsForOverpaymentsDto reasonsForOverpaymentsDto) {
         try {
-            reasonsForOverpaymentsService.update(reasonsForOverpaymentsMapper.fromDto(reasonsForOverpaymentsDto));
+            reasonsForOverpaymentsService.update(
+                    reasonsForOverpaymentsMapper.fromDto(reasonsForOverpaymentsDto)
+            );
             return new ResponseEntity<>("Изменено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -69,7 +72,9 @@ public class ReferenceBookControllerRest {
     public ResponseEntity<?> add(
             @RequestBody ReasonsForOverpaymentsDto reasonsForOverpaymentsDto) {
         try {
-            reasonsForOverpaymentsService.save(reasonsForOverpaymentsMapper.fromDto(reasonsForOverpaymentsDto));
+            reasonsForOverpaymentsService.save(
+                    reasonsForOverpaymentsMapper.fromDto(reasonsForOverpaymentsDto)
+            );
             return new ResponseEntity<>("Добавлено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

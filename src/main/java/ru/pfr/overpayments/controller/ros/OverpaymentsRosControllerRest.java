@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.pfr.overpayments.jpaRepository.ros.VozPereRepository;
-import ru.pfr.overpayments.model.ros.entity.VozPereRos;
 import ru.pfr.overpayments.model.ros.mapper.OverpaymentsRosMapper;
 import ru.pfr.overpayments.service.ros.OverpaymentsRosService;
-import ru.pfr.overpayments.service.ros.UderRosService;
 
 import java.util.stream.Collectors;
 
@@ -22,8 +19,6 @@ public class OverpaymentsRosControllerRest {
 
     private final OverpaymentsRosMapper overpaymentsRosMapper;
     private final OverpaymentsRosService overpaymentsRosService;
-
-    private final VozPereRepository vozPereRepository;
 
     /**
      * Найти ID

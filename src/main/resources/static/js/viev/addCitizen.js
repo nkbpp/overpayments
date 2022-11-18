@@ -2,6 +2,21 @@ $(document).ready(function () {
 
     let BODY = $("body");
 
+    //обработка ENTER 085-306-812 68
+    $("#snils").keyup(function(event){
+        if(event.keyCode === 13){
+            event.preventDefault();
+            $("#formAddPensioner .btnFindCitizenSNILS").click();
+        }
+    });
+    $("#tel").keyup(function(event){
+        if(event.keyCode === 13){
+            event.preventDefault();
+            $("#btnAddCitizen").click();
+        }
+    });
+
+
     BODY.on('click', 'a', function () {
         if ($(this).hasClass("pickPensioner")) {
             $('#divTableFindPensioner').addClass("d-none");
@@ -54,15 +69,11 @@ $(document).ready(function () {
                 processData: false,
                 contentType: "application/json",
                 type: "POST",
-                /*beforeSend: function (xhr) {
-                xhr.setRequestHeader($('#_csrf').attr('content'),
-                    $('#_csrf_header').attr('content'));
-                },*/
                 success: function () {
                     document.location.href = '/overpayment/vievInformationOverpayments/IdRos/' + id_ros;
                 },
-                error: function (jqXHR) {
-                    alert("Error: " + jqXHR.responseText + " !!! ")
+                error: function (response) {
+                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
                 }
             });
         }
@@ -75,7 +86,6 @@ function findCitizen() {
     let snils = $("#snils").val();
     let json = JSON.stringify({'snils': snils});
 
-
     $.ajax({
         url: "/overpayment/ros/findPensionerBySnils",
         //url: "/overpayment/ros/findAllBySnils", //несколько результатов 162-181-171 38
@@ -84,10 +94,6 @@ function findCitizen() {
         processData: false,
         contentType: "application/json",
         type: 'POST',
-        /*beforeSend: function (xhr) {
-            xhr.setRequestHeader($('#_csrf').attr('content'),
-                                 $('#_csrf_header').attr('content'));
-        },*/
         success: function (response) {
             if (response.length > 1) {
 
@@ -121,12 +127,12 @@ function findCitizen() {
                 getSpinnerTable("tableOverpayments")
                 findOverpayments(response[0].id);
             } else {
-                alert("Нет результатов")
+                initialToats("Успешно!","Нет результатов!","success").show();
             }
 
         },
-        error: function () {
-            alert("ERROR");
+        error: function (response) {
+            initialToats("Ошибка!", response.responseJSON.message , "err").show();
         }
     });
 }
@@ -140,10 +146,6 @@ function findOverpayments(id) {
         processData: false,
         contentType: "application/json",
         type: 'GET',
-        /*beforeSend: function (xhr) {
-            xhr.setRequestHeader($('#_csrf').attr('content'),
-                                 $('#_csrf_header').attr('content'));
-        },*/
         success: function (response) {
             let trHTML = '';
             let tableOverpaymentsBody = $('#tableOverpayments tbody');
@@ -157,7 +159,6 @@ function findOverpayments(id) {
                     '<td>' + replaceNull(item.srokpo) + '</td>' +
                     '<td>' + replaceNull(item.spe) + '</td>' +
                     '<td>' + replaceNull(item.close_date) + '</td>' +
-                    //'<td><a href="#" id="' + item.id + '">Выбрать</a></td>' +
                     '</tr>';
             });
             tableOverpaymentsBody.append(trHTML);
@@ -165,8 +166,8 @@ function findOverpayments(id) {
             btnAddCitizen.attr("name", id);
             btnAddCitizen.removeAttr("disabled");
         },
-        error: function () {
-            alert("ERROR");
+        error: function (response) {
+            initialToats("Ошибка!", response.responseJSON.message , "err").show();
         }
     });
 

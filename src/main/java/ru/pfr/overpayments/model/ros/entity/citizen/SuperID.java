@@ -23,6 +23,6 @@ public class SuperID {
     @Id
     @Column(name = "ID", updatable = false, nullable = false)
     @NotNull(message = "id cannot be null")
-    String id;
+    private String id;
 
 }

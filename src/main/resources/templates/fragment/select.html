@@ -68,7 +68,16 @@
 
 <div th:fragment="reasonsForOverpayments" class="input-field">
     <div class="row m-0">
-        <div class="col-11 m-0 p-0">
+        <div class="col-11 m-0 p-0" th:insert="fragment/select :: reasonsForOverpaymentsSelect">
+        </div>
+        <div class="col-1 m-0 p-0 p-2 d-flex align-items-end">
+            <button class="btn btn-secondary" id="clearReasonsForOverpayments" type="button">Очистить</button>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="reasonsForOverpaymentsSelect" class="input-field">
+        <div class="m-0 p-0">
             <label for="selectReasonsForOverpayments" class="form-label m-0">Причина переплаты</label>
             <select id="selectReasonsForOverpayments" name="reasonsForOverpayments" class="selectized" tabindex="-1" placeholder="Выберите причину переплаты">
                 <option value="" selected="selected"></option>
@@ -79,10 +88,6 @@
                 ></option>
             </select>
         </div>
-        <div class="col-1 m-0 p-0 p-2 d-flex align-items-end">
-            <button class="btn btn-secondary" id="clearReasonsForOverpayments" type="button">Очистить</button>
-        </div>
-    </div>
 </div>
 
 <div th:fragment="specificationOfTheReasonsForOverpayments" class="input-field">

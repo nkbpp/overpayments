@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.pfr.overpayments.model.overpayment.dto.PensionerDto;
 import ru.pfr.overpayments.model.overpayment.entity.Pensioner;
-import ru.pfr.overpayments.service.overpayment.DistrictService;
 
 @RequiredArgsConstructor
 @Component

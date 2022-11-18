@@ -5,6 +5,12 @@ $(document).ready(function () {
     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDocuments");
     ajaxDocumentsAll(params, "");
 
+    //обработка ENTER
+/*    $("#formSpecificationOfTheReasonsForOverpayments").on("submit", function(event){
+        event.preventDefault();
+        $("#formSpecificationOfTheReasonsForOverpayments #updateOrAddSpecificationOfTheReasonsForOverpayments").click()
+    })*/
+
     BODY.on('change','#col',function(){
         let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDocuments");
         ajaxDocumentsAll(params, "");
@@ -28,8 +34,10 @@ $(document).ready(function () {
                     },*/
                     success: function () {
                         $("button.deleteDocumentsBtn[name='" + id + "']").parents('tr').remove()
+                        initialToats("Успешно!", "Данные удалены!" , "success").show();
                     },
-                    error: function (jqXHR, textStatus) {
+                    error: function (response) {
+                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     }
                 });
             }
@@ -81,10 +89,11 @@ $(document).ready(function () {
                 success: function () {
                     //$("#modalDocuments").hide();
                     let params = "col=" + $("#col").val() + "&pagination=" + activeList("#paginationDocuments");
+                    initialToats("Успешно!", $("#updateOrAddDocuments").text()==="Изменить"?"Данные изменены!":"Данные сохранены!" , "success").show();
                     ajaxDocumentsAll(params);
                 },
-                error: function (jqXHR, textStatus) {
-                    alert("err " + textStatus + " !!! " +  jqXHR)
+                error: function (response) {
+                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     $('#tableDocuments tbody').html("");
                 }
             });
@@ -150,8 +159,8 @@ function ajaxDocumentsAll(params){
             });
             $('#tableDocuments').append(trHTML);
         },
-        error: function () {
-            alert("ERROR")
+        error: function (response) {
+            initialToats("Ошибка!", response.responseJSON.message , "err").show();
             $('#tableDocuments tbody').html("");
         }
     });

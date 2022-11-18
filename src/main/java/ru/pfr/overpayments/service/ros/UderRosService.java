@@ -4,9 +4,7 @@ package ru.pfr.overpayments.service.ros;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.pfr.overpayments.jpaRepository.ros.UderJpaRepository;
-import ru.pfr.overpayments.jpaRepository.ros.VidVplJpaRepository;
 import ru.pfr.overpayments.model.ros.entity.UderRos;
-import ru.pfr.overpayments.model.ros.entity.VidVplRos;
 
 import java.util.List;
 

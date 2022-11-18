@@ -1,12 +1,9 @@
 package ru.pfr.overpayments.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.pfr.overpayments.model.overpayment.dto.referenceBook.ReasonsForOverpaymentsDto;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.DepartmentMapper;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.ReasonsForOverpaymentsMapper;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.SpecificationOfTheReasonsForOverpaymentsMapper;
@@ -33,32 +30,31 @@ public class InformationOverpaymentsController {
      */
     @GetMapping(path = "/{id}")
     public String findById(@PathVariable("id") String id,
-                                      Model model) {
-        model.addAttribute("selectReasonsForOverpayments", reasonsForOverpaymentsService.findAll().stream().map(
-                reasonsForOverpayments -> reasonsForOverpaymentsMapper.toDto(reasonsForOverpayments)
-        ).collect(Collectors.toList()));
-        model.addAttribute("selectSpecificationOfTheReasonsForOverpayments", specificationOfTheReasonsForOverpaymentsService.findAll().stream().map(
-                specificationOfTheReasonsForOverpayments -> specificationOfTheReasonsForOverpaymentsMapper.toDto(specificationOfTheReasonsForOverpayments)
-        ).collect(Collectors.toList()));
+                           Model model) {
+
+        var reasonsForOverpayments = reasonsForOverpaymentsService.findAll().stream().map(
+                reasonsForOverpaymentsMapper::toDto
+        ).collect(Collectors.toList());
+        model.addAttribute("selectReasonsForOverpayments", reasonsForOverpayments);
         model.addAttribute("department", departmentService.findAll().stream().map(
-                department -> departmentMapper.toDto(department)
+                departmentMapper::toDto
         ).collect(Collectors.toList()));
-            model.addAttribute("id", id);
-            model.addAttribute("idRos", "");
+        model.addAttribute("id", id);
+        model.addAttribute("idRos", "");
         return "viev/overpaymentData";
     }
 
     @GetMapping(path = "/IdRos/{id}")
     public String findByIdRos(@PathVariable("id") String idRos,
-                           Model model) {
+                              Model model) {
         model.addAttribute("selectReasonsForOverpayments", reasonsForOverpaymentsService.findAll().stream().map(
-                reasonsForOverpayments -> reasonsForOverpaymentsMapper.toDto(reasonsForOverpayments)
+                reasonsForOverpaymentsMapper::toDto
         ).collect(Collectors.toList()));
-        model.addAttribute("selectSpecificationOfTheReasonsForOverpayments", specificationOfTheReasonsForOverpaymentsService.findAll().stream().map(
-                specificationOfTheReasonsForOverpayments -> specificationOfTheReasonsForOverpaymentsMapper.toDto(specificationOfTheReasonsForOverpayments)
+        model.addAttribute("se  lectSpecificationOfTheReasonsForOverpayments", specificationOfTheReasonsForOverpaymentsService.findAll().stream().map(
+                specificationOfTheReasonsForOverpaymentsMapper::toDto
         ).collect(Collectors.toList()));
         model.addAttribute("department", departmentService.findAll().stream().map(
-                department -> departmentMapper.toDto(department)
+                departmentMapper::toDto
         ).collect(Collectors.toList()));
         model.addAttribute("id", "");
         model.addAttribute("idRos", idRos);

@@ -11,37 +11,6 @@ import java.util.Optional;
 public interface CitizenRosJpaRepository extends JpaRepository<CitizenRos, String> {
 
     List<CitizenRos> findBySnils(String snils);
+    Optional<CitizenRos> findById(String id);
 
-    Optional<CitizenRos> findById(Long id);
-
-    /*List<CitizenRos> findAll();*/
-
-    /*Optional<List<CitizenRos>> findBySurnameLikeIgnoreCaseAndNameLikeIgnoreCaseAndPatronymicLikeIgnoreCase(String surname, String name, String patronymic);*/
-/*    @Query(
-            value = "SELECT * FROM PF.MAN " +
-                    "WHERE (?1 is null or FA like ?1%) and " +
-                    "(?2 is null or IM like ?2%) and " +
-                    "(?3 is null or OT like ?3%) and " +
-                    "(?4 is null or RDAT = ?4) order by RDAT desc ",
-            nativeQuery = true)
-    Optional<List<CitizenRos>> findByFioAndDate(String surname, String name, String patronymic, LocalDate date);*/
-
-
-/*    @Query(
-            value = "SELECT * " +
-                    "FROM PF.MAN WHERE id in(" +
-                    "SELECT ID_UHOD  " +
-                    "FROM PF.PE WHERE id IN(SELECT ID FROM PF.MAN WHERE NPERS = ?1) AND SROKS = (SELECT MAX(SROKS) FROM PF.PE WHERE id IN(SELECT ID FROM PF.MAN WHERE NPERS = ?1))" +
-                    ")",
-            nativeQuery = true)
-    Optional<List<CitizenRos>> findPEBySnils(String snils);*/
-
-/*    @Query(
-            value = "SELECT * " +
-                    "FROM PF.MAN WHERE id in(" +
-                    "SELECT ID_UHOD  " +
-                    "FROM PF.PE WHERE id = ?1 AND SROKS = (SELECT MAX(SROKS) FROM PF.PE WHERE id = ?1)" +
-                    ")",
-            nativeQuery = true)
-    List<CitizenRos> findPEById(String id);*/
 }

@@ -1,6 +1,10 @@
 package ru.pfr.overpayments.model.overpayment.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.petrovich4j.Case;
+import com.github.petrovich4j.Gender;
+import com.github.petrovich4j.NameType;
+import com.github.petrovich4j.Petrovich;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,5 +65,46 @@ public class Citizen {
         this.tel = tel;
         this.dsm = dsm;
         this.district = district;
+    }
+
+    public String getSurname(Case aCase) {
+        if(aCase == null){
+            return surname;
+        }
+        Petrovich petrovich = new Petrovich();
+        return petrovich.say(
+                surname, NameType.LastName,
+                petrovich.gender(surname, Gender.Both),
+                Case.Prepositional
+        );
+    }
+
+    public String getName(Case aCase) {
+        if(aCase == null){
+            return name;
+        }
+        Petrovich petrovich = new Petrovich();
+        return petrovich.say(
+                name, NameType.LastName,
+                petrovich.gender(name, Gender.Both),
+                Case.Prepositional
+        );
+    }
+
+    public String getPatronymic(Case aCase) {
+        if(aCase == null){
+            return patronymic;
+        }
+        Petrovich petrovich = new Petrovich();
+        return petrovich.say(
+                patronymic, NameType.LastName,
+                petrovich.gender(patronymic, Gender.Both),
+                Case.Prepositional
+        );
+    }
+
+    public String getInitials() {
+        return name.substring(0,1).toUpperCase() + "." +
+                patronymic.substring(0,1).toUpperCase() + ".";
     }
 }

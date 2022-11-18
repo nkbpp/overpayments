@@ -36,7 +36,7 @@
                 aria-selected="false">
             Уведомительные письма
         </button>
-        <button class="nav-link"
+        <!--<button class="nav-link"
                 id="nav-Repayment-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-Repayment"
@@ -62,7 +62,7 @@
                 aria-controls="nav-WriteOff"
                 aria-selected="false">
             Списание
-        </button>
+        </button>-->
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
@@ -177,7 +177,7 @@
                         <input class="form-control" type="text" name="documentNumber" id="documentNumber" placeholder="Введите номер документа" disabled>
                     </div>
 
-<!--                    <div class="col-4">
+                    <!--<div class="col-4">
                         <label class="form-label m-0" for="snilsUhod">Снилс ухаживающего лица</label>
                         <input class="form-control snils" type="text" name="snilsUhod" id="snilsUhod" placeholder="Введите снилс">
                     </div>-->
@@ -292,7 +292,35 @@
         </div>
 
     </div>
-    <div class="tab-pane fade" id="nav-NotificationLetters" role="tabpanel" aria-labelledby="nav-NotificationLetters-tab">NotificationLetters</div>
+
+    <!--  Уведомительные письма  -->
+    <div class="tab-pane fade" id="nav-NotificationLetters" role="tabpanel" aria-labelledby="nav-NotificationLetters-tab">
+        <div class="row m-0">
+            <div>
+                <table id="tableNotificationLetters" class="table table-block table-secondary table-striped table-hover table-bordered text-center caption-top table-sm">
+                    <caption>
+                        Уведомительные письма
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>№ п/п</th>
+                        <th>Номер документа</th>
+                        <th>Дата с</th>
+                        <th>Дата по</th>
+                        <th>Сумма</th>
+                        <th>Дата закрытия</th>
+                        <th>Письмо пенсионеру</th>
+                        <th>Письмо Ухаживающему лицу</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Погашение-->
     <div class="tab-pane fade" id="nav-Repayment" role="tabpanel" aria-labelledby="nav-Repayment-tab">
         <div>
             <table id="tableRepayment"
@@ -328,6 +356,7 @@
             </table>
         </div>
     </div>
+<!--    Взыскание-->
     <div class="tab-pane fade" id="nav-Punishment" role="tabpanel" aria-labelledby="nav-Punishment-tab">
         <!--Дата передачи документов в юридическое управление (возможность проставления 2-х и долее дат).
         В случае возврата документов юристами, дата возврата (возможность проставления 2-х и долее дат)-->
@@ -389,6 +418,7 @@
             </div>
         </div>
     </div>
+<!--Списание-->
     <div class="tab-pane fade" id="nav-WriteOff" role="tabpanel" aria-labelledby="nav-WriteOff-tab">
         <div class="row m-0">
             <div class="col-2">
@@ -424,6 +454,10 @@
             </div>
         </div>
     </div>
+</div>
+
+<!--TOASTS-->
+<div class="toast-container position-absolute p-3 bottom-0 end-0">
 </div>
 
 </body>

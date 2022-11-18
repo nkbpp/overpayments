@@ -3,9 +3,7 @@ package ru.pfr.overpayments.service.overpayment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.pfr.overpayments.jpaRepository.overpayment.DistrictRepository;
 import ru.pfr.overpayments.jpaRepository.overpayment.DocumentsRepository;
-import ru.pfr.overpayments.model.overpayment.entity.District;
 import ru.pfr.overpayments.model.overpayment.entity.Documents;
 
 import java.util.ArrayList;

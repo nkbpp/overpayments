@@ -1,8 +1,8 @@
 package ru.pfr.overpayments.model.ros.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.pfr.overpayments.model.ros.dto.VidVplRosDto;
 import ru.pfr.overpayments.model.ros.entity.VidVplRos;
+import ru.pfr.overpayments.model.ros.dto.VidVplRosDto;
 
 @Component
 public class VidVplRosMapper {

@@ -45,7 +45,7 @@ public class FindCitizenController {
     ){
         model.addAttribute("find", "district");
         model.addAttribute("district", districtService.findAll().stream().map(
-                district -> districtMapper.toDto(district)
+                districtMapper::toDto
         ).collect(Collectors.toList()));
         return "viev/findCitizen";
     }

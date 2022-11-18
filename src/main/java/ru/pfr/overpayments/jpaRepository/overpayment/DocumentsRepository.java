@@ -2,7 +2,6 @@ package ru.pfr.overpayments.jpaRepository.overpayment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.pfr.overpayments.model.overpayment.entity.District;
 import ru.pfr.overpayments.model.overpayment.entity.Documents;
 
 import java.util.Optional;

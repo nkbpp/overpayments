@@ -68,13 +68,15 @@ public class DocumentsControllerRest {
     @PutMapping(path = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> update(
             @RequestParam("id") Long id,
-            @RequestParam("nameFile") String nameFile,
+            @RequestParam(defaultValue = "", name = "nameFile") String nameFile,
             @RequestPart(name = "dokument", required = false) MultipartFile dokument
     ) {
         try {
             Documents documents = documentsService.findById(id);
-            nameFile = nameFile.equals("") ? dokument.getName() : nameFile;
-            nameFile = nameFile.lastIndexOf('.') != -1 ? nameFile : nameFile + ".docx";
+            nameFile = nameFile.equals("") ? dokument.getOriginalFilename() : nameFile;
+            if (nameFile != null) {
+                nameFile = nameFile.lastIndexOf('.') != -1 ? nameFile : nameFile + ".docx";
+            }
             documents.setNameFile(nameFile);
             if (dokument != null) {
                 documents.setDokument(dokument.getBytes());
