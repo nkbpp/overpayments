@@ -22,7 +22,9 @@ public class InformationOverpaymentsControllerRest {
      * Найти IDIS
      */
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> findByIsId(@PathVariable("id") Long isId) {
+    public ResponseEntity<?> findByIsId(
+            @PathVariable("id") Long isId
+    ) {
         try {
             Overpayment overpayment = overpaymentService.findByIsId(isId);
             if (overpayment == null) {
@@ -42,8 +44,9 @@ public class InformationOverpaymentsControllerRest {
      */
     @PostMapping(path = "", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> add(@RequestBody //@Valid
-                                 OverpaymentDto overpaymentDto) {
+    public ResponseEntity<?> add(
+            @RequestBody OverpaymentDto overpaymentDto //@Valid
+    ) {
         try {
             if (overpaymentService.findByIsId(overpaymentDto.getIdOverpayment()) != null) { //уже есть такая запись
                 return new ResponseEntity<>("Такая переплата уже добавлена", HttpStatus.BAD_REQUEST);
@@ -62,8 +65,8 @@ public class InformationOverpaymentsControllerRest {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
             @PathVariable("id") Long idis,
-            @RequestBody //@Valid
-            OverpaymentDto overpaymentDto) {
+            @RequestBody OverpaymentDto overpaymentDto //@Valid
+    ) {
         try {
             var newOverpayment = overpaymentMapper.fromDto(overpaymentDto);
             Overpayment oldOverpayment = overpaymentService.findByIsId(idis);

@@ -10,7 +10,7 @@ import ru.pfr.overpayments.model.dto.AppError;
 //https://habr.com/ru/post/528116/
 //@ControllerAdvice(annotations = CustomExceptionHandler.class)
 @ControllerAdvice
-public class DefaultAdvice {
+public class DefaultAdvice { //ловлю все исключения
 
     @ExceptionHandler(SNILSValidatorExeption.class)
     public ResponseEntity<?> handleSNILSValidatorExeption(SNILSValidatorExeption e) {

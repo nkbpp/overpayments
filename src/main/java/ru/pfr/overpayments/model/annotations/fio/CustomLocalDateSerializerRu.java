@@ -8,16 +8,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class CustomDateSerializerRu extends StdSerializer<LocalDate> {
+public class CustomLocalDateSerializerRu extends StdSerializer<LocalDate> {
 
     private static final DateTimeFormatter formatterRu
             = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    protected CustomDateSerializerRu(Class<LocalDate> t) {
+    protected CustomLocalDateSerializerRu(Class<LocalDate> t) {
         super(t);
     }
 
-    protected CustomDateSerializerRu() {
+    protected CustomLocalDateSerializerRu() {
         this(null);
     }
 

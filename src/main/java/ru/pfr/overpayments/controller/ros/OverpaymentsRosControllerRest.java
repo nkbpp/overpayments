@@ -24,7 +24,9 @@ public class OverpaymentsRosControllerRest {
      * Найти ID
      */
     @GetMapping(path = "/overpayments/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+    public ResponseEntity<?> findById(
+            @PathVariable("id") String id
+    ) {
         try {
             return new ResponseEntity<>(overpaymentsRosService.findById(id)
                     .stream()
@@ -40,10 +42,10 @@ public class OverpaymentsRosControllerRest {
      * Найти ID_IS
      */
     @GetMapping(path = "/overpayment/{id}")
-    public ResponseEntity<?> findByIdIs(@PathVariable("id") Long idIs) {
+    public ResponseEntity<?> findByIdIs(
+            @PathVariable("id") Long idIs
+    ) {
         try {
-            /*var t = overpaymentsRosService.findByIdIs(idIs).getDoc();
-            var v = vozPereRepository.findDoc(t);*/
             return new ResponseEntity<>(
                     overpaymentsRosMapper.toDto(overpaymentsRosService.findByIdIs(idIs))
                     , HttpStatus.OK);

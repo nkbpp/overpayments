@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Data
 class TestDeserializerObject {
-    @JsonDeserialize(using = CustomDateDeserializerRuAndEn.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
     public LocalDate date;
 }
 
-class CustomDateDeserializerRuAndEnTest {
+class CustomLocalDateDeserializerRuAndEnTest {
 
     @Test
     public void whenDeserializingUsingJsonDeserializeRu_thenCorrect()

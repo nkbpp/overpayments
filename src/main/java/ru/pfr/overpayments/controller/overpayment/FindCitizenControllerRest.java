@@ -29,7 +29,6 @@ public class FindCitizenControllerRest {
 
     @PostMapping(path = "/findPensionerSNILS", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-
     public ResponseEntity<?> findPensionerSNILSDto(
             @RequestBody @Valid SNILSDto snils,
             @RequestParam(defaultValue = "30") Integer col,
@@ -37,10 +36,12 @@ public class FindCitizenControllerRest {
     ) {
         try {
             List<Pensioner> pensioner = pensionerService
-                    .findBySnils(snils.getSnils(), pagination, col);
+                    .findBySnils(snils.getSnils());
             return new ResponseEntity<>(
                     pensioner.stream()
                             .map(pensionerMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
@@ -60,12 +61,13 @@ public class FindCitizenControllerRest {
             @RequestParam(defaultValue = "1") Integer pagination
     ) {
         try {
-
             List<Pensioner> pensioners = pensionerService
-                    .findByDistrict(districtService.findByKod(district.getNumDistrict()), pagination, col);
+                    .findByDistrict(districtService.findByKod(district.getNumDistrict()));
             return new ResponseEntity<>(
                     pensioners.stream()
                             .map(pensionerMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
@@ -83,10 +85,12 @@ public class FindCitizenControllerRest {
         try {
             List<Pensioner> pensioners = pensionerService
                     .findByFioAndDate(fio.getSurname(), fio.getName(), fio.getPatronymic(),
-                            fio.getDateOfBirth(), pagination, col);
+                            fio.getDateOfBirth());
             return new ResponseEntity<>(
                     pensioners.stream()
                             .map(pensionerMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
@@ -96,7 +100,9 @@ public class FindCitizenControllerRest {
 
     @PostMapping(path = "/findPensionerById/{id}", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findPensionerById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> findPensionerById(
+            @PathVariable("id") Long id
+    ) {
         try {
             Pensioner pensioner = pensionerService.findById(id);
             return new ResponseEntity<>(
@@ -109,7 +115,9 @@ public class FindCitizenControllerRest {
 
     @PostMapping(path = "/findPensionerByIdRos/{id}", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findPensionerByRosId(@PathVariable("id") String id_ros) {
+    public ResponseEntity<?> findPensionerByRosId(
+            @PathVariable("id") String id_ros
+    ) {
         try {
             Pensioner pensioner = pensionerService.findByIdRos(id_ros);
             return new ResponseEntity<>(

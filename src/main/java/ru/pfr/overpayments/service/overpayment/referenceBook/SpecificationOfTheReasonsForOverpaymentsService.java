@@ -5,11 +5,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.referenceBook.SpecificationOfTheReasonsForOverpaymentsRepository;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.SpecificationOfTheReasonsForOverpayments;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional(transactionManager="overpaymentsTransactionManager")
+@Transactional(transactionManager = "overpaymentsTransactionManager")
 public class SpecificationOfTheReasonsForOverpaymentsService {
 
     private final SpecificationOfTheReasonsForOverpaymentsRepository repository;
@@ -18,15 +18,12 @@ public class SpecificationOfTheReasonsForOverpaymentsService {
         this.repository = repository;
     }
 
-    public SpecificationOfTheReasonsForOverpayments findById(Long id){
+    public SpecificationOfTheReasonsForOverpayments findById(Long id) {
         return repository.findById(id).orElse(null);
     }
-    public List<SpecificationOfTheReasonsForOverpayments> findAll(){
-        return repository.findAll();
-    }
 
-    public List<SpecificationOfTheReasonsForOverpayments> findAll(int pagination, int col){
-        return cutTheList(repository.findAll(), pagination, col);
+    public List<SpecificationOfTheReasonsForOverpayments> findAll() {
+        return repository.findAll();
     }
 
     public void update(SpecificationOfTheReasonsForOverpayments specificationOfTheReasonsForOverpayments) {
@@ -50,18 +47,6 @@ public class SpecificationOfTheReasonsForOverpaymentsService {
         r.setReasonsForOverpayments(null);
         save(r);
         repository.deleteById(id);
-    }
-
-    private List<SpecificationOfTheReasonsForOverpayments> cutTheList(List<SpecificationOfTheReasonsForOverpayments> lists, int pagination, int col) {
-        List<SpecificationOfTheReasonsForOverpayments> objs = new ArrayList<>();
-
-        int start = col*(pagination-1);
-        int end = start + col;
-
-        for (int i = start; i < end && i<lists.size() ; i++) {
-            objs.add(lists.get(i));
-        }
-        return objs;
     }
 
 }

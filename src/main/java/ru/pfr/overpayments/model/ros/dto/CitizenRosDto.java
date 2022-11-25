@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.pfr.overpayments.model.annotations.district.District;
-import ru.pfr.overpayments.model.annotations.fio.CustomDateDeserializerRuAndEn;
+import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateDeserializerRuAndEn;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -29,7 +29,7 @@ public class CitizenRosDto {
     @NotNull(message = "patronymic cannot be null")
     private String patronymic;
 
-    @JsonDeserialize(using = CustomDateDeserializerRuAndEn.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
     private LocalDate rdat;
 
     private String adrfakt;
@@ -45,7 +45,7 @@ public class CitizenRosDto {
 
     private String snils;
 
-    @JsonDeserialize(using = CustomDateDeserializerRuAndEn.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
     private LocalDate dsm; //дата смерти
 
 }

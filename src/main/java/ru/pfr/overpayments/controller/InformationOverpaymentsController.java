@@ -3,7 +3,9 @@ package ru.pfr.overpayments.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.DepartmentMapper;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.ReasonsForOverpaymentsMapper;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.SpecificationOfTheReasonsForOverpaymentsMapper;
@@ -29,9 +31,10 @@ public class InformationOverpaymentsController {
      * Найти ID
      */
     @GetMapping(path = "/{id}")
-    public String findById(@PathVariable("id") String id,
-                           Model model) {
-
+    public String findById(
+            @PathVariable("id") String id,
+            Model model
+    ) {
         var reasonsForOverpayments = reasonsForOverpaymentsService.findAll().stream().map(
                 reasonsForOverpaymentsMapper::toDto
         ).collect(Collectors.toList());
@@ -45,8 +48,10 @@ public class InformationOverpaymentsController {
     }
 
     @GetMapping(path = "/IdRos/{id}")
-    public String findByIdRos(@PathVariable("id") String idRos,
-                              Model model) {
+    public String findByIdRos(
+            @PathVariable("id") String idRos,
+            Model model
+    ) {
         model.addAttribute("selectReasonsForOverpayments", reasonsForOverpaymentsService.findAll().stream().map(
                 reasonsForOverpaymentsMapper::toDto
         ).collect(Collectors.toList()));

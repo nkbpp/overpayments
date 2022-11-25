@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class CustomDateDeserializerRuAndEn extends StdDeserializer<LocalDate> {
+public class CustomLocalDateDeserializerRuAndEn extends StdDeserializer<LocalDate> {
 
     private static final DateTimeFormatter formatterEn
             = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -17,11 +17,11 @@ public class CustomDateDeserializerRuAndEn extends StdDeserializer<LocalDate> {
     private static final DateTimeFormatter formatterRu
             = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    public CustomDateDeserializerRuAndEn() {
+    public CustomLocalDateDeserializerRuAndEn() {
         this(null);
     }
 
-    public CustomDateDeserializerRuAndEn(Class<?> vc) {
+    public CustomLocalDateDeserializerRuAndEn(Class<?> vc) {
         super(vc);
     }
 

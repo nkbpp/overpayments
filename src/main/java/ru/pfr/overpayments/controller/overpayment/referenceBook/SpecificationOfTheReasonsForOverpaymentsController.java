@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = { "/overpayment/referenceBook"})
+@RequestMapping(value = {"/overpayment/referenceBook"})
 public class SpecificationOfTheReasonsForOverpaymentsController {
 
     private final ReasonsForOverpaymentsService reasonsForOverpaymentsService;
@@ -22,8 +22,10 @@ public class SpecificationOfTheReasonsForOverpaymentsController {
     private final DocumentsService documentsService;
     private final DocumentsMapper documentsMapper;
 
-    @GetMapping(value = { "/vievReferenceBookSpecificationOfTheReasonsForOverpayments"})
-    public String vievReferenceBookReasonsForOverpayments(Model model){
+    @GetMapping(value = {"/vievReferenceBookSpecificationOfTheReasonsForOverpayments"})
+    public String vievReferenceBookReasonsForOverpayments(
+            Model model
+    ) {
 
         model.addAttribute("selectReasonsForOverpayments", reasonsForOverpaymentsService.findAll()
                 .stream()

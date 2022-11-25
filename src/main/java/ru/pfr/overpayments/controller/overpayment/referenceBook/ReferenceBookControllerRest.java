@@ -11,10 +11,9 @@ import ru.pfr.overpayments.service.overpayment.referenceBook.ReasonsForOverpayme
 
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/overpayment/referenceBook")
+@RequestMapping("/overpayment/referenceBook/reasonsForOverpayments")
 public class ReferenceBookControllerRest {
 
     private final ReasonsForOverpaymentsService reasonsForOverpaymentsService;
@@ -23,8 +22,10 @@ public class ReferenceBookControllerRest {
     /**
      * Удалить
      */
-    @DeleteMapping("/reasonsForOverpayments/{id}")
-    public ResponseEntity<?> delette(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(
+            @PathVariable("id") Long id
+    ) {
         try {
             reasonsForOverpaymentsService.delete(id);
             return new ResponseEntity<>("Удаление прошло успешно!", HttpStatus.OK);
@@ -36,8 +37,10 @@ public class ReferenceBookControllerRest {
     /**
      * Найти ID
      */
-    @GetMapping(path = "/reasonsForOverpayments/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<?> findById(
+            @PathVariable("id") Long id
+    ) {
         try {
             return new ResponseEntity<>(reasonsForOverpaymentsMapper.toDto(
                     reasonsForOverpaymentsService.findById(id)
@@ -50,10 +53,11 @@ public class ReferenceBookControllerRest {
     /**
      * Обновить
      */
-    @PutMapping(path ="/reasonsForOverpayments",
-            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @PutMapping(path = "",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
-            @RequestBody ReasonsForOverpaymentsDto reasonsForOverpaymentsDto) {
+            @RequestBody ReasonsForOverpaymentsDto reasonsForOverpaymentsDto
+    ) {
         try {
             reasonsForOverpaymentsService.update(
                     reasonsForOverpaymentsMapper.fromDto(reasonsForOverpaymentsDto)
@@ -67,10 +71,11 @@ public class ReferenceBookControllerRest {
     /**
      * Добавление
      */
-    @PostMapping(path ="/reasonsForOverpayments",
+    @PostMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
-            @RequestBody ReasonsForOverpaymentsDto reasonsForOverpaymentsDto) {
+            @RequestBody ReasonsForOverpaymentsDto reasonsForOverpaymentsDto
+    ) {
         try {
             reasonsForOverpaymentsService.save(
                     reasonsForOverpaymentsMapper.fromDto(reasonsForOverpaymentsDto)
@@ -85,14 +90,18 @@ public class ReferenceBookControllerRest {
     /**
      * Получить все
      */
-    @PostMapping(path = "/reasonsForOverpayments/All")
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
-                                    @RequestParam(defaultValue = "1") Integer pagination) {
+    @PostMapping(path = "/All")
+    public ResponseEntity<?> getAll(
+            @RequestParam(defaultValue = "30") Integer col,
+            @RequestParam(defaultValue = "1") Integer pagination
+    ) {
         try {
             return new ResponseEntity<>(
-                    reasonsForOverpaymentsService.findAll(pagination, col)
+                    reasonsForOverpaymentsService.findAll()
                             .stream()
                             .map(reasonsForOverpaymentsMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList()),
                     HttpStatus.OK);
         } catch (Exception e) {

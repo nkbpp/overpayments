@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.pfr.overpayments.model.annotations.district.District;
-import ru.pfr.overpayments.model.annotations.fio.CustomDateDeserializerRuAndEn;
+import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateDeserializerRuAndEn;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class CitizenRos extends SuperIDFIO {
 
     @Column(name = "RDAT")
-    @JsonDeserialize(using = CustomDateDeserializerRuAndEn.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
     private LocalDate rdat;
 
     @Column(name = "ADRFAKT")

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/overpayment/referenceBook")
+@RequestMapping("/overpayment/referenceBook/district")
 public class DistrictControllerRest {
 
     private final DistrictService districtService;
@@ -23,8 +23,10 @@ public class DistrictControllerRest {
     /**
      * Удалить
      */
-    @DeleteMapping("/district/{id}")
-    public ResponseEntity<?> delette(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(
+            @PathVariable("id") Long id
+    ) {
         try {
             districtService.delete(id);
             return new ResponseEntity<>("Удаление прошло успешно!", HttpStatus.OK);
@@ -36,8 +38,10 @@ public class DistrictControllerRest {
     /**
      * Найти ID
      */
-    @GetMapping(path = "/district/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<?> findById(
+            @PathVariable("id") Long id
+    ) {
         try {
             return new ResponseEntity<>(districtService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -49,10 +53,11 @@ public class DistrictControllerRest {
     /**
      * Обновить
      */
-    @PutMapping(path ="/district",
-            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @PutMapping(path = "",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
-            @RequestBody DistrictDto districtDto) {
+            @RequestBody DistrictDto districtDto
+    ) {
         try {
             districtService.update(districtMapper.fromDto(districtDto));
             return new ResponseEntity<>("Изменено", HttpStatus.OK);
@@ -64,10 +69,11 @@ public class DistrictControllerRest {
     /**
      * Добавление
      */
-    @PostMapping(path ="/district",
+    @PostMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
-            @RequestBody DistrictDto districtDto) {
+            @RequestBody DistrictDto districtDto
+    ) {
         try {
             districtService.save(districtMapper.fromDto(districtDto));
             return new ResponseEntity<>("Добавлено", HttpStatus.OK);
@@ -80,14 +86,18 @@ public class DistrictControllerRest {
     /**
      * Получить все
      */
-    @PostMapping(path = "/district/All")
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
-                                    @RequestParam(defaultValue = "1") Integer pagination) {
+    @PostMapping(path = "/All")
+    public ResponseEntity<?> getAll(
+            @RequestParam(defaultValue = "30") Integer col,
+            @RequestParam(defaultValue = "1") Integer pagination
+    ) {
         try {
             return new ResponseEntity<>(
-                    districtService.findAll(pagination, col)
+                    districtService.findAll()
                             .stream()
                             .map(districtMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList()),
                     HttpStatus.OK);
         } catch (Exception e) {

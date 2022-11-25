@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.referenceBook.ReasonsForOverpaymentsRepository;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.ReasonsForOverpayments;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +24,6 @@ public class ReasonsForOverpaymentsService {
         return repository.findAll();
     }
 
-    public List<ReasonsForOverpayments> findAll(int pagination, int col) {
-        return cutTheList(repository.findAll(), pagination, col);
-    }
-
     public void update(ReasonsForOverpayments reasonsForOverpayments) {
         var old = findById(
                 reasonsForOverpayments.getId()
@@ -42,18 +38,6 @@ public class ReasonsForOverpaymentsService {
 
     public void delete(Long id) {
         repository.deleteById(id);
-    }
-
-    private List<ReasonsForOverpayments> cutTheList(List<ReasonsForOverpayments> lists, int pagination, int col) {
-        List<ReasonsForOverpayments> objs = new ArrayList<>();
-
-        int start = col * (pagination - 1);
-        int end = start + col;
-
-        for (int i = start; i < end && i < lists.size(); i++) {
-            objs.add(lists.get(i));
-        }
-        return objs;
     }
 
 }

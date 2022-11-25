@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Data
 @AllArgsConstructor
 class TestSerializerObject {
-    @JsonSerialize(using = CustomDateSerializerRu.class)
+    @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     public LocalDate date;
 }
 
-class CustomDateSerializerRuTest {
+class CustomLocalDateSerializerRuTest {
     private  static  DateTimeFormatter formatterRu
             = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 

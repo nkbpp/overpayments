@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.pfr.overpayments.model.annotations.fio.CustomDateDeserializerRuAndEn;
-import ru.pfr.overpayments.model.annotations.fio.CustomDateSerializerRu;
+import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateDeserializerRuAndEn;
+import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateSerializerRu;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -23,8 +23,8 @@ public class FIODto {
     @NotNull(message = "patronymic cannot be null")
     private String patronymic;
     @NotNull(message = "dateOfBirth cannot be null")
-    @JsonDeserialize(using = CustomDateDeserializerRuAndEn.class)
-    @JsonSerialize(using = CustomDateSerializerRu.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
+    @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate dateOfBirth;
 
 }

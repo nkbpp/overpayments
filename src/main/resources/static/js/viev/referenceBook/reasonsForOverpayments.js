@@ -101,7 +101,8 @@ $(document).ready(function () {
 });
 
 function ajaxReasonsForOverpaymentsAll(params){
-    $('#tableReasonsForOverpayments tbody').html('<tr><th>' + getSpinner() + '</th><td></td><td></td><td></td></tr>');
+    getSpinnerTable("tableReasonsForOverpayments")
+
     $.ajax({
         url: "/overpayment/referenceBook/reasonsForOverpayments/All?" + params,
         data: "",

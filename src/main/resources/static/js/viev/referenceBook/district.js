@@ -104,7 +104,8 @@ $(document).ready(function () {
 });
 
 function ajaxDistrictAll(params){
-    $('#tableDistrict tbody').html('<tr><th>' + getSpinner() + '</th><td></td><td></td><td></td></tr>');
+    getSpinnerTable("tableDistrict")
+
     $.ajax({
         url: "/overpayment/referenceBook/district/All?" + params,
         data: "",

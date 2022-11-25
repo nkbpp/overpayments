@@ -39,7 +39,9 @@ public class FullOverpaymentsControllerRest {
      * Найти ID
      */
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> findByIsId(@PathVariable("id") String id) {
+    public ResponseEntity<?> findByIsId(
+            @PathVariable("id") String id
+    ) {
         try {
             return new ResponseEntity<>(
                     fullOverpaymentsService.findById(id).stream()
@@ -55,10 +57,12 @@ public class FullOverpaymentsControllerRest {
      * скачать документ по шаблону
      */
     @GetMapping(path = "/download")
-    public ResponseEntity<?> downloadPensioner(@RequestParam("isId") Long idIs,
-                                               @RequestParam(name="who",defaultValue = "") String who) {
+    public ResponseEntity<?> downloadPensioner(
+            @RequestParam("isId") Long idIs,
+            @RequestParam(name = "who", defaultValue = "") String who
+    ) {
         try {
-            var  fullOverpayment = fullOverpaymentsService.findByIdIs(idIs);
+            var fullOverpayment = fullOverpaymentsService.findByIdIs(idIs);
             Documents document = who.equals("carer") ?
                     documentsService.findById(fullOverpayment
                             .getOverpayment()
@@ -81,7 +85,7 @@ public class FullOverpaymentsControllerRest {
                         table.getRows()) {
                     for (var cell :
                             row.getTableCells()) {
-                        for (var paragraph:
+                        for (var paragraph :
                                 cell.getParagraphs()) {
                             runs(
                                     paragraph.getRuns(),
@@ -94,8 +98,8 @@ public class FullOverpaymentsControllerRest {
             }
 
             var xwpfParagraphs = docxFile.getParagraphs();
-            for (var paragraph:
-                 xwpfParagraphs) {
+            for (var paragraph :
+                    xwpfParagraphs) {
                 runs(
                         paragraph.getRuns(),
                         who.equals("carer") ? fullOverpayment.getOverpayment().getCarer() : pensioner,
@@ -122,101 +126,114 @@ public class FullOverpaymentsControllerRest {
 
     }
 
-    private void runs (List<XWPFRun> xwpfRuns, Citizen citizen, FullOverpayment fullOverpayment){
+    private void runs(List<XWPFRun> xwpfRuns, Citizen citizen, FullOverpayment fullOverpayment) {
         for (int i = 0; i < xwpfRuns.size(); i++) {
             var run = xwpfRuns.get(i);
 
             StringBuilder text = new StringBuilder(run.text());
-            while(text.toString().contains("$")){
-                if(text.toString().contains("$NAME_I")){
+            while (text.toString().contains("$")) {
+                if (text.toString().contains("$NAME_I")) {
                     run.setText(text.toString().replaceAll(
                             "\\$NAME_I",
                             toNormalCase(citizen.getName())
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$NAME_R")){
+                if (text.toString().contains("$NAME_R")) {
                     run.setText(text.toString().replaceAll(
                             "\\$NAME_R",
                             toNormalCase(citizen.getName(Case.Genitive))
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$FAM_I")){
+                if (text.toString().contains("$FAM_I")) {
                     run.setText(text.toString().replaceAll(
                             "\\$FAM_I",
                             toNormalCase(citizen.getSurname())
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$FAM_R")){
+                if (text.toString().contains("$FAM_R")) {
                     run.setText(text.toString().replaceAll(
                             "\\$FAM_R",
                             toNormalCase(citizen.getSurname(Case.Genitive))
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$OT_I")){
+                if (text.toString().contains("$OT_I")) {
                     run.setText(text.toString().replaceAll(
                             "\\$OT_I",
                             toNormalCase(citizen.getSurname())
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$OT_R")){
+                if (text.toString().contains("$OT_R")) {
                     run.setText(text.toString().replaceAll(
                             "\\$OT_R",
                             toNormalCase(citizen.getSurname(Case.Genitive))
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$INI")){
+                if (text.toString().contains("$INI")) {
                     run.setText(text.toString().replaceAll(
                             "\\$INI",
                             citizen.getInitials()
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$ADDR")){
+                if (text.toString().contains("$ADDR")) {
                     run.setText(text.toString().replaceAll(
                             "\\$ADDR",
                             citizen.getAdrreg()
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
                 DateTimeFormatter formatterRu
                         = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                if(text.toString().contains("$PERIOD_S")){
+                if (text.toString().contains("$PERIOD_S")) {
                     run.setText(text.toString().replaceAll(
                             "\\$PERIOD_S",
                             formatterRu.format(fullOverpayment.getSroks())
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$PERIOD_PO")){
+                if (text.toString().contains("$PERIOD_PO")) {
                     run.setText(text.toString().replaceAll(
                             "\\$PERIOD_PO",
                             formatterRu.format(fullOverpayment.getSrokpo())
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$SUMMA")){
+                if (text.toString().contains("$SUMMA")) {
                     run.setText(text.toString().replaceAll(
                             "\\$SUMMA",
                             fullOverpayment.getSpe().toString()
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$DATEDOC")){
+                if (text.toString().contains("$DATEDOC")) {
                     run.setText(text.toString().replaceAll(
                             "\\$DATEDOC",
                             formatterRu.format(fullOverpayment.getDocdv())
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
-                if(text.toString().contains("$NUMDOC")){
+                if (text.toString().contains("$NUMDOC")) {
                     run.setText(text.toString().replaceAll(
                             "\\$NUMDOC",
                             fullOverpayment.getDoc()
-                    ), 0); break;
+                    ), 0);
+                    break;
                 }
                 text.append(xwpfRuns.get(++i).text());
-                xwpfRuns.get(i).setText("",0);
+                xwpfRuns.get(i).setText("", 0);
             }
             //System.out.println(run.text());
         }
     }
 
-    private String toNormalCase(String str){
-        return str.substring(0,1).toUpperCase() +
+    private String toNormalCase(String str) {
+        return str.substring(0, 1).toUpperCase() +
                 str.substring(1).toLowerCase();
     }
 

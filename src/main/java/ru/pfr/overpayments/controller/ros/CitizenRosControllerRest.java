@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.pfr.overpayments.model.dto.SNILSDto;
 import ru.pfr.overpayments.model.ros.entity.citizen.CitizenRos;
 import ru.pfr.overpayments.model.ros.mapper.CitizenRosMapper;
@@ -22,9 +25,11 @@ public class CitizenRosControllerRest {
     private final CitizenRosMapper citizenRosMapper;
     private final CitizenRosService citizenRosService;
 
-    @PostMapping(path ="/findPensionerBySnils", //produces = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "/findPensionerBySnils", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findPensionerBySnils(@RequestBody @Valid SNILSDto snils) {
+    public ResponseEntity<?> findPensionerBySnils(
+            @RequestBody @Valid SNILSDto snils
+    ) {
         try {
             List<CitizenRos> citizenRos = citizenRosService
                     .findPensionerBySnils(snils.getSnils());
@@ -35,13 +40,15 @@ public class CitizenRosControllerRest {
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("снилс",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("снилс", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping(path ="/findAllBySnils", //produces = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "/findAllBySnils", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findAllBySnils(@RequestBody @Valid SNILSDto snils) {
+    public ResponseEntity<?> findAllBySnils(
+            @RequestBody @Valid SNILSDto snils
+    ) {
         try {
             List<CitizenRos> citizenRos = citizenRosService
                     .findBySnils(snils.getSnils());
@@ -52,7 +59,7 @@ public class CitizenRosControllerRest {
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("снилс",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("снилс", HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -26,7 +26,9 @@ public class DocumentsControllerRest {
      * Удалить
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(
+            @PathVariable("id") Long id
+    ) {
         try {
             documentsService.delete(id);
             return new ResponseEntity<>(
@@ -93,7 +95,8 @@ public class DocumentsControllerRest {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> get(
-            @PathVariable("id") Long id) {
+            @PathVariable("id") Long id
+    ) {
         try {
             return new ResponseEntity<>(
                     documentsMapper.toDto(documentsService.findById(id)),
@@ -108,13 +111,17 @@ public class DocumentsControllerRest {
      * Получить все
      */
     @PostMapping(path = "/All")
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
-                                    @RequestParam(defaultValue = "1") Integer pagination) {
+    public ResponseEntity<?> getAll(
+            @RequestParam(defaultValue = "30") Integer col,
+            @RequestParam(defaultValue = "1") Integer pagination
+    ) {
         try {
             return new ResponseEntity<>(
-                    documentsService.findAll(pagination, col)
+                    documentsService.findAll()
                             .stream()
                             .map(documentsMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList()),
                     HttpStatus.OK
             );
@@ -131,18 +138,22 @@ public class DocumentsControllerRest {
     ResponseEntity<?> download(
             @PathVariable("id") Long id
     ) {
-        Documents document = documentsService.findById(id);
+        try {
+            Documents document = documentsService.findById(id);
 
-        Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
+            Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" +
-                                toLatinTrans.transliterate(document.getNameFile()
-                                        .replaceAll("ё", "е").replaceAll("Ё", "Е")
-                                ) + "\"")
-                .body(document.getDokument());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" +
+                                    toLatinTrans.transliterate(document.getNameFile()
+                                            .replaceAll("ё", "е").replaceAll("Ё", "Е")
+                                    ) + "\"")
+                    .body(document.getDokument());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

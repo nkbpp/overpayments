@@ -101,7 +101,7 @@ $(document).ready(function () {
 });
 
 function ajaxDepartmentAll(params){
-    $('#tableDepartment tbody').html('<tr><th>' + getSpinner() + '</th><td></td><td></td><td></td></tr>');
+    getSpinnerTable("tableDepartment")
     $.ajax({
         url: "/overpayment/referenceBook/department/All?" + params,
         data: "",

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.pfr.overpayments.model.annotations.fio.CustomDateSerializerRu;
+import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateSerializerRu;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,16 +20,16 @@ public class ParentOverpaymentRosDto {
 
     private String doc; //номер документа
 
-    @JsonSerialize(using = CustomDateSerializerRu.class)
+    @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate docdv; //дата выдачи исполнит.док-та
 
-    @JsonSerialize(using = CustomDateSerializerRu.class)
+    @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate sroks; //дата начала выплат
 
-    @JsonSerialize(using = CustomDateSerializerRu.class)
+    @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate srokpo; //дата окончания удержания
 
-    @JsonSerialize(using = CustomDateSerializerRu.class)
+    @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate close_date; //дата закрытия удержания
 
     private Double spe; //общая сумма

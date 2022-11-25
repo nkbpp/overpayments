@@ -9,7 +9,7 @@ public class CheckSNILSValidator implements ConstraintValidator<CheckSNILS, Stri
     @Override
     public boolean isValid(String strSNILS, ConstraintValidatorContext context) {
 
-        if(strSNILS == null){
+        if(strSNILS == null || strSNILS.equals("000-000-000 00")){
             throw new SNILSValidatorExeption("SNILS incorrect! SNILS is null!");
         }
 

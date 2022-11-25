@@ -32,19 +32,4 @@ public class CitizenRosService {
                 .findById(id).orElse(null);
     }
 
-    /*public CitizenRos findById(Long id){
-        return repository.findById(id).orElse(null);
-    }*/
-
-
-
-/*    public CitizenRos findCarerByPensionerSnils(String id){
-        return repository
-                .findPEById(id)
-                .orElse(null)
-                .stream()
-                .findFirst()
-                .orElse(null);
-    }*/
-
 }

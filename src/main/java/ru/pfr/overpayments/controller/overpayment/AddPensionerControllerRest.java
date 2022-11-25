@@ -11,6 +11,7 @@ import ru.pfr.overpayments.service.overpayment.PensionerService;
 
 import javax.validation.Valid;
 
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/overpayment/pensioner")
@@ -22,7 +23,9 @@ public class AddPensionerControllerRest {
      * Удалить
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(
+            @PathVariable("id") Long id
+    ) {
         try {
             pensionerService.delete(id);
             return new ResponseEntity<>("Удаление прошло успешно!", HttpStatus.OK);
@@ -32,14 +35,16 @@ public class AddPensionerControllerRest {
     }
 
     /**
-    * Добавление
-    */
-    @PostMapping(path ="", //produces = MediaType.APPLICATION_JSON_VALUE,
+     * Добавление
+     */
+    @PostMapping(path = "", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> add(@RequestBody @Valid PensionerDto pensionerDto) {
+    public ResponseEntity<?> add(
+            @RequestBody @Valid PensionerDto pensionerDto
+    ) {
         try {
-            if(pensionerService.findByIdRos(pensionerDto.getId_ros())!=null){ //уже есть такая запись
-                return new ResponseEntity<>("Такой пенсионер уже добавлен",HttpStatus.BAD_REQUEST);
+            if (pensionerService.findByIdRos(pensionerDto.getId_ros()) != null) { //уже есть такая запись
+                return new ResponseEntity<>("Такой пенсионер уже добавлен", HttpStatus.BAD_REQUEST);
             }
             pensionerService.save(pensionerDto);//todo
             return new ResponseEntity<>(HttpStatus.OK);
@@ -51,11 +56,12 @@ public class AddPensionerControllerRest {
     /**
      * Обновление
      */
-    @PutMapping(path ="/{id}", //produces = MediaType.APPLICATION_JSON_VALUE,
+    @PutMapping(path = "/{id}", //produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
-            @RequestBody @Valid PensionerDto addPensionerDto) {
+            @RequestBody @Valid PensionerDto addPensionerDto
+    ) {
         try {
             Pensioner pensioner = pensionerService.findById(id);
             pensioner.setAdrreg(addPensionerDto.getAdrreg());

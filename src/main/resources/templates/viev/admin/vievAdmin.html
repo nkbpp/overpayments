@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
+<head th:replace="fragment/head :: head">
+</head>
+
+<body>
+<div th:insert="fragment/menu :: menu"></div>
+
+<div>
+    <button class="btn btn-secondary m-2" id="clearLog">Удалить все записи</button>
+</div>
+
+<div>
+    <table id="tableLogi" class="table table-block table-secondary table-hover table-bordered text-center caption-top table-sm">
+        <caption>
+            <div class="row m-0 p-0">
+                <div class="col-11"></div>
+                <div class="col-1">
+                    <select id="col" name="col" class="form-select">
+                        <option th:text="10"
+                                value="10"></option>
+                        <option th:text="20"
+                                value="20" selected></option>
+                        <option th:text="30"
+                                value="30"></option>
+                        <option th:text="50"
+                                value="50"></option>
+                        <option th:text="100"
+                                value="100"></option>
+                    </select>
+                </div>
+            </div>
+        </caption>
+        <thead>
+        <tr>
+            <th>№ п/п</th>
+            <th>Дата</th>
+            <th>Пользователь</th>
+            <th>Тип</th>
+            <th>Текст</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="paginationLogi" th:include="fragment/pagination :: pagination"></div>
+
+<script type="text/javascript" th:src="@{/js/viev/admin/admin.js}"></script>
+<div th:replace="fragment/bottom :: bottom"></div>
+
+<!--TOASTS-->
+<div class="toast-container position-absolute p-3 bottom-0 end-0">
+</div>
+
+</body>
+</html>

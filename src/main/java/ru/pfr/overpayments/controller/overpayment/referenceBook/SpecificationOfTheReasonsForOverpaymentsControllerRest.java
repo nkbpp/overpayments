@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/overpayment/referenceBook")
+@RequestMapping("/overpayment/referenceBook/specificationOfTheReasonsForOverpayments")
 public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
 
     private final SpecificationOfTheReasonsForOverpaymentsService specificationOfTheReasonsForOverpaymentsService;
@@ -23,8 +23,10 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Удалить
      */
-    @DeleteMapping("/specificationOfTheReasonsForOverpayments/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(
+            @PathVariable("id") Long id
+    ) {
         try {
             specificationOfTheReasonsForOverpaymentsService.delete(id);
             return new ResponseEntity<>("Удаление прошло успешно!", HttpStatus.OK);
@@ -36,8 +38,10 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Найти по ID
      */
-    @GetMapping(path = "/specificationOfTheReasonsForOverpayments/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findById(
+            @PathVariable("id") Long id
+    ) {
         try {
             return new ResponseEntity<>(specificationOfTheReasonsForOverpaymentsService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -49,10 +53,11 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Обновить тут
      */
-    @PutMapping(path = "/specificationOfTheReasonsForOverpayments",
+    @PutMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
-            @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto) {
+            @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto
+    ) {
         try {
             specificationOfTheReasonsForOverpaymentsService.update(
                     specificationOfTheReasonsForOverpaymentsMapper.fromDto(
@@ -68,10 +73,11 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Добавление
      */
-    @PostMapping(path = "/specificationOfTheReasonsForOverpayments",
+    @PostMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
-            @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto) {
+            @RequestBody SpecificationOfTheReasonsForOverpaymentsDto specificationOfTheReasonsForOverpaymentsDto
+    ) {
         try {
             specificationOfTheReasonsForOverpaymentsService.save(
                     specificationOfTheReasonsForOverpaymentsMapper.fromDto(specificationOfTheReasonsForOverpaymentsDto)
@@ -86,14 +92,18 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     /**
      * Получить все
      */
-    @PostMapping(path = "/specificationOfTheReasonsForOverpayments/All")
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "30") Integer col,
-                                    @RequestParam(defaultValue = "1") Integer pagination) {
+    @PostMapping(path = "/All")
+    public ResponseEntity<?> getAll(
+            @RequestParam(defaultValue = "30") Integer col,
+            @RequestParam(defaultValue = "1") Integer pagination
+    ) {
         try {
             return new ResponseEntity<>(
-                    specificationOfTheReasonsForOverpaymentsService.findAll(pagination, col)
+                    specificationOfTheReasonsForOverpaymentsService.findAll()
                             .stream()
                             .map(specificationOfTheReasonsForOverpaymentsMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
                             .collect(Collectors.toList()),
                     HttpStatus.OK);
         } catch (Exception e) {

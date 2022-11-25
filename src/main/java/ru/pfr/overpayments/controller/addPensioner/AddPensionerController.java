@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = { "/overpayment"})
+@RequestMapping(value = {"/overpayment"})
 public class AddPensionerController {
 
-    @GetMapping(value = { "/menuAddCitizen"})
-    public String vievAddCitizen(){
+    @GetMapping(value = {"/menuAddCitizen"})
+    public String vievAddCitizen() {
         return "viev/addCitizen";
     }
 

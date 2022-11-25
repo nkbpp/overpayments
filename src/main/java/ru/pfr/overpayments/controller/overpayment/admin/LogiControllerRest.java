@@ -1,24 +1,25 @@
-package ru.pfr.overpayments.controller.overpayment.referenceBook;
+package ru.pfr.overpayments.controller.overpayment.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pfr.overpayments.model.overpayment.dto.referenceBook.DepartmentDto;
-import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.DepartmentMapper;
-import ru.pfr.overpayments.service.overpayment.referenceBook.DepartmentService;
+import ru.pfr.overpayments.model.dto.AppError;
+import ru.pfr.overpayments.model.overpayment.dto.log.LogiDto;
+import ru.pfr.overpayments.model.overpayment.mapper.log.LogiMapper;
+import ru.pfr.overpayments.service.overpayment.log.LogiService;
 
 import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/overpayment/referenceBook/department")
-public class DepartmentControllerRest {
+@RequestMapping("/admin/log")
+public class LogiControllerRest {
 
-    private final DepartmentService departmentService;
+    private final LogiService logiService;
 
-    private final DepartmentMapper departmentMapper;
+    private final LogiMapper logiMapper;
 
     /**
      * Удалить
@@ -28,10 +29,30 @@ public class DepartmentControllerRest {
             @PathVariable("id") Long id
     ) {
         try {
-            departmentService.delete(id);
+            logiService.deleteById(id);
             return new ResponseEntity<>("Удаление прошло успешно!", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Удалить
+     */
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<?> deleteAll(
+    ) {
+        try {
+            var size = logiService.findAll().size();
+            logiService.clear();
+            return new ResponseEntity<>("Было удалено " + size + " записей!", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(
+                    new AppError(
+                            HttpStatus.BAD_REQUEST.value(),
+                            e.getMessage()
+                    ),
+                    HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -43,7 +64,7 @@ public class DepartmentControllerRest {
             @PathVariable("id") Long id
     ) {
         try {
-            return new ResponseEntity<>(departmentService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(logiService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -55,10 +76,10 @@ public class DepartmentControllerRest {
     @PutMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
-            @RequestBody DepartmentDto departmentDto
+            @RequestBody LogiDto logiDto
     ) {
         try {
-            departmentService.update(departmentMapper.fromDto(departmentDto));
+            logiService.save(logiMapper.fromDto(logiDto));
             return new ResponseEntity<>("Изменено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -71,10 +92,10 @@ public class DepartmentControllerRest {
     @PostMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
-            @RequestBody DepartmentDto departmentDto
+            @RequestBody LogiDto logiDto
     ) {
         try {
-            departmentService.save(departmentMapper.fromDto(departmentDto));
+            logiService.save(logiMapper.fromDto(logiDto));
             return new ResponseEntity<>("Добавлено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -91,9 +112,9 @@ public class DepartmentControllerRest {
     ) {
         try {
             return new ResponseEntity<>(
-                    departmentService.findAll()
+                    logiService.findAll()
                             .stream()
-                            .map(departmentMapper::toDto)
+                            .map(logiMapper::toDto)
                             .skip((long) col * (pagination - 1))
                             .limit(col)
                             .collect(Collectors.toList()),
