@@ -37,7 +37,7 @@ public class LogiControllerRest {
     }
 
     /**
-     * Удалить
+     * Удалить все
      */
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAll(
@@ -97,6 +97,28 @@ public class LogiControllerRest {
         try {
             logiService.save(logiMapper.fromDto(logiDto));
             return new ResponseEntity<>("Добавлено", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/find")
+    public ResponseEntity<?> find(
+            @RequestParam(defaultValue = "30") Integer col,
+            @RequestParam(defaultValue = "1") Integer pagination,
+            @RequestBody LogiFindDto logiFindDto
+    ) {
+        try {
+            /*logiService.save(logiMapper.fromDto(logiDto));
+            return new ResponseEntity<>("Добавлено", HttpStatus.OK);*/
+            return new ResponseEntity<>(
+                    logiService.find(logiFindDto)
+                            .stream()
+                            .map(logiMapper::toDto)
+                            .skip((long) col * (pagination - 1))
+                            .limit(col)
+                            .collect(Collectors.toList())
+                    , HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

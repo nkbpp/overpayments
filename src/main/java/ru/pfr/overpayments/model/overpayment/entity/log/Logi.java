@@ -19,11 +19,10 @@ import java.util.Date;
 @AllArgsConstructor // конструктора включающего все возможные поля
 @Entity
 @Builder
-public class Logi {
+public class Logi implements Comparable<Logi>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime date;
     @Column(length = 255)
     private String user;
@@ -32,4 +31,14 @@ public class Logi {
     @Column(columnDefinition = "TEXT")
     private String text;
 
+    @Override
+    public int compareTo(Logi o) {
+        if (this.id.equals(o.id)) {
+            return 0;
+        } else if (this.id < o.id) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }

@@ -1,0 +1,4 @@
+#https://habr.com/post/438796/
+FROM openjdk:17
+ADD target/overpayments-0.0.1-SNAPSHOT.jar overpayments.jar
+ENTRYPOINT ["java","-jar","overpayments.jar"]

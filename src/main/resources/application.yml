@@ -1,0 +1,66 @@
+server:
+  port: 8098
+app:
+  dbros:
+    datasource:
+      url: jdbc:db2://10.41.0.35:50000/ROS
+      username: db2admin
+      password: db2admin
+  dboverpayments:
+    datasource:
+      #url: jdbc:mysql://10.41.0.247:3306/overpayments?connectionTimeZone=LOCAL&forceConnectionTimeZoneToSession=true
+      url: jdbc:mysql://10.41.0.247:3306/overpayments?useLegacyDatetimeCode=false&amp&serverTimezone=UTC
+      username: root
+      password: 654321
+#  dboverpayments:
+#    datasource:
+#      url: jdbc:postgresql://postgres:5432/overpayment
+#      username: root
+#      password: 654321
+#      driver-class: org.postgresql.Driver
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+  file:
+    name: application.overpayment
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      file-name-pattern: "${LOG_FILE}.%d{yyyy-MM-dd}.%i.log"
+      clean-history-on-start: true
+  pattern:
+    dateformat: dd.MM.yyyy HH:mm:ss:SSS
+
+
+
+#        type:
+#          descriptor:
+#            sql: TRACE
+#      springframework:
+#        transaction: TRACE
+
+#  mvc:
+#    hiddenmethod:
+#      filter:
+#        enabled: true
+
+org:
+  opfr:
+    acsAddress: http://sa04100uitwa248.0041.pfr.ru:18003
+    requestType: AuthAccess
+    applId: 172
+    roles:
+      OZIADMIN: 1
+      USER: 14

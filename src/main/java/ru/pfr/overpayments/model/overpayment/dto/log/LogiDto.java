@@ -1,5 +1,6 @@
 package ru.pfr.overpayments.model.overpayment.dto.log;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class LogiDto {
 
     private String user;
 
+    @JsonDeserialize(using = TypeLogDeserializer.class)
     private TypeLog type;
 
     private String text;

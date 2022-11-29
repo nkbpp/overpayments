@@ -48,6 +48,19 @@ class CustomLocalDateDeserializerRuAndEnTest {
         assertThat(event.date).isEqualTo(expectedDate);
     }
 
+/*    @Test
+    public void whenDeserializingUsingJsonDeserializeRu_thenInCorrect()
+            throws IOException {
+        String json
+                = "{\"date\":\"\"}";
+
+        TestDeserializerObject event = new ObjectMapper()
+                .readerFor(TestDeserializerObject.class)
+                .readValue(json);
+
+        assertThat(event.date).isNull();
+    }*/
+
     @Test
     public void whenDeserializingUsingJsonDeserializeRu_thenInCorrect() {
         String json

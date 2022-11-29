@@ -9,6 +9,59 @@
 <body>
 <div th:insert="fragment/menu :: menu"></div>
 
+<p>
+    <button
+            class="btn btn-outline-secondary m-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample">
+        Поиск
+    </button>
+</p>
+<div class="collapse" id="collapseExample">
+    <form id="formFindLog">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-3">
+                    <label for="dateS" class="form-label m-0">Дата с</label>
+                    <input type="text" class="form-control datepicker m-1" placeholder="дд.мм.гггг" id="dateS" name="dateS">
+
+                    <label for="datePo" class="form-label m-0">Дата по</label>
+                    <input type="text" class="form-control datepicker m-1" placeholder="дд.мм.гггг" id="datePo" name="datePo">
+                </div>
+                <div class="col-3">
+                    <label for="user" class="form-label m-0">Введите пользователя</label>
+                    <input
+                            class="form-control m-1"
+                            type="text"
+                            id="user"
+                            name="user"
+                            placeholder="Пользователь"/>
+                    <label for="type" class="form-label m-0">Cтатус</label>
+                    <select id="type" name="type" class="form-select m-1">
+                        <option value="" selected>Выберите статус</option>
+                        <option value="Danger">Danger</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Success">Success</option>
+                        <option value="Info">Info</option>
+                    </select>
+                </div>
+                <div class="col-2 text-center align-self-center">
+                    <button
+                            class="btn btn-dark"
+                            type="button"
+                            aria-expanded="false"
+                            id="findLog">
+                        Найти
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div>
     <button class="btn btn-secondary m-2" id="clearLog">Удалить все записи</button>
 </div>

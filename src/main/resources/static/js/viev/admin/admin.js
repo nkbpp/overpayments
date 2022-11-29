@@ -16,6 +16,13 @@ $(document).ready(function () {
     });
 
     BODY.on('click', 'button', function () {
+        //кнопка поиска
+        if ($(this).attr("id") === "findLog") {
+            ajaxLogiAll(getLogiParams());
+        }
+    });
+
+    BODY.on('click', 'button', function () {
         if ($(this).attr("id") === "clearLog") {
             if(confirm("Удалить все записи?")) {
                 $.ajax({
@@ -43,11 +50,24 @@ function getLogiParams() {
     return "col=" + $("#col").val() + "&pagination=" + activeList("#paginationLogi");
 }
 
+function getLogiData() {
+    let fd = new FormData(document.getElementById("formFindLog"));
+    let object = {};
+    fd.forEach((value, key) => object[key] = value);
+    object.dateS = object.dateS === "" ? "01.01.1800" : object.dateS;
+    object.datePo = object.datePo === "" ? "31.12.2113" : object.datePo;
+    console.log('dateS =' + object.dateS)
+    console.log('datePo =' + object.datePo)
+    return JSON.stringify(object);
+}
+
+
+
 function ajaxLogiAll(params) {
     getSpinnerTable("tableLogi")
     $.ajax({
-        url: "/admin/log/All?" + params,
-        data: "",
+        url: "/admin/log/find?" + params,
+        data: getLogiData(),
         cache: false,
         processData: false,
         contentType: "application/json",
