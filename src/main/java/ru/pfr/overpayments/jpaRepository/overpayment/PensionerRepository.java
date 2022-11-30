@@ -32,13 +32,6 @@ public interface PensionerRepository extends JpaRepository<Pensioner, String> {
                     "(?3 is null or ?3 = '' or patronymic like ?3%) and " +
                     "(?4 is null or rdat = ?4) order by rdat desc ",
             nativeQuery = true)
-        //todo List<Pensioner> findByFioAndDateOfBirth(String surname, String name, String patronymic, LocalDate dateOfBirth);
     List<Pensioner> findByFioAndDateOfBirth(String surname, String name, String patronymic, String dateOfBirth);
 
-/*
-    Optional<List<PensionerOverpayment>> findBySurnameLikeIgnoreCaseAndNameLikeIgnoreCaseAndPatronymicLikeIgnoreCase(String surname, String name, String patronymic);
-
-    Optional<List<Pensioner>> findByDistrict(Integer district);*/
-
-    //List<PensionerOverpayment> findBySnils(String snils);
 }

@@ -22,7 +22,6 @@ import java.util.HashMap;
 @Configuration
 public class DatabaseOverpaymentsConfig {
     public static final String PROPERTY_PREFIX = "app.dboverpayments.datasource";
-
     public static final String JPA_REPOSITORY_PACKAGE = "ru.pfr.overpayments.jpaRepository.overpayment";
     public static final String ENTITY_PACKAGE = "ru.pfr.overpayments.model.overpayment.entity";
     public static final String ENTITY_MANAGER_FACTORY = "overpaymentsEntityManagerFactory";

@@ -27,6 +27,7 @@ function clickPagination(selA, idpag) {
     return list;
 }
 
+//очитстить clearPagination($("#paginationLogi a"))
 function clearPagination(pag) {
     pag.first().parent().removeClass("disabled").addClass("disabled");
     pag.eq(1).text("1").parent().removeClass("active").addClass("active");

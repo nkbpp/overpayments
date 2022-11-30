@@ -32,7 +32,8 @@ $(document).ready(function () {
                     processData: false,
                     type: 'DELETE',
                     success: function (response) {
-                        ajaxLogiAll(getLogiParams());//todo возможно сбросить pag
+                        ajaxLogiAll(getLogiParams());
+                        clearPagination($("#paginationLogi a"))
                         initialToats("Все записи удалены!", response, "success").show();
                     },
                     error: function (response) {
@@ -56,12 +57,8 @@ function getLogiData() {
     fd.forEach((value, key) => object[key] = value);
     object.dateS = object.dateS === "" ? "01.01.1800" : object.dateS;
     object.datePo = object.datePo === "" ? "31.12.2113" : object.datePo;
-    console.log('dateS =' + object.dateS)
-    console.log('datePo =' + object.datePo)
     return JSON.stringify(object);
 }
-
-
 
 function ajaxLogiAll(params) {
     getSpinnerTable("tableLogi")

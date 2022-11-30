@@ -72,7 +72,6 @@ public class PensionerService {
     }
 
     public List<Pensioner> findByFioAndDate(String surname, String name, String patronymic, LocalDate dateOfBirth) {
-        //todo return repository.findByFioAndDateOfBirth(surname, name, patronymic, dateOfBirth);
         return repository.findByFioAndDateOfBirth(surname, name, patronymic, dateOfBirth.toString());
     }
 

@@ -27,8 +27,4 @@ public class Carer extends Citizen {
         this.overpayment = overpayment;
     }
 
-    public Carer(Long id, String idRos, String snils, String surname, String name, String patronymic, String adrreg, LocalDate rdat, String tel, LocalDate dsm, District district, Overpayment overpayment) {
-        super(id, idRos, snils, surname, name, patronymic, adrreg, rdat, tel, dsm, district);
-        this.overpayment = overpayment;
-    }
 }
