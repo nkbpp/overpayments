@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
 public class Citizen {
@@ -42,6 +41,8 @@ public class Citizen {
 
     private String adrreg;
 
+    private String pol;
+
     @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate rdat;
 
@@ -54,13 +55,15 @@ public class Citizen {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private District district;
 
-    public Citizen(String idRos, String snils, String surname, String name, String patronymic, String adrreg, LocalDate rdat, String tel, LocalDate dsm, District district) {
+    public Citizen(Long id, String idRos, String snils, String surname, String name, String patronymic, String adrreg, String pol, LocalDate rdat, String tel, LocalDate dsm, District district) {
+        this.id = id;
         this.idRos = idRos;
         this.snils = snils;
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
         this.adrreg = adrreg;
+        this.pol = pol;
         this.rdat = rdat;
         this.tel = tel;
         this.dsm = dsm;
@@ -74,8 +77,8 @@ public class Citizen {
         Petrovich petrovich = new Petrovich();
         return petrovich.say(
                 surname, NameType.LastName,
-                petrovich.gender(surname, Gender.Both),
-                Case.Prepositional
+                pol.equals("M")?Gender.Male:Gender.Female,
+                aCase
         );
     }
 
@@ -86,8 +89,8 @@ public class Citizen {
         Petrovich petrovich = new Petrovich();
         return petrovich.say(
                 name, NameType.LastName,
-                petrovich.gender(name, Gender.Both),
-                Case.Prepositional
+                pol.equals("M")?Gender.Male:Gender.Female,
+                aCase
         );
     }
 
@@ -98,8 +101,8 @@ public class Citizen {
         Petrovich petrovich = new Petrovich();
         return petrovich.say(
                 patronymic, NameType.LastName,
-                petrovich.gender(patronymic, Gender.Both),
-                Case.Prepositional
+                pol.equals("M")?Gender.Male:Gender.Female,
+                aCase
         );
     }
 

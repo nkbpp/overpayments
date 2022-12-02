@@ -24,11 +24,14 @@ public class SuperIDFIO extends SuperID{
     @NotNull(message = "patronymic cannot be null")
     @Column(name = "OT")
     private String patronymic;
+    @Column(name = "POL")
+    private String pol;
 
-    public SuperIDFIO(String id, String surname, String name, String patronymic) {
+    public SuperIDFIO(@NotNull(message = "id cannot be null") String id, String surname, String name, String patronymic, String pol) {
         super(id);
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
+        this.pol = pol;
     }
 }

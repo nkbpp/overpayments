@@ -28,6 +28,8 @@ public class CitizenDto {
     //@NotNull(message = "patronymic cannot be null")
     private String patronymic;
 
+    private String pol;
+
     @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate rdat;
 

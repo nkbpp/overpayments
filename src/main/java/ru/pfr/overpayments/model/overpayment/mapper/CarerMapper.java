@@ -23,6 +23,7 @@ public class CarerMapper {
                 .surname(obj.getSurname())
                 .name(obj.getName())
                 .patronymic(obj.getPatronymic())
+                .pol(obj.getPol())
                 .adrreg(obj.getAdrreg())
                 .rdat(obj.getRdat())
                 .tel(obj.getTel())
@@ -39,6 +40,7 @@ public class CarerMapper {
                 .surname(dto.getSurname())
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
+                .pol(dto.getPol())
                 .adrreg(
                         (dto.getAdrreg()==null || dto.getAdrreg().equals(""))?
                                 dto.getAdrfakt():dto.getAdrreg()

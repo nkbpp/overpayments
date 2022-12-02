@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.OverpaymentRepository;
 import ru.pfr.overpayments.model.overpayment.entity.Overpayment;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional(transactionManager = "overpaymentsTransactionManager")
@@ -34,4 +36,7 @@ public class OverpaymentService {
         return repository.findByIsId(idIs).orElse(null);
     }
 
+    public List<Overpayment> findAll(){
+        return repository.findAll();
+    }
 }

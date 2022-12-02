@@ -14,6 +14,7 @@ public class CitizenRosMapper {
                 .name(obj.getName())
                 .patronymic(obj.getPatronymic())
                 .rdat(obj.getRdat())
+                .pol(obj.getPol())
                 .adrfakt(obj.getAdrfakt())
                 .adrreg(
                         (obj.getAdrreg()==null || obj.getAdrreg().equals(""))?
@@ -37,6 +38,7 @@ public class CitizenRosMapper {
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
                 .rdat(dto.getRdat())
+                .pol(dto.getPol())
                 .adrfakt(dto.getAdrfakt())
                 .adrreg(dto.getAdrreg())
                 .tel(dto.getTel())

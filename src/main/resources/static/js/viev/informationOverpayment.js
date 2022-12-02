@@ -53,8 +53,7 @@ $(document).ready(function () {
             ARRSELECTIZE[0].selectize.clear();
         }
         if ($(this).attr('id') === "clearReasonsForOverpayments") {
-            let sel = SELECTIZEREASONS[0].selectize;
-            sel.clear();
+            SELECTIZEREASONS[0].selectize.clear();
             clearSELECTIZESPECIFICATIONREASONS();
         }
         if ($(this).attr('id') === "clearSelectSpecificationOfTheReasonsForOverpayments") {

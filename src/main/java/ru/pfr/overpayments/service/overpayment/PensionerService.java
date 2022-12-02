@@ -42,6 +42,7 @@ public class PensionerService {
                 .patronymic(citizenRos.getPatronymic())
                 .rdat(citizenRos.getRdat())
                 .dsm(citizenRos.getDsm())
+                .pol(citizenRos.getPol())
                 .district(districtService.findByKod(citizenRos.getDistrict()))
                 .overpayments(new ArrayList<>())
                 .overpayments(new ArrayList<>())

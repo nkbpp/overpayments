@@ -5,10 +5,12 @@ import com.ibm.icu.text.Transliterator;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.opfr.springbootstarterauthsso.security.UserInfo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.pfr.overpayments.model.entity.FullOverpayment;
 import ru.pfr.overpayments.model.mapper.FullOverpaymentsMapper;
@@ -59,8 +61,9 @@ public class FullOverpaymentsControllerRest {
     @GetMapping(path = "/download")
     public ResponseEntity<?> downloadPensioner(
             @RequestParam("isId") Long idIs,
-            @RequestParam(name = "who", defaultValue = "") String who
-    ) {
+            @RequestParam(name = "who", defaultValue = "") String who,
+            @AuthenticationPrincipal UserInfo userInfo
+            ) {
         try {
             var fullOverpayment = fullOverpaymentsService.findByIdIs(idIs);
             Documents document = who.equals("carer") ?
@@ -90,7 +93,8 @@ public class FullOverpaymentsControllerRest {
                             runs(
                                     paragraph.getRuns(),
                                     who.equals("carer") ? fullOverpayment.getOverpayment().getCarer() : pensioner,
-                                    fullOverpayment
+                                    fullOverpayment,
+                                    userInfo
                             );
                         }
                     }
@@ -103,7 +107,8 @@ public class FullOverpaymentsControllerRest {
                 runs(
                         paragraph.getRuns(),
                         who.equals("carer") ? fullOverpayment.getOverpayment().getCarer() : pensioner,
-                        fullOverpayment
+                        fullOverpayment,
+                        userInfo
                 );
             }
 
@@ -126,10 +131,11 @@ public class FullOverpaymentsControllerRest {
 
     }
 
-    private void runs(List<XWPFRun> xwpfRuns, Citizen citizen, FullOverpayment fullOverpayment) {
+    private void runs(List<XWPFRun> xwpfRuns, Citizen citizen, FullOverpayment fullOverpayment, UserInfo userInfo) {
         for (int i = 0; i < xwpfRuns.size(); i++) {
             var run = xwpfRuns.get(i);
-
+            DateTimeFormatter formatterRu
+                    = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             StringBuilder text = new StringBuilder(run.text());
             while (text.toString().contains("$")) {
                 if (text.toString().contains("$NAME_I")) {
@@ -174,6 +180,20 @@ public class FullOverpaymentsControllerRest {
                     ), 0);
                     break;
                 }
+                if (text.toString().contains("$DSM")) {
+                    run.setText(text.toString().replaceAll(
+                            "\\$DSM",
+                            formatterRu.format(citizen.getDsm())
+                    ), 0);
+                    break;
+                }
+                if (text.toString().contains("$RDAT")) {
+                    run.setText(text.toString().replaceAll(
+                            "\\$RDAT",
+                            formatterRu.format(citizen.getRdat())
+                    ), 0);
+                    break;
+                }
                 if (text.toString().contains("$INI")) {
                     run.setText(text.toString().replaceAll(
                             "\\$INI",
@@ -188,8 +208,6 @@ public class FullOverpaymentsControllerRest {
                     ), 0);
                     break;
                 }
-                DateTimeFormatter formatterRu
-                        = DateTimeFormatter.ofPattern("dd.MM.yyyy");
                 if (text.toString().contains("$PERIOD_S")) {
                     run.setText(text.toString().replaceAll(
                             "\\$PERIOD_S",
@@ -222,6 +240,13 @@ public class FullOverpaymentsControllerRest {
                     run.setText(text.toString().replaceAll(
                             "\\$NUMDOC",
                             fullOverpayment.getDoc()
+                    ), 0);
+                    break;
+                }
+                if (text.toString().contains("$FIO_SPEC")) {
+                    run.setText(text.toString().replaceAll(
+                            "\\$FIO_SPEC",
+                            userInfo.getFio()
                     ), 0);
                     break;
                 }

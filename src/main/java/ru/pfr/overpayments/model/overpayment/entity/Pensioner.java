@@ -43,8 +43,8 @@ public class Pensioner extends Citizen {
     }
 
     @Builder
-    public Pensioner(@NotNull(message = "id cannot be null") Long id, @NotNull(message = "id cannot be null") String idRos, @CheckSNILS String snils, String surname, String name, String patronymic, String adrreg, LocalDate rdat, String tel, LocalDate dsm, District district, List<Overpayment> overpayments) {
-        super(id, idRos, snils, surname, name, patronymic, adrreg, rdat, tel, dsm, district);
+    public Pensioner(Long id, String idRos, String snils, String surname, String name, String patronymic, String adrreg, String pol, LocalDate rdat, String tel, LocalDate dsm, District district, List<Overpayment> overpayments) {
+        super(id, idRos, snils, surname, name, patronymic, adrreg, pol, rdat, tel, dsm, district);
         this.overpayments = overpayments;
     }
 }

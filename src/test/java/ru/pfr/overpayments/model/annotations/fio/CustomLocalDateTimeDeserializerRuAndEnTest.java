@@ -7,28 +7,28 @@ import lombok.Data;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Data
-class TestDeserializerLocalDateObject {
-    @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
-    public LocalDate date;
+class TestDeserializerLocalDateTimeObject {
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializerRuAndEn.class)
+    public LocalDateTime date;
 }
 
-class CustomLocalDateDeserializerRuAndEnTest {
+class CustomLocalDateTimeDeserializerRuAndEnTest {
 
     @Test
     public void whenDeserializingUsingJsonDeserializeRu_thenCorrect()
             throws IOException {
         String json
                 = "{\"date\":\"13.08.1993\"}";
-        LocalDate expectedDate = LocalDate.of(1993,8,13);
+        LocalDateTime expectedDate = LocalDateTime.of(1993, 8, 13, 0, 0, 0);
 
-        TestDeserializerLocalDateObject event = new ObjectMapper()
-                .readerFor(TestDeserializerLocalDateObject.class)
+        TestDeserializerLocalDateTimeObject event = new ObjectMapper()
+                .readerFor(TestDeserializerLocalDateTimeObject.class)
                 .readValue(json);
 
         assertThat(event.date).isEqualTo(expectedDate);
@@ -39,10 +39,10 @@ class CustomLocalDateDeserializerRuAndEnTest {
             throws IOException {
         String json
                 = "{\"date\":\"1993-08-13\"}";
-        LocalDate expectedDate = LocalDate.of(1993,8,13);
+        LocalDateTime expectedDate = LocalDateTime.of(1993, 8, 13, 0, 0, 0);
 
-        TestDeserializerLocalDateObject event = new ObjectMapper()
-                .readerFor(TestDeserializerLocalDateObject.class)
+        TestDeserializerLocalDateTimeObject event = new ObjectMapper()
+                .readerFor(TestDeserializerLocalDateTimeObject.class)
                 .readValue(json);
 
         assertThat(event.date).isEqualTo(expectedDate);
@@ -69,8 +69,8 @@ class CustomLocalDateDeserializerRuAndEnTest {
 
         JsonMappingException thrown = assertThrows(JsonMappingException.class,
                 () -> new ObjectMapper()
-                .readerFor(TestDeserializerLocalDateObject.class)
-                .readValue(json)
+                        .readerFor(TestDeserializerLocalDateTimeObject.class)
+                        .readValue(json)
         );
 
         assertThat(thrown).hasMessageContaining("LocalDate parse exception");

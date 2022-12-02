@@ -49,8 +49,8 @@ public class CitizenRos extends SuperIDFIO {
     private LocalDate dsm; //дата смерти
 
     @Builder
-    public CitizenRos(String id, String surname, String name, String patronymic, LocalDate rdat, String adrfakt, String adrreg, String tel, Integer district, String snils, String pw, LocalDate dsm) {
-        super(id, surname, name, patronymic);
+    public CitizenRos(String id, String surname, String name, String patronymic, String pol, LocalDate rdat, String adrfakt, String adrreg, String tel, Integer district, String snils, String pw, LocalDate dsm) {
+        super(id, surname, name, patronymic, pol);
         this.rdat = rdat;
         this.adrfakt = adrfakt;
         this.adrreg = adrreg;
@@ -60,5 +60,4 @@ public class CitizenRos extends SuperIDFIO {
         this.pw = pw;
         this.dsm = dsm;
     }
-
 }

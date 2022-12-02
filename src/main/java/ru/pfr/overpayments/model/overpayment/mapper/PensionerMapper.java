@@ -19,6 +19,7 @@ public class PensionerMapper {
                 .surname(obj.getSurname())
                 .name(obj.getName())
                 .patronymic(obj.getPatronymic())
+                .pol(obj.getPol())
                 .adrreg(obj.getAdrreg())
                 .rdat(obj.getRdat())
                 .tel(obj.getTel())

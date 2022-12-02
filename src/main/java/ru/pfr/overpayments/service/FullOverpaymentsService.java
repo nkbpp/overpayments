@@ -18,6 +18,15 @@ public class FullOverpaymentsService {
 
     private final OverpaymentService overpaymentService;
 
+    public List<FullOverpayment> findAll() {
+        List<FullOverpayment> fullOverpayments = new ArrayList<>();
+        for (var overpayment:
+                overpaymentService.findAll()) {
+            fullOverpayments.add(findByIdIs(overpayment.getIsId()));
+        }
+        return fullOverpayments;
+    }
+
     public List<FullOverpayment> findById(String id) {
 
         List<FullOverpayment> fullOverpayments = new ArrayList<>();
@@ -67,7 +76,6 @@ public class FullOverpaymentsService {
                 .overpayment(overpaymentService.findByIsId(overpaymentRos.getIs_id()))
                 .build()
         );
-
     }
 
 }

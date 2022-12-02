@@ -32,6 +32,8 @@ public class CitizenRosDto {
     @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEn.class)
     private LocalDate rdat;
 
+    private String pol;
+
     private String adrfakt;
 
     private String adrreg;
