@@ -1,6 +1,5 @@
 package ru.pfr.overpayments.model.annotations.fio;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
@@ -10,15 +9,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Data
-class TestDeserializerLocalDateTimeObject {
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializerRuAndEn.class)
+class TestDeserializerLocalDateTimeOrNullObject {
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializerRuAndEnOrNull.class)
     public LocalDateTime date;
 }
 
-class CustomLocalDateTimeDeserializerRuAndEnTest {
+class CustomLocalDateTimeDeserializerRuAndEnOrNullTest {
 
     @Test
     public void whenDeserializingUsingJsonDeserializeRu_thenCorrect()
@@ -48,32 +46,17 @@ class CustomLocalDateTimeDeserializerRuAndEnTest {
         assertThat(event.date).isEqualTo(expectedDate);
     }
 
-/*    @Test
+    @Test
     public void whenDeserializingUsingJsonDeserializeRu_thenInCorrect()
             throws IOException {
         String json
                 = "{\"date\":\"\"}";
 
-        TestDeserializerObject event = new ObjectMapper()
-                .readerFor(TestDeserializerObject.class)
+        TestDeserializerLocalDateTimeOrNullObject event = new ObjectMapper()
+                .readerFor(TestDeserializerLocalDateTimeOrNullObject.class)
                 .readValue(json);
 
         assertThat(event.date).isNull();
-    }*/
-
-    @Test
-    public void whenDeserializingUsingJsonDeserializeRu_thenInCorrect() {
-        String json
-                = "{\"date\":\"\"}";
-        //LocalDate expectedDate = LocalDate.of(1993,8,13);
-
-        JsonMappingException thrown = assertThrows(JsonMappingException.class,
-                () -> new ObjectMapper()
-                        .readerFor(TestDeserializerLocalDateTimeOrNullObject.class)
-                        .readValue(json)
-        );
-
-        assertThat(thrown).hasMessageContaining("LocalDate parse exception");
     }
 
 }

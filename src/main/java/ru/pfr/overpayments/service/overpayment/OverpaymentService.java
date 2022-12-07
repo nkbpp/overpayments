@@ -18,10 +18,16 @@ public class OverpaymentService {
     private final CarerService carerService;
 
     public void update(Overpayment overpayment) {
-        repository.save(overpayment);
+        save(overpayment);
     }
 
     public void save(Overpayment overpayment) {
+        if (overpayment.getLegalDepartment() != null) {
+            for (var o :
+                    overpayment.getLegalDepartment()) {
+                o.setOverpayment(overpayment);
+            }
+        }
         if (overpayment.getCarer() != null) {
             overpayment.getCarer().setOverpayment(overpayment);
         }

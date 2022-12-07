@@ -12,12 +12,16 @@ import ru.pfr.overpayments.model.overpayment.entity.referenceBook.SpecificationO
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Overpayment {
 
     @Id
@@ -55,6 +59,43 @@ public class Overpayment {
     @JoinColumn (name="carer_id")
     private Carer carer;
 
+    private LocalDate writeOffProtocolDate;
+
+    private String writeOffOrderNumber;
+
+    private LocalDate writeOffOrderDate;
+
+    private Double writeOffSum;
+
+    //взыскание
+    private Boolean controlUFSSP;
+    private Boolean theFactThatTheDebtorHasAJob;
+    private LocalDate dateOfCourtDecision; //Дата решение суда
+    private LocalDate dateUFSSP; //Дата передачи исполнительного документа в УФССП
+    private LocalDate dateUVPSV; //Дата передачи исполнительного документа в управление выплаты пенсий и социальных выплат
+    @OneToMany(mappedBy = "overpayment",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<DateOfSubmissionOfDocumentsToTheLegalDepartment> legalDepartment = new ArrayList<>();
+
+/*    public void addDateOfSubmissionOfDocumentsToTheLegalDepartment(DateOfSubmissionOfDocumentsToTheLegalDepartment legalDepartment) {
+        this.legalDepartment.add(legalDepartment);
+        legalDepartment.setOverpayment(this);
+    }
+
+    public void setAllDateOfSubmissionOfDocumentsToTheLegalDepartment(List<DateOfSubmissionOfDocumentsToTheLegalDepartment> legalDepartment) {
+        for (DateOfSubmissionOfDocumentsToTheLegalDepartment dateOfSubmissionOfDocumentsToTheLegalDepartment :
+                legalDepartment) {
+            addDateOfSubmissionOfDocumentsToTheLegalDepartment(dateOfSubmissionOfDocumentsToTheLegalDepartment);
+        }
+    }
+
+    public void removeDateOfSubmissionOfDocumentsToTheLegalDepartment(DateOfSubmissionOfDocumentsToTheLegalDepartment legalDepartment) {
+        this.legalDepartment.remove(legalDepartment);
+        legalDepartment.setOverpayment(null);
+    }*/
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pensioner_id")
     private Pensioner pensioner;
@@ -63,39 +104,5 @@ public class Overpayment {
     public Pensioner getPensioner() {
         return pensioner;
     }
-
-
-    @Builder
-    public Overpayment(String idRos, Long isId, Boolean zajav, String comment, Department department, ReasonsForOverpayments reasonsForOverpayments, SpecificationOfTheReasonsForOverpayments specificationOfTheReasonsForOverpayments, Carer carer, Pensioner pensioner) {
-        this.idRos = idRos;
-        this.isId = isId;
-        this.zajav = zajav;
-        this.comment = comment;
-        this.department = department;
-        this.reasonsForOverpayments = reasonsForOverpayments;
-        this.specificationOfTheReasonsForOverpayments = specificationOfTheReasonsForOverpayments;
-        this.carer = carer;
-        this.pensioner = pensioner;
-    }
-/*    @OneToMany(mappedBy = "overpaymentOverpayment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CarerOverpayment> carer = new ArrayList<>();
-
-
-    public void addCarer(CarerOverpayment carerOverpayment) {
-        this.carer.add(carerOverpayment);
-        carerOverpayment.setOverpayment(this);
-    }
-
-    public void setAllCarer(List<CarerOverpayment> carerOverpayments) {
-        for (CarerOverpayment c :
-                carerOverpayments) {
-            addCarer(c);
-        }
-    }
-
-    public void removeCarer(CarerOverpayment carerOverpayment) {
-        this.carer.remove(carerOverpayment);
-        carerOverpayment.setOverpayment(null);
-    }*/
 
 }

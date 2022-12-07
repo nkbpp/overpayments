@@ -79,7 +79,7 @@ $(document).ready(function () {
 
             console.log(json)
 
-            /*getSpinnerTable("tableStatistics");
+            getSpinnerTable("tableStatistics");
             $.ajax({
                 url: "/overpayment/statistics/find",
                 data: json,
@@ -88,28 +88,27 @@ $(document).ready(function () {
                 contentType: "application/json",
                 type: 'POST',
                 success: function (response) {
+                    console.log(response)
                     var trHTML = '';
                     $('#tableStatistics tbody').html("");
-                    $.each(response, function (i, item) {
-                        let col = $("#col");
                         trHTML +=
                             '<tr>' +
-                            '<th>' + (+i + 1) + '</th>' +
+                            '<th>' + (1) + '</th>' +
                             '<td>' + replaceNull("") + '</td>' +
-                            '<td>' + replaceNull("") + '</td>' +
+                            '<td>' + replaceNull(response.revealed) + '</td>' +
+                            '<td>' + replaceNull(response.redeemed) + '</td>' +
                             '<td>' + replaceNull("") + '</td>' +
                             '<td>' + replaceNull("") + '</td>' +
                             '<td>' + replaceNull("") + '</td>' +
                             '<td>' + replaceNull("") + '</td>' +
                             '</tr>';
-                    });
                     $('#tableStatistics').append(trHTML);
                 },
                 error: function (response) {
                     initialToats("Ошибка!", response.responseJSON.message , "err").show();
                     $('#tablefindresult tbody').html("");
                 }
-            });*/
+            });
         }
     });
 

@@ -28,24 +28,24 @@ $(document).ready(function () {
     }
 
     //обработка ENTER
-    $("#tel").keyup(function(event){
-        if(event.keyCode === 13){
+    $("#tel").keyup(function (event) {
+        if (event.keyCode === 13) {
             event.preventDefault();
             $("#formCitizenData #btnUpdatePensioner").click();
         }
     });
-    $("#formFindCarer #snils").keyup(function(event){
-        if(event.keyCode === 13){
+    $("#formFindCarer #snils").keyup(function (event) {
+        if (event.keyCode === 13) {
             event.preventDefault();
             $("#formFindCarer .btnFindCitizenSNILS").click();
         }
     });
-/*    $("#formOverpaymentData #comment").keyup(function(event){
-        if(event.keyCode === 13){
-            event.preventDefault();
-            $("#formOverpaymentData #btnSaveOverpaymentData").click();
-        }
-    });*/
+    /*    $("#formOverpaymentData #comment").keyup(function(event){
+            if(event.keyCode === 13){
+                event.preventDefault();
+                $("#formOverpaymentData #btnSaveOverpaymentData").click();
+            }
+        });*/
 
     //Чистка select
     BODY.on('click', 'button', function () {
@@ -85,11 +85,20 @@ $(document).ready(function () {
             $('#nav-NotificationLetters-tab').removeAttr("disabled").removeClass("text-muted");
         },
         error: function (response) {
-            initialToats("Ошибка!", response.responseJSON.message , "err").show();
+            initialToats("Ошибка!", response.responseJSON.message, "err").show();
         }
     });
 
     BODY.on('click', 'button', function () {
+
+        if ($(this).attr('name') === "delLegalManagement") {
+            $(this).closest("[name='LegalManagementContainer']").remove()
+        }
+
+        if ($(this).attr('id') === "btnLegalManagement") {
+            getLegalManagement()
+        }
+
 
         if ($(this).attr('id') === "btnUpdatePensioner") {
             let id = $("#nav-CitizenData-tab").attr("data-id");
@@ -107,10 +116,10 @@ $(document).ready(function () {
                 contentType: "application/json",
                 type: "PUT",
                 success: function () {
-                    initialToats("Успешно!","Данные изменены!","success").show();
+                    initialToats("Успешно!", "Данные изменены!", "success").show();
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                 }
             });
         }
@@ -149,7 +158,7 @@ $(document).ready(function () {
                     $('#formFindCarer .btnFindCitizenSNILS').removeAttr("name");
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                 }
             });
         }
@@ -177,13 +186,13 @@ $(document).ready(function () {
                         } else { //данные в базе overpayment есть
                             let specific = overpayment.specificationOfTheReasonsForOverpaymentsDto;
                             if (specific !== undefined && specific !== null) {
-                                if(specific.documentPensioner.nameFile !== undefined && specific.documentPensioner.nameFile !== null){
+                                if (specific.documentPensioner.nameFile !== undefined && specific.documentPensioner.nameFile !== null) {
                                     pensionerLetter = '<a class="btn btn-link" ' +
                                         'href="/overpayment/fullInformationOverpayment/download?who=pensioner' +
                                         '&isId=' + item.isId +
                                         '">' + specific.documentPensioner.nameFile + '</a>';
                                 }
-                                if(specific.documentCarer.nameFile !== undefined && specific.documentCarer.nameFile !== null){
+                                if (specific.documentCarer.nameFile !== undefined && specific.documentCarer.nameFile !== null) {
                                     carerLetter = '<a class="btn btn-link" ' +
                                         'href="/overpayment/fullInformationOverpayment/download?who=carer' +
                                         '&isId=' + item.isId +
@@ -206,10 +215,12 @@ $(document).ready(function () {
                     tableBody.append(trHTML);
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                 }
             });
         }
+
+
 
     })
 
@@ -271,6 +282,40 @@ $(document).ready(function () {
                             $("#isApplicationForVoluntaryRedemption2").prop('checked', true);
                         }
 
+                        //взыскание
+                        if (response.controlUFSSP === true) {
+                            $("#controlUFSSPYes").prop('checked', true);
+                        } else {
+                            $("#controlUFSSPNo").prop('checked', true);
+                        }
+                        if (response.theFactThatTheDebtorHasAJob === true) {
+                            $("#theFactThatTheDebtorHasAJobYes").prop('checked', true);
+                        } else {
+                            $("#theFactThatTheDebtorHasAJobNo").prop('checked', true);
+                        }
+                        let legalDepartment = response.legalDepartment;
+                        if (legalDepartment.length > 0) {
+                            for (let i = 0; i < legalDepartment.length; i++) {
+                                getLegalManagement(
+                                    replaceNull(legalDepartment[i].transferDate),
+                                    replaceNull(legalDepartment[i].returnDate)
+                                )
+                            }
+                        }
+                        /*if(){
+
+                        }
+                        */
+
+                        $("#dateOfCourtDecision").val(replaceNull(response.dateOfCourtDecision)),
+                            $("#dateUFSSP").val(replaceNull(response.dateUFSSP)),
+                            $("#dateUVPSV").val(replaceNull(response.dateUVPSV)),
+
+                            $("#writeOffProtocolDate").val(replaceNull(response.writeOffProtocolDate)),
+                            $("#writeOffOrderNumber").val(replaceNull(response.writeOffOrderNumber)),
+                            $("#writeOffOrderDate").val(replaceNull(response.writeOffOrderDate)),
+                            $("#writeOffSum").val(replaceNull(response.writeOffSum))
+
                         $("#btnSaveOverpaymentData").text("Изменить").attr("data-type", "update");
                     }
 
@@ -320,7 +365,7 @@ $(document).ready(function () {
                                     $("#dateOfDeathOfPensioner").val(response.dsm);
                                 },
                                 error: function (response) {
-                                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                                 }
                             });
 
@@ -328,7 +373,7 @@ $(document).ready(function () {
                             $("#formFindCarer").removeClass("d-none");
                         },
                         error: function (response) {
-                            initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                            initialToats("Ошибка!", response.responseJSON.message, "err").show();
                         }
                     });
 
@@ -336,7 +381,7 @@ $(document).ready(function () {
                     $("#formFindCarer").removeClass("d-none");
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                     $("#formOverpaymentData").addClass("d-none");
                     $("#formFindCarer").addClass("d-none");
                 }
@@ -404,12 +449,12 @@ $(document).ready(function () {
                         $("#formFindCarer #tel").val(replaceNull(response[0].tel));
                         $('#formFindCarer .btnFindCitizenSNILS').attr("name", replaceNull(response[0].id));
                     } else {
-                        initialToats("Успешно!","Нет результатов!","success").show();
+                        initialToats("Успешно!", "Нет результатов!", "success").show();
                     }
 
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                 }
             });
         }
@@ -446,6 +491,19 @@ $(document).ready(function () {
             //Заявление о добровольном погашении
             let isApplicationForVoluntaryRedemption = $("#isApplicationForVoluntaryRedemption1").is(':checked')
 
+            //взыскание
+            let controlUFSSP = $("#controlUFSSPYes").is(':checked')
+            let theFactThatTheDebtorHasAJob = $("#theFactThatTheDebtorHasAJobYes").is(':checked')
+
+            let arrLegalDepartment = []; // объявляем массив
+            let lmi = $("#legalManagement input");
+            for (let i = 0, j = 0; i < lmi.length; i = i + 2, j++) {
+                let legalDepartment = {
+                    "transferDate": lmi.eq(i).val(),
+                    "returnDate": lmi.eq(i + 1).val()
+                };
+                arrLegalDepartment[j] = legalDepartment;
+            };
 
             let data = JSON.stringify(
                 {
@@ -466,7 +524,17 @@ $(document).ready(function () {
                         "id": structuralSubdivision,
                     },
                     "comment": comment,
-                    "isApplicationForVoluntaryRedemption": isApplicationForVoluntaryRedemption
+                    "isApplicationForVoluntaryRedemption": isApplicationForVoluntaryRedemption,
+                    "writeOffProtocolDate": $("#writeOffProtocolDate").val(),
+                    "writeOffOrderNumber": $("#writeOffOrderNumber").val(),
+                    "writeOffOrderDate": $("#writeOffOrderDate").val(),
+                    "writeOffSum": $("#writeOffSum").val(),
+                    "controlUFSSP": controlUFSSP,
+                    "theFactThatTheDebtorHasAJob": theFactThatTheDebtorHasAJob,
+                    "dateOfCourtDecision": $("#dateOfCourtDecision").val(),
+                    "dateUFSSP": $("#dateUFSSP").val(),
+                    "dateUVPSV": $("#dateUVPSV").val(),
+                    "legalDepartment": arrLegalDepartment,
                 });
 
             if ($("#btnSaveOverpaymentData").attr("data-type") === "save") {
@@ -478,10 +546,10 @@ $(document).ready(function () {
                     contentType: "application/json",
                     type: "POST",
                     success: function () {
-                        initialToats("Успешно!","Данные сохранены!","success").show();
+                        initialToats("Успешно!", "Данные сохранены!", "success").show();
                     },
                     error: function (response) {
-                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                        initialToats("Ошибка!", response.responseJSON.message, "err").show();
                     }
                 });
             } else {
@@ -493,16 +561,15 @@ $(document).ready(function () {
                     contentType: "application/json",
                     type: "PUT",
                     success: function () {
-                        initialToats("Успешно!","Данные изменены!","success").show();
+                        initialToats("Успешно!", "Данные изменены!", "success").show();
                     },
                     error: function (response) {
-                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                        initialToats("Ошибка!", response.responseJSON.message, "err").show();
                     }
                 });
             }
 
         }
-
     });
 
     //выбор причины
@@ -527,7 +594,7 @@ $(document).ready(function () {
                     });
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                 }
             });
         }
@@ -554,6 +621,19 @@ function clearInputOverpaymentData() {
     $("#comment").val('');
     $("#isApplicationForVoluntaryRedemption1").prop('checked', true);
 
+    $("#writeOffProtocolDate").val('');
+    $("#writeOffOrderNumber").val('');
+    $("#writeOffOrderDate").val('');
+    $("#writeOffSum").val('');
+
+    //взыскание
+    $("#controlUFSSPNo").prop('checked', true);
+    $("#theFactThatTheDebtorHasAJobNo").prop('checked', true);
+    $("#dateOfCourtDecision").val('');
+    $("#dateUFSSP").val('');
+    $("#dateUVPSV").val('');
+    $("#legalManagement").html("")
+
     $("#btnSaveOverpaymentData").text("").removeAttr("data-type");
 }
 
@@ -571,8 +651,30 @@ function clearFindCarer() {
 //для погашения и удержания
 function clearSELECTIZESPECIFICATIONREASONS() {
     let items = SELECTIZESPECIFICATIONREASONS[0].selectize.options;
-    //console.log(items)
     for (let i in items) {
         SELECTIZESPECIFICATIONREASONS[0].selectize.removeOption(items[i].value);
     }
+}
+
+function getLegalManagement(val1 = "", val2 = "") {
+
+    $("#legalManagement").append(
+        "<div class='col-12 row' name='LegalManagementContainer'>" +
+        "     <div class='col-3'>" +
+        "          <label class='form-label m-0'>Дата передачи</label>" +
+        "          <input type='text' class='form-control datepicker' placeholder='дд.мм.гггг' value='" + val1 + "'>" +
+        "     </div>" +
+        "     <div class='col-3'>" +
+        "          <label class='form-label m-0'>Дата возврата</label>" +
+        "          <input type='text' class='form-control datepicker' placeholder='дд.мм.гггг' value='" + val2 + "'>" +
+        "     </div>" +
+        "     <div class='col-3 d-flex align-items-end'>" +
+        "          <button class='btn btn-secondary' type='button' name='delLegalManagement'>Удалить</button>" +
+        "     </div>" +
+        "</div>"
+    );
+    $('#legalManagement .datepicker').datepicker({
+        format: 'dd.mm.yyyy',
+        language: "ru"
+    });
 }

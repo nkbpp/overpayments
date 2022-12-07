@@ -2,8 +2,10 @@ package ru.pfr.overpayments.model.overpayment.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.pfr.overpayments.model.overpayment.dto.DateOfSubmissionOfDocumentsToTheLegalDepartmentDto;
 import ru.pfr.overpayments.model.overpayment.dto.OverpaymentDto;
 import ru.pfr.overpayments.model.overpayment.entity.Carer;
+import ru.pfr.overpayments.model.overpayment.entity.DateOfSubmissionOfDocumentsToTheLegalDepartment;
 import ru.pfr.overpayments.model.overpayment.entity.Overpayment;
 import ru.pfr.overpayments.model.overpayment.entity.Pensioner;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.Department;
@@ -19,6 +21,10 @@ import ru.pfr.overpayments.service.overpayment.referenceBook.ReasonsForOverpayme
 import ru.pfr.overpayments.service.overpayment.referenceBook.SpecificationOfTheReasonsForOverpaymentsService;
 import ru.pfr.overpayments.service.ros.CitizenRosService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class OverpaymentMapper {
@@ -32,8 +38,16 @@ public class OverpaymentMapper {
     private final SpecificationOfTheReasonsForOverpaymentsService specificationOfTheReasonsForOverpaymentsService;
     private final SpecificationOfTheReasonsForOverpaymentsMapper specificationOfTheReasonsForOverpaymentsMapper;
     private final PensionerService pensionerService;
+    private final DateOfSubmissionOfDocumentsToTheLegalDepartmentMapper dateOfSubmissionOfDocumentsToTheLegalDepartmentMapper;
 
     public OverpaymentDto toDto(Overpayment obj) {
+        List<DateOfSubmissionOfDocumentsToTheLegalDepartmentDto> legalDepartment = new ArrayList<>();
+        if(obj.getLegalDepartment() != null){
+            for (var ld :
+                    obj.getLegalDepartment()) {
+                legalDepartment.add(dateOfSubmissionOfDocumentsToTheLegalDepartmentMapper.toDto(ld));
+            }
+        }
         return OverpaymentDto.builder()
                 .idPensioner(obj.getId())
                 .idRos(obj.getIdRos())
@@ -62,6 +76,17 @@ public class OverpaymentMapper {
                                 null :
                         carerMapper.toDto(obj.getCarer())
                 )
+                .writeOffOrderDate(obj.getWriteOffOrderDate())
+                .writeOffOrderNumber(obj.getWriteOffOrderNumber())
+                .writeOffProtocolDate(obj.getWriteOffProtocolDate())
+                .writeOffSum(obj.getWriteOffSum())
+                .controlUFSSP(obj.getControlUFSSP())
+                .theFactThatTheDebtorHasAJob(obj.getTheFactThatTheDebtorHasAJob())
+
+                .dateOfCourtDecision(obj.getDateOfCourtDecision())
+                .dateUFSSP(obj.getDateUFSSP())
+                .dateUVPSV(obj.getDateUVPSV())
+                .legalDepartment(legalDepartment)
                 .build();
     }
 
@@ -87,6 +112,14 @@ public class OverpaymentMapper {
                 departmentService.findById(dto.getDepartmentDto().getId());
         Pensioner pensioner = pensionerService.findById(dto.getIdPensioner());
 
+        List<DateOfSubmissionOfDocumentsToTheLegalDepartment> legalDepartment = new ArrayList<>();
+        if(dto.getLegalDepartment() != null){
+            for (var ld :
+                    dto.getLegalDepartment()) {
+                legalDepartment.add(dateOfSubmissionOfDocumentsToTheLegalDepartmentMapper.fromDto(ld));
+            }
+        }
+
         return Overpayment.builder()
                 .idRos(pensioner.getIdRos())
                 .isId(dto.getIdOverpayment())
@@ -97,6 +130,16 @@ public class OverpaymentMapper {
                 .reasonsForOverpayments(reasonsForOverpayments)
                 .specificationOfTheReasonsForOverpayments(specificationOfTheReasonsForOverpayments)
                 .pensioner(pensioner)
+                .writeOffOrderDate(dto.getWriteOffOrderDate())
+                .writeOffOrderNumber(dto.getWriteOffOrderNumber())
+                .writeOffProtocolDate(dto.getWriteOffProtocolDate())
+                .writeOffSum(dto.getWriteOffSum())
+                .controlUFSSP(dto.getControlUFSSP())
+                .theFactThatTheDebtorHasAJob(dto.getTheFactThatTheDebtorHasAJob())
+                .dateOfCourtDecision(dto.getDateOfCourtDecision())
+                .dateUFSSP(dto.getDateUFSSP())
+                .dateUVPSV(dto.getDateUVPSV())
+                .legalDepartment(legalDepartment)
                 .build();
     }
 
