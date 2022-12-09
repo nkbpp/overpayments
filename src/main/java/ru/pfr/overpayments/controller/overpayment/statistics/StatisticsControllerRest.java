@@ -50,7 +50,7 @@ public class StatisticsControllerRest {
                     .map(fullOverpaymentsMapper::toDto)
                     .filter(fullOverpaymentDto ->
                             filterFullOverpaymentDto.getNumDistrict() == null
-                                    || pensionerService.findById(fullOverpaymentDto.getOverpayment().getIdPensioner()).getDistrict()
+                                    || pensionerService.findByIdRos(fullOverpaymentDto.getOverpayment().getIdRos()).getDistrict()
                                     .getId().equals(filterFullOverpaymentDto.getNumDistrict().getId())
                     )
                     .filter(fullOverpaymentDto ->

@@ -27,8 +27,8 @@ class CustomLocalDateTimeDeserializerRuAndEnTest {
                 = "{\"date\":\"13.08.1993\"}";
         LocalDateTime expectedDate = LocalDateTime.of(1993, 8, 13, 0, 0, 0);
 
-        TestDeserializerLocalDateTimeOrNullObject event = new ObjectMapper()
-                .readerFor(TestDeserializerLocalDateTimeOrNullObject.class)
+        TestDeserializerLocalDateTimeObject event = new ObjectMapper()
+                .readerFor(TestDeserializerLocalDateTimeObject.class)
                 .readValue(json);
 
         assertThat(event.date).isEqualTo(expectedDate);
@@ -41,8 +41,8 @@ class CustomLocalDateTimeDeserializerRuAndEnTest {
                 = "{\"date\":\"1993-08-13\"}";
         LocalDateTime expectedDate = LocalDateTime.of(1993, 8, 13, 0, 0, 0);
 
-        TestDeserializerLocalDateTimeOrNullObject event = new ObjectMapper()
-                .readerFor(TestDeserializerLocalDateTimeOrNullObject.class)
+        TestDeserializerLocalDateTimeObject event = new ObjectMapper()
+                .readerFor(TestDeserializerLocalDateTimeObject.class)
                 .readValue(json);
 
         assertThat(event.date).isEqualTo(expectedDate);
@@ -69,7 +69,7 @@ class CustomLocalDateTimeDeserializerRuAndEnTest {
 
         JsonMappingException thrown = assertThrows(JsonMappingException.class,
                 () -> new ObjectMapper()
-                        .readerFor(TestDeserializerLocalDateTimeOrNullObject.class)
+                        .readerFor(TestDeserializerLocalDateTimeObject.class)
                         .readValue(json)
         );
 

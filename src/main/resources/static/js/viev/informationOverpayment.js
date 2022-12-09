@@ -4,6 +4,7 @@ let SELECTIZESPECIFICATIONREASONS;
 let CHANGE = true;
 $(document).ready(function () {
 
+
     ARRSELECTIZE = $("#structuralSubdivision").selectize({
         create: true,
         //sortField: "text",
@@ -83,6 +84,7 @@ $(document).ready(function () {
 
             $('#nav-OverpaymentData-tab').removeAttr("disabled").removeClass("text-muted");
             $('#nav-NotificationLetters-tab').removeAttr("disabled").removeClass("text-muted");
+
         },
         error: function (response) {
             initialToats("Ошибка!", response.responseJSON.message, "err").show();
@@ -156,6 +158,8 @@ $(document).ready(function () {
                     $("#formFindCarer button.btnFindCitizenSNILS").removeClass("d-none");
                     $("#formFindCarer #snils").val('');
                     $('#formFindCarer .btnFindCitizenSNILS').removeAttr("name");
+
+                    $("label[for=structuralSubdivision-selectized]").text("Cтруктурное подразделение допустившее переплату по 16 счету")
                 },
                 error: function (response) {
                     initialToats("Ошибка!", response.responseJSON.message, "err").show();
