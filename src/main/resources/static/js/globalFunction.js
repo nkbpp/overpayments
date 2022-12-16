@@ -1,5 +1,8 @@
 function replaceNull(val){
-    return val===null?"":val;
+    return val===null ?
+        "":
+        typeof val === "string"?
+        val.trim() : val;
 }
 
 function replaceNullDecimal(val){

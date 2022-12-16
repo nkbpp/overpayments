@@ -35,6 +35,9 @@ public class VozPereRos {
     @Column(name = "PPNUM")
     private String ppnum;
 
+    @Column(name = "NN", insertable = false, updatable = false)
+    private Integer nn;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name="ID", //название столбца в родителе
@@ -43,6 +46,10 @@ public class VozPereRos {
             ),
             @JoinColumn(name="DOC", //название столбца в родителе
                     referencedColumnName="DOC", //название столбца в текущей таблице
+                    insertable = false, updatable = false
+            ),
+            @JoinColumn(name="NN", //название столбца в родителе
+                    referencedColumnName="NN", //название столбца в текущей таблице
                     insertable = false, updatable = false
             )
     })

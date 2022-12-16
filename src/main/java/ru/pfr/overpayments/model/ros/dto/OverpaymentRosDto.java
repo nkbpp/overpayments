@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class OverpaymentRosDto extends ParentOverpaymentRosDto {
     @Builder
-    public OverpaymentRosDto(Long isId, String id, String doc, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRosDto vidVpl, List<UderRosDto> uderRosDto, List<VozPereRosDto> vozPereRosDto) {
-        super(isId, id, doc, docdv, sroks, srokpo, close_date, spe, vinap, vidVpl, uderRosDto, vozPereRosDto);
+    public OverpaymentRosDto(Long isId, String id, String doc, Integer nn, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRosDto vidVpl, List<UderRosDto> uderRosDto, List<VozPereRosDto> vozPereRosDto) {
+        super(isId, id, doc, nn, docdv, sroks, srokpo, close_date, spe, vinap, vidVpl, uderRosDto, vozPereRosDto);
     }
+
 }

@@ -18,7 +18,7 @@ public interface OverpaymentRosJpaRepository extends JpaRepository<OverpaymentRo
                     "id = ?1 " +
                     "order by SROKPO desc ",
             nativeQuery = true)
-    List<OverpaymentRos> findOverpaymentById(String id);
+    List<OverpaymentRos> findOverpaymentByIdRos(String id);
 
     @Query(
             value = "SELECT * FROM VPL.IS " +

@@ -14,9 +14,9 @@ $(document).ready(function () {
     $("#numDistrict").selectize({
         create: true
     });
-/*    SELECTIZEDSTRUCTURAL = $("#structuralSubdivision").selectize({
-        create: true
-    });*/
+    /*    SELECTIZEDSTRUCTURAL = $("#structuralSubdivision").selectize({
+            create: true
+        });*/
     SELECTIZEREASONS = $("#selectReasonsForOverpayments").selectize({
         create: true
     });
@@ -47,7 +47,7 @@ $(document).ready(function () {
                     });
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                 }
             });
         }
@@ -88,24 +88,43 @@ $(document).ready(function () {
                 contentType: "application/json",
                 type: 'POST',
                 success: function (response) {
-                    console.log(response)
-                    var trHTML = '';
+                    console.log("r = " + response)
                     $('#tableStatistics tbody').html("");
+                    var trHTML = '';
+
+                    $.each(response, function (i, item) {
+                        let trHTML2 = "";
+
+                        //console.log("i = " + item.statistics[i])
+                        for (let i2 = 0; i2 < item.statistics.length; i2++) {
+
+                            if(i2 !== 0) {
+                                trHTML2 += '<tr>' +
+                                '<th></th>' +
+                                '<td></td>';
+                            }
+                            trHTML2 +=
+                                '<td>' +
+                                (item.statistics[i2].reason === "" ? "Причина не указана" :
+                                replaceNull(item.statistics[i2].reason)) +
+                                '</td>' +
+                                '<td>' + replaceNull(item.statistics[i2].v1) + '</td>' +
+                                '<td>' + replaceNull(item.statistics[i2].d1) + '</td>' +
+                                '</tr>';
+                        };
+
+                        //console.log(trHTML2)
+
                         trHTML +=
                             '<tr>' +
-                            '<th>' + (1) + '</th>' +
-                            '<td>' + replaceNull("") + '</td>' +
-                            '<td>' + replaceNull(response.revealed) + '</td>' +
-                            '<td>' + replaceNull(response.redeemed) + '</td>' +
-                            '<td>' + replaceNull("") + '</td>' +
-                            '<td>' + replaceNull("") + '</td>' +
-                            '<td>' + replaceNull("") + '</td>' +
-                            '<td>' + replaceNull("") + '</td>' +
-                            '</tr>';
+                            '<th>' + (+i + 1) + '</th>' +
+                            '<td>' + replaceNull(item.district.name) + '</td>' +
+                            trHTML2;
+                    });
                     $('#tableStatistics').append(trHTML);
                 },
                 error: function (response) {
-                    initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                    initialToats("Ошибка!", response.responseJSON.message, "err").show();
                     $('#tablefindresult tbody').html("");
                 }
             });
@@ -113,94 +132,94 @@ $(document).ready(function () {
     });
 
     //обработка ENTER
-/*    $("#formFindPensioner").on("submit", function(event){
-        event.preventDefault();
-        $("#formFindPensioner button").click();
-    })
+    /*    $("#formFindPensioner").on("submit", function(event){
+            event.preventDefault();
+            $("#formFindPensioner button").click();
+        })
 
-    BODY.on('click', 'button', function () {
+        BODY.on('click', 'button', function () {
 
-        // кнопка поиск по снилс
-        if ($(this).attr('id') === "btnFindPensionerSNILS") {
-            if(correctInputs()){findPensioner("SNILS")}
-        }
-
-        // кнопка поиск по фио
-        if ($(this).attr('id') === "btnFindPensionerFIO") {
-            if(correctInputs()){findPensioner("FIO")}
-        }
-
-        // кнопка поиск по району
-        if ($(this).attr('id') === "btnFindPensionerDistrict") {
-            if(correctInputs()){findPensioner("District")}
-        }
-
-    });
-
-    //caption в таблице
-    BODY.on('change', '#col', function () {
-        // кнопка поиск по снилс
-        if ($("#btnFindPensionerSNILS").length > 0) {
-            if(correctInputs()){findPensioner("SNILS")}
-        }
-
-        // кнопка поиск по фио
-        if ($("#btnFindPensionerFIO").length > 0) {
-            if(correctInputs()){findPensioner("FIO")}
-        }
-
-        // кнопка поиск по району
-        if ($("#btnFindPensionerDistrict").length > 0) {
-            if(correctInputs()){findPensioner("District")}
-        }
-    });
-
-    BODY.on('click', 'a', function () {
-        //переключатели страниц pagination
-        if ($(this).parents("#paginationFindPensioner").attr("id") === "paginationFindPensioner") {
-            if(correctInputs()){
-                clickPagination($(this), "#paginationFindPensioner");
-                let howFind;
-                if ($("#btnFindPensionerDistrict").length > 0) {
-                    howFind = "District";
-                }
-                if ($("#btnFindPensionerSNILS").length > 0) {
-                    howFind = "SNILS";
-                }
-                if ($("#btnFindPensionerFIO").length > 0) {
-                    howFind = "FIO";
-                }
-                findPensioner(howFind);
+            // кнопка поиск по снилс
+            if ($(this).attr('id') === "btnFindPensionerSNILS") {
+                if(correctInputs()){findPensioner("SNILS")}
             }
-        }
 
-        if ($(this).hasClass("linkInformationOverpayments")) {
-            document.location.href = '/overpayment/vievInformationOverpayments/' + $(this).attr("id");
-        }
+            // кнопка поиск по фио
+            if ($(this).attr('id') === "btnFindPensionerFIO") {
+                if(correctInputs()){findPensioner("FIO")}
+            }
 
-        /!*УДАЛИТЬ*!/
-        if ($(this).hasClass("deletePensioner")) {
-            if (confirm("Удалить пенсионера с СНИЛС: " +
-                $(this).parents('tr').children('td').eq(0).text())) {
-                let id = $(this).attr("id");
-                $.ajax({
-                    url: "/overpayment/pensioner/" + id,
-                    cache: false,
-                    processData: false,
-                    contentType: "application/json",
-                    type: 'DELETE',
-                    success: function () {
-                        //поиск добавленного id
-                        $(".deletePensioner[id=" + id + "]").parents('tr').remove();
-                    },
-                    error: function (response) {
-                        initialToats("Ошибка!", response.responseJSON.message , "err").show();
+            // кнопка поиск по району
+            if ($(this).attr('id') === "btnFindPensionerDistrict") {
+                if(correctInputs()){findPensioner("District")}
+            }
+
+        });
+
+        //caption в таблице
+        BODY.on('change', '#col', function () {
+            // кнопка поиск по снилс
+            if ($("#btnFindPensionerSNILS").length > 0) {
+                if(correctInputs()){findPensioner("SNILS")}
+            }
+
+            // кнопка поиск по фио
+            if ($("#btnFindPensionerFIO").length > 0) {
+                if(correctInputs()){findPensioner("FIO")}
+            }
+
+            // кнопка поиск по району
+            if ($("#btnFindPensionerDistrict").length > 0) {
+                if(correctInputs()){findPensioner("District")}
+            }
+        });
+
+        BODY.on('click', 'a', function () {
+            //переключатели страниц pagination
+            if ($(this).parents("#paginationFindPensioner").attr("id") === "paginationFindPensioner") {
+                if(correctInputs()){
+                    clickPagination($(this), "#paginationFindPensioner");
+                    let howFind;
+                    if ($("#btnFindPensionerDistrict").length > 0) {
+                        howFind = "District";
                     }
-                });
+                    if ($("#btnFindPensionerSNILS").length > 0) {
+                        howFind = "SNILS";
+                    }
+                    if ($("#btnFindPensionerFIO").length > 0) {
+                        howFind = "FIO";
+                    }
+                    findPensioner(howFind);
+                }
             }
-        }
 
-    });*/
+            if ($(this).hasClass("linkInformationOverpayments")) {
+                document.location.href = '/overpayment/vievInformationOverpayments/' + $(this).attr("id");
+            }
+
+            /!*УДАЛИТЬ*!/
+            if ($(this).hasClass("deletePensioner")) {
+                if (confirm("Удалить пенсионера с СНИЛС: " +
+                    $(this).parents('tr').children('td').eq(0).text())) {
+                    let id = $(this).attr("id");
+                    $.ajax({
+                        url: "/overpayment/pensioner/" + id,
+                        cache: false,
+                        processData: false,
+                        contentType: "application/json",
+                        type: 'DELETE',
+                        success: function () {
+                            //поиск добавленного id
+                            $(".deletePensioner[id=" + id + "]").parents('tr').remove();
+                        },
+                        error: function (response) {
+                            initialToats("Ошибка!", response.responseJSON.message , "err").show();
+                        }
+                    });
+                }
+            }
+
+        });*/
 
 });
 

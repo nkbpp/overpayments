@@ -16,10 +16,10 @@ public class CitizenRosService {
 
     public List<CitizenRos> findPensionerBySnils(String snils){
         return repository
-                .findBySnils(snils)
-                .stream()
-                .filter((p) -> (p.getPw()==null || p.getPw().equals("0")))
-                .collect(Collectors.toList());
+                .findBySnils(snils);
+                //.stream()
+                //.filter((p) -> (p.getPw()==null || p.getPw().equals("0")))
+                //.collect(Collectors.toList());
     }
 
     public List<CitizenRos> findBySnils(String snils){

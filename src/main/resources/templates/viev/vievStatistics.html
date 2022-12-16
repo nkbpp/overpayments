@@ -12,8 +12,8 @@
 
     <div class="col-12" th:insert="fragment/select :: district">
     </div>
-<!--    <div class="col-12" th:insert="fragment/select :: structuralSubdivision">
-    </div>-->
+    <!--    <div class="col-12" th:insert="fragment/select :: structuralSubdivision">
+        </div>-->
     <div class="col-12" th:insert="fragment/select :: reasonsForOverpayments">
     </div>
     <div class="col-12" th:insert="fragment/select :: specificationOfTheReasonsForOverpayments">
@@ -22,11 +22,13 @@
     <div class="col-12 row">
         <div class="col-3">
             <label for="dateDetectionS" class="form-label m-0">Дата выявления c</label>
-            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateDetectionS" name="dateDetectionS">
+            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateDetectionS"
+                   name="dateDetectionS">
         </div>
         <div class="col-3">
             <label for="dateDetectionPo" class="form-label m-0">Дата выявления по</label>
-            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateDetectionPo" name="dateDetectionPo">
+            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateDetectionPo"
+                   name="dateDetectionPo">
         </div>
     </div>
 
@@ -44,11 +46,13 @@
     <div class="col-12 row">
         <div class="col-3">
             <label for="dateWriteOffS" class="form-label m-0">Дата списания c</label>
-            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateWriteOffS" name="dateWriteOffS">
+            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateWriteOffS"
+                   name="dateWriteOffS">
         </div>
         <div class="col-3">
             <label for="dateWriteOffPo" class="form-label m-0">Дата списания по</label>
-            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateWriteOffPo" name="dateWriteOffPo">
+            <input type="text" placeholder="дд.мм.гггг" class="form-control datepicker" id="dateWriteOffPo"
+                   name="dateWriteOffPo">
         </div>
     </div>
     <div>
@@ -59,20 +63,31 @@
 </form>
 
 
-<table id="tableStatistics" class="table table-block table-secondary table-striped table-hover table-bordered text-center caption-top table-sm">
+<table id="tableStatistics"
+       class="table table-block table-secondary table-striped table-hover table-bordered text-center caption-top table-sm">
     <caption>
         Статистика
     </caption>
     <thead>
+    <!--    <tr>
+            <th>№ п/п</th>
+            <th>Остаток переплат на начало месяца</th>
+            <th>Выявлено</th>
+            <th>Погашено</th>
+            <th>Удержано</th>
+            <th>Списано</th>
+            <th>Переплата выбыла</th>
+            <th>Остаток на конец месяца</th>
+        </tr>-->
     <tr>
-        <th>№ п/п</th>
-        <th>Остаток переплат на начало месяца</th>
-        <th>Выявлено</th>
-        <th>Погашено</th>
-        <th>Удержано</th>
-        <th>Списано</th>
-        <th>Переплата выбыла</th>
-        <th>Остаток на конец месяца</th>
+        <th rowspan="2">№ п/п</th>
+        <th rowspan="2">Наименование района</th>
+        <th rowspan="2">Причина переплаты</th>
+        <th colspan="2">Выявлено</th>
+    </tr>
+    <tr>
+        <th>кол-во</th>
+        <th>сумма</th>
     </tr>
     </thead>
     <tbody>

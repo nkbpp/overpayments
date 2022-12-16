@@ -44,7 +44,10 @@ public class FullOverpaymentsMapper {
                         .map(vozPereRos -> vozPereRosMapper.toDto(vozPereRos))
                         .collect(Collectors.toList())
                 )
-                .overpayment(overpaymentMapper.toDto(obj.getOverpayment()))
+                .overpayment(
+                        obj.getOverpayment() == null ? null :
+                        overpaymentMapper.toDto(obj.getOverpayment())
+                )
                 .build();
     }
 

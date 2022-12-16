@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Table(name = "district")
-public class District {
+public class District implements Comparable<District> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,4 +23,8 @@ public class District {
 
     private String name;
 
+    @Override
+    public int compareTo(District o) {
+        return this.kod.compareTo(o.kod);
+    }
 }

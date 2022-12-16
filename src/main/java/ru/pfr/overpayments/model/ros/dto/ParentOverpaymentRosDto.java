@@ -20,6 +20,8 @@ public class ParentOverpaymentRosDto {
 
     private String doc; //номер документа
 
+    private Integer nn;
+
     @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     private LocalDate docdv; //дата выдачи исполнит.док-та
 

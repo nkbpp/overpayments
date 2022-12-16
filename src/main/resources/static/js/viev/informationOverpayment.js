@@ -144,7 +144,7 @@ $(document).ready(function () {
                         trHTML +=
                             '<tr>' +
                             '<th>' + (+i + 1) + '</th>' +
-                            '<td>' + replaceNull(item.doc) + '</td>' +
+                            '<td>' + replaceNull(item.doc) + '/' + replaceNull(item.nn) + '</td>' +
                             '<td>' + replaceNull(item.sroks) + '</td>' +
                             '<td>' + replaceNull(item.srokpo) + '</td>' +
                             '<td>' + replaceNull(item.spe) + '</td>' +
@@ -182,13 +182,15 @@ $(document).ready(function () {
                     let trHTML = '';
                     let tableBody = $('#tableNotificationLetters tbody');
                     tableBody.html("");
+
                     $.each(responseFull, function (i, item) {
                         let pensionerLetter = "";
                         let carerLetter = "";
                         let overpayment = item.overpayment;
-                        if (overpayment === "" || overpayment === undefined) { //данных в базе overpayment нет
+                        if (overpayment === null || overpayment === "" || overpayment === undefined) { //данных в базе overpayment нет
                         } else { //данные в базе overpayment есть
                             let specific = overpayment.specificationOfTheReasonsForOverpaymentsDto;
+                            //console.log(overpayment)
                             if (specific !== undefined && specific !== null) {
                                 if (specific.documentPensioner.nameFile !== undefined && specific.documentPensioner.nameFile !== null) {
                                     pensionerLetter = '<a class="btn btn-link" ' +
@@ -207,7 +209,7 @@ $(document).ready(function () {
                         trHTML +=
                             '<tr>' +
                             '<th>' + (+i + 1) + '</th>' +
-                            '<td>' + replaceNull(item.doc) + '</td>' +
+                            '<td>' + replaceNull(item.doc) + '/' + replaceNull(item.nn) + '</td>' +
                             '<td>' + replaceNull(item.sroks) + '</td>' +
                             '<td>' + replaceNull(item.srokpo) + '</td>' +
                             '<td>' + replaceNull(item.spe) + '</td>' +
@@ -332,11 +334,11 @@ $(document).ready(function () {
                         contentType: "application/json",
                         type: 'GET',
                         success: function (response) {
-                            $("#documentNumber").val(response.doc);
-                            $("#overpaymentPeriodFrom").val(response.sroks);
-                            $("#overpaymentPeriodFor").val(response.srokpo);
-                            $("#overpaymentAmount").val(response.spe);
-                            $("#dateOfDetectionOfOverpayment").val(response.docdv);
+                            $("#documentNumber").val(replaceNull(response.doc)  + '/' + replaceNull(response.nn));
+                            $("#overpaymentPeriodFrom").val(replaceNull(response.sroks));
+                            $("#overpaymentPeriodFor").val(replaceNull(response.srokpo));
+                            $("#overpaymentAmount").val(replaceNull(response.spe));
+                            $("#dateOfDetectionOfOverpayment").val(replaceNull(response.docdv));
 
                             let trUderHTML = "";
                             let zad = +response.spe;
@@ -345,7 +347,7 @@ $(document).ready(function () {
                                 trUderHTML +=
                                     '<tr>' +
                                     '<th>' + (+i + 1) + '</th>' +
-                                    '<td>' + replaceNull(response.doc) + '</td>' +
+                                    '<td>' + replaceNull(response.doc)  + '/' + replaceNull(response.nn) + '</td>' +
                                     '<td>' + replaceNull(uder.god) + '</td>' +
                                     '<td>' + replaceNull(uder.mes) + '</td>' +
                                     '<td>' + replaceNull(response.spe) + '</td>' +

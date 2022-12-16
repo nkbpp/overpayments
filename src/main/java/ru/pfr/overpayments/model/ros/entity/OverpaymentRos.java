@@ -12,10 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "IS", schema = "VPL")
 public class OverpaymentRos extends OverpaymentRosParent {
-
     @Builder
-    public OverpaymentRos(Long is_id, String id, String doc, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRos vidVpl, List<UderRos> uderRos, List<VozPereRos> vozPereRos) {
-        super(is_id, id, doc, docdv, sroks, srokpo, close_date, spe, vinap, vidVpl, uderRos, vozPereRos);
+    public OverpaymentRos(Long is_id, String id, String doc, Integer nn, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRos vidVpl, List<UderRos> uderRos, List<VozPereRos> vozPereRos) {
+        super(is_id, id, doc, nn, docdv, sroks, srokpo, close_date, spe, vinap, vidVpl, uderRos, vozPereRos);
     }
 }
 

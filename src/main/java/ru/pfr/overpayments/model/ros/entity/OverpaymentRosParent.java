@@ -27,6 +27,9 @@ public class OverpaymentRosParent implements Serializable {
     @Column(name = "DOC")
     private String doc; //номер документа
 
+    @Column(name = "NN")
+    private Integer nn;
+
     @Column(name = "DOCDV")
     private LocalDate docdv; //дата выдачи исполнит.док-та
 
@@ -45,8 +48,11 @@ public class OverpaymentRosParent implements Serializable {
     @Column(name = "VINAP")
     private Boolean vinap; //Вина пенсионера
 
-    @OneToOne(optional=true, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+
+
+    @OneToOne(optional=true, cascade=CascadeType.ALL)
     @JoinColumn (name="UBRAZ")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private VidVplRos vidVpl; //вид выплаты
 
     @OneToMany(targetEntity=UderRos.class, mappedBy = "overpaymentRos", //Свойство mappedBy — это то, что мы используем, чтобы сообщить Hibernate, какую переменную мы используем для представления родительского класса в нашем дочернем классе.
@@ -61,10 +67,11 @@ public class OverpaymentRosParent implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<VozPereRos> vozPereRos;
 
-    public OverpaymentRosParent(Long is_id, String id, String doc, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRos vidVpl, List<UderRos> uderRos, List<VozPereRos> vozPereRos) {
+    public OverpaymentRosParent(Long is_id, String id, String doc, Integer nn, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRos vidVpl, List<UderRos> uderRos, List<VozPereRos> vozPereRos) {
         this.is_id = is_id;
         this.id = id;
         this.doc = doc;
+        this.nn = nn;
         this.docdv = docdv;
         this.sroks = sroks;
         this.srokpo = srokpo;
@@ -76,7 +83,7 @@ public class OverpaymentRosParent implements Serializable {
         this.vozPereRos = vozPereRos;
     }
 
-    /*    @Column(name = "SZA")
+/*    @Column(name = "SZA")
     private Double sza; //Осумма задолженности
 
     @Column(name = "MPU")

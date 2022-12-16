@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.pfr.overpayments.model.annotations.OkrugSerializer;
 import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateDeserializerRuAndEnOrNull;
 import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateSerializerRu;
 import ru.pfr.overpayments.model.overpayment.dto.referenceBook.DepartmentDto;
@@ -39,6 +40,7 @@ public class OverpaymentDto {
     @JsonSerialize(using = CustomLocalDateSerializerRu.class)
     @JsonDeserialize(using = CustomLocalDateDeserializerRuAndEnOrNull.class)
     private LocalDate writeOffOrderDate;
+    @JsonSerialize(using = OkrugSerializer.class)
     private Double writeOffSum;
 
     //взыскание

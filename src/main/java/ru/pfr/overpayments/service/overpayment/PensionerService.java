@@ -84,4 +84,8 @@ public class PensionerService {
         return repository.findByIdRos(idRos).orElse(null);
     }
 
+    public List<Pensioner> findAll() {
+        return repository.findAll();
+    }
+
 }

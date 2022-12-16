@@ -10,6 +10,7 @@ import ru.pfr.overpayments.model.overpayment.entity.Pensioner;
 public class PensionerMapper {
 
     //DistrictService districtService;
+    private final DistrictMapper districtMapper;
 
     public PensionerDto toDto(Pensioner obj) {
         return PensionerDto.builder()
@@ -24,6 +25,7 @@ public class PensionerMapper {
                 .rdat(obj.getRdat())
                 .tel(obj.getTel())
                 .dsm(obj.getDsm())
+                .districtDto(districtMapper.toDto(obj.getDistrict()))
                 .build();
     }
 

@@ -46,6 +46,9 @@ public class UderRos {
     @Column(name = "UDER_PERCENT")
     private Double uderPercent; //процент удержания с твердой суммы
 
+    @Column(name = "NN", insertable = false, updatable = false)
+    private Integer nn;
+
     @Formula(
             value = "(" +
                     "SELECT sum(t0.AMOUNT) " +
@@ -56,6 +59,8 @@ public class UderRos {
                     "t0.MONTH = MES AND " +
                     "t0.YEAR = GOD AND " +
                     "t2.DOC = DOC AND " +
+                    "t2.NN = NN AND " +
+                    "t0.PARENT_ID IS NULL AND " +
                     "t0.ACTION_TYPE in (12,13) " +
                     "GROUP BY t0.month, t0.YEAR, t2.DOC " +
                     ")" //ВАЖНО в аннотации QUERY использовать не SQL а HQL
@@ -73,6 +78,8 @@ public class UderRos {
                     "t0.MONTH = MES AND " +
                     "t0.YEAR = GOD AND " +
                     "t2.DOC = DOC AND " +
+                    "t2.NN = NN AND " +
+                    "t0.PARENT_ID IS NULL AND " +
                     "t0.ACTION_TYPE in (85) " +
                     "GROUP BY t0.month, t0.YEAR, t2.DOC " +
                     ")"//ВАЖНО в аннотации QUERY использовать не SQL а HQL
@@ -87,6 +94,9 @@ public class UderRos {
             ),
             @JoinColumn(name = "DOC", //название столбца в родителе
                     referencedColumnName = "DOC" //название столбца в текущей таблице
+            ),
+            @JoinColumn(name = "NN", //название столбца в родителе
+                    referencedColumnName = "NN" //название столбца в текущей таблице
             )
     })
     private OverpaymentRos overpaymentRos;

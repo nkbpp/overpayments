@@ -154,7 +154,7 @@ function findOverpayments(id) {
                 trHTML +=
                     '<tr>' +
                     '<th>' + (+i + 1) + '</th>' +
-                    '<td>' + replaceNull(item.doc) + '</td>' +
+                    '<td>' + replaceNull(item.doc) + '/' + replaceNull(item.nn) + '</td>' +
                     '<td>' + replaceNull(item.sroks) + '</td>' +
                     '<td>' + replaceNull(item.srokpo) + '</td>' +
                     '<td>' + replaceNull(item.spe) + '</td>' +

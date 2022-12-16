@@ -19,8 +19,8 @@ public class FullOverpaymentDto extends ParentOverpaymentRosDto {
     private OverpaymentDto overpayment;
 
     @Builder
-    public FullOverpaymentDto(Long isId, String id, String doc, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRosDto vidVpl, List<UderRosDto> uderRosDto, List<VozPereRosDto> vozPereRosDto, OverpaymentDto overpayment) {
-        super(isId, id, doc, docdv, sroks, srokpo, close_date, spe, vinap, vidVpl, uderRosDto, vozPereRosDto);
+    public FullOverpaymentDto(Long isId, String id, String doc, Integer nn, LocalDate docdv, LocalDate sroks, LocalDate srokpo, LocalDate close_date, Double spe, Boolean vinap, VidVplRosDto vidVpl, List<UderRosDto> uderRosDto, List<VozPereRosDto> vozPereRosDto, OverpaymentDto overpayment) {
+        super(isId, id, doc, nn, docdv, sroks, srokpo, close_date, spe, vinap, vidVpl, uderRosDto, vozPereRosDto);
         this.overpayment = overpayment;
     }
 }

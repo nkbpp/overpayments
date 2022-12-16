@@ -16,7 +16,7 @@ public class OverpaymentsRosService {
 
     public List<OverpaymentRos> findById(String id){
         return repository
-                .findOverpaymentById(id);
+                .findOverpaymentByIdRos(id);
     }
 
     public OverpaymentRos findByIdIs(Long idIs){
