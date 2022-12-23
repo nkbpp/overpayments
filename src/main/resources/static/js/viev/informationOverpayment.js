@@ -78,6 +78,13 @@ $(document).ready(function () {
             $("#snils").val(response.snils);
             $("#surname").val(response.surname);
             $("#name").val(response.name);
+            $("#pensfiosnils").html(
+                "<p class='fw-bold m-0'>Пенсионер: &nbsp</p><p class='m-0'> " +
+                response.surname.slice(0, 1).toUpperCase() + response.surname.slice(1).toLowerCase() +
+                "&nbsp" + response.name.slice(0, 1).toUpperCase() + "." +
+                response.patronymic.slice(0, 1).toUpperCase() + "." +
+                " </p>" +
+                "<p class='fw-bold m-0'>&nbspСНИЛС:&nbsp</p><p class='m-0'> " + response.snils + "</p>");
             $("#patronymic").val(response.patronymic);
             $("#adrreg").val(response.adrreg);
             $("#tel").val(response.tel);
