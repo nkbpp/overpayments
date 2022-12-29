@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+/**
+ * Преобразует LocalDateTime в строку даты в русском формате
+ */
 public class CustomLocalDateTimeSerializerRu extends StdSerializer<LocalDateTime> {
 
     private static final DateTimeFormatter formatterRu

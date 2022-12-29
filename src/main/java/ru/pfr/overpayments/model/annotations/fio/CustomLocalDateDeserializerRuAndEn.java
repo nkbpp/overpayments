@@ -9,6 +9,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Преобразует строку даты (в русском и американском формате) в LocalDate
+ * при ошибке выбрасывает RuntimeException
+ */
 public class CustomLocalDateDeserializerRuAndEn extends StdDeserializer<LocalDate> {
 
     private static final DateTimeFormatter formatterEn

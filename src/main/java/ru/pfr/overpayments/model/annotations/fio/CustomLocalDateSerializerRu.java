@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Преобразует LocalDate в строку даты в русском формате
+ */
 public class CustomLocalDateSerializerRu extends StdSerializer<LocalDate> {
 
     private static final DateTimeFormatter formatterRu

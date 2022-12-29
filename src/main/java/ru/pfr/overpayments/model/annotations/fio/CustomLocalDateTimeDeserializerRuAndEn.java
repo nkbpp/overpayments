@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
+/**
+ * Преобразует строку даты (в русском и американском формате) в LocalDateTime
+ * при ошибке выбрасывает RuntimeException
+ */
 public class CustomLocalDateTimeDeserializerRuAndEn extends StdDeserializer<LocalDateTime> {
 
     private static final DateTimeFormatter formatterEn

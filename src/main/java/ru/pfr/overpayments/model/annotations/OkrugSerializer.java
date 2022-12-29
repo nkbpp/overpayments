@@ -7,6 +7,11 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+/**
+ * Округление чисел типа Double до 2х знаков после запятой
+ * применяется в DTO
+ * пример: @JsonSerialize(using = OkrugSerializer.class)
+ */
 public class OkrugSerializer  extends StdSerializer<Double> {
 
     protected OkrugSerializer(Class<Double> t) {
