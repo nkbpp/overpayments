@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CitizenDto {
+public abstract class CitizenDto {
 
     private Long id;
 

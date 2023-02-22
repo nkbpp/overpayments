@@ -6,9 +6,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import ru.pfr.overpayments.model.overpayment.entity.referenceBook.Department;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.ReasonsForOverpayments;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.SpecificationOfTheReasonsForOverpayments;
+import ru.pfr.overpayments.model.overpayment.entity.referenceBook.department.Department;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,6 +1,7 @@
 package ru.pfr.overpayments.service.overpayment;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.PensionerRepository;
@@ -68,12 +69,26 @@ public class PensionerService {
                 .findBySnils(snils);
     }
 
+    public List<Pensioner> findBySnils(String snils, Pageable pageable) {
+        return repository
+                .findBySnils(snils, pageable);
+    }
+
     public List<Pensioner> findByDistrict(District district) {
         return repository.findByDistrict(district);
     }
 
+    public List<Pensioner> findByDistrict(District district, Pageable pageable) {
+        return repository
+                .findByDistrict(district, pageable);
+    }
+
     public List<Pensioner> findByFioAndDate(String surname, String name, String patronymic, LocalDate dateOfBirth) {
         return repository.findByFioAndDateOfBirth(surname, name, patronymic, dateOfBirth.toString());
+    }
+
+    public List<Pensioner> findByFioAndDate(String surname, String name, String patronymic, LocalDate dateOfBirth, Pageable pageable) {
+        return repository.findByFioAndDateOfBirth(surname, name, patronymic, dateOfBirth.toString(), pageable);
     }
 
     public Pensioner findById(Long id) {

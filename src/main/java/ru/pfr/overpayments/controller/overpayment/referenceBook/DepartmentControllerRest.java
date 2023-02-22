@@ -1,15 +1,19 @@
 package ru.pfr.overpayments.controller.overpayment.referenceBook;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pfr.overpayments.model.overpayment.dto.referenceBook.DepartmentDto;
-import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.DepartmentMapper;
+import ru.pfr.overpayments.model.overpayment.dto.referenceBook.department.DepartmentRequest;
+import ru.pfr.overpayments.model.overpayment.dto.referenceBook.department.DepartmentResponse;
+import ru.pfr.overpayments.model.overpayment.entity.referenceBook.department.DepartmentRequestMapper;
+import ru.pfr.overpayments.model.overpayment.entity.referenceBook.department.DepartmentResponseMapper;
 import ru.pfr.overpayments.service.overpayment.referenceBook.DepartmentService;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +21,8 @@ import java.util.stream.Collectors;
 public class DepartmentControllerRest {
 
     private final DepartmentService departmentService;
-
-    private final DepartmentMapper departmentMapper;
+    private final DepartmentResponseMapper departmentResponseMapper;
+    private final DepartmentRequestMapper departmentRequestMapper;
 
     /**
      * Удалить
@@ -55,10 +59,10 @@ public class DepartmentControllerRest {
     @PutMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
-            @RequestBody DepartmentDto departmentDto
+            @RequestBody DepartmentRequest departmentRequest
     ) {
         try {
-            departmentService.update(departmentMapper.fromDto(departmentDto));
+            departmentService.update(departmentRequestMapper.apply(departmentRequest).get());
             return new ResponseEntity<>("Изменено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -71,10 +75,10 @@ public class DepartmentControllerRest {
     @PostMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
-            @RequestBody DepartmentDto departmentDto
+            @RequestBody DepartmentRequest departmentRequest
     ) {
         try {
-            departmentService.save(departmentMapper.fromDto(departmentDto));
+            departmentService.save(departmentRequestMapper.apply(departmentRequest).get());
             return new ResponseEntity<>("Добавлено", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,18 +89,22 @@ public class DepartmentControllerRest {
      * Получить все
      */
     @PostMapping(path = "/All")
-    public ResponseEntity<?> getAll(
+    public ResponseEntity<List<DepartmentResponse>> getAll(
             @RequestParam(defaultValue = "30") Integer col,
             @RequestParam(defaultValue = "1") Integer pagination
     ) {
         try {
             return new ResponseEntity<>(
-                    departmentService.findAll()
+                    departmentService.findAll(
+                                    PageRequest.of(
+                                            pagination,
+                                            col,
+                                            Sort.by("id").descending()
+                                    )
+                            )
                             .stream()
-                            .map(departmentMapper::toDto)
-                            .skip((long) col * (pagination - 1))
-                            .limit(col)
-                            .collect(Collectors.toList()),
+                            .map(departmentResponseMapper)
+                            .toList(),
                     HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

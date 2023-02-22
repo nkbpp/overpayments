@@ -1,13 +1,13 @@
 package ru.pfr.overpayments.service.overpayment;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.DistrictRepository;
 import ru.pfr.overpayments.model.overpayment.entity.District;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +26,10 @@ public class DistrictService {
 
     public List<District> findAll() {
         return repository.findAll();
+    }
+
+    public List<District> findAll(Pageable pageable) {
+        return repository.findAll(pageable).getContent();
     }
 
 

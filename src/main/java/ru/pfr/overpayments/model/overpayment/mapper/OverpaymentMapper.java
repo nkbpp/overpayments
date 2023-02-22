@@ -8,9 +8,9 @@ import ru.pfr.overpayments.model.overpayment.entity.Carer;
 import ru.pfr.overpayments.model.overpayment.entity.DateOfSubmissionOfDocumentsToTheLegalDepartment;
 import ru.pfr.overpayments.model.overpayment.entity.Overpayment;
 import ru.pfr.overpayments.model.overpayment.entity.Pensioner;
-import ru.pfr.overpayments.model.overpayment.entity.referenceBook.Department;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.ReasonsForOverpayments;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.SpecificationOfTheReasonsForOverpayments;
+import ru.pfr.overpayments.model.overpayment.entity.referenceBook.department.Department;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.DepartmentMapper;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.ReasonsForOverpaymentsMapper;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.SpecificationOfTheReasonsForOverpaymentsMapper;
@@ -21,7 +21,6 @@ import ru.pfr.overpayments.service.overpayment.referenceBook.ReasonsForOverpayme
 import ru.pfr.overpayments.service.overpayment.referenceBook.SpecificationOfTheReasonsForOverpaymentsService;
 import ru.pfr.overpayments.service.ros.CitizenRosService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

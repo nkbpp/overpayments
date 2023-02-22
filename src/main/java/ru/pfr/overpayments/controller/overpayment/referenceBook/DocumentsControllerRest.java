@@ -2,6 +2,8 @@ package ru.pfr.overpayments.controller.overpayment.referenceBook;
 
 import com.ibm.icu.text.Transliterator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.pfr.overpayments.model.overpayment.entity.Documents;
 import ru.pfr.overpayments.model.overpayment.mapper.DocumentsMapper;
 import ru.pfr.overpayments.service.overpayment.DocumentsService;
-
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -117,12 +117,16 @@ public class DocumentsControllerRest {
     ) {
         try {
             return new ResponseEntity<>(
-                    documentsService.findAll()
+                    documentsService.findAll(
+                                    PageRequest.of(
+                                            pagination,
+                                            col,
+                                            Sort.by("id").descending()
+                                    )
+                            )
                             .stream()
                             .map(documentsMapper::toDto)
-                            .skip((long) col * (pagination - 1))
-                            .limit(col)
-                            .collect(Collectors.toList()),
+                            .toList(),
                     HttpStatus.OK
             );
         } catch (Exception e) {

@@ -5,22 +5,24 @@ import com.github.petrovich4j.Case;
 import com.github.petrovich4j.Gender;
 import com.github.petrovich4j.NameType;
 import com.github.petrovich4j.Petrovich;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import ru.pfr.overpayments.model.annotations.fio.CustomLocalDateSerializerRu;
 import ru.pfr.overpayments.model.annotations.snils.CheckSNILS;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @MappedSuperclass
-public class Citizen {
+public abstract class Citizen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +56,11 @@ public class Citizen {
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private District district;
+
+    @CreatedDate
+    protected LocalDateTime sysCreateDate;
+    @LastModifiedDate
+    protected LocalDateTime sysUpdateDate;
 
     public Citizen(Long id, String idRos, String snils, String surname, String name, String patronymic, String adrreg, String pol, LocalDate rdat, String tel, LocalDate dsm, District district) {
         this.id = id;

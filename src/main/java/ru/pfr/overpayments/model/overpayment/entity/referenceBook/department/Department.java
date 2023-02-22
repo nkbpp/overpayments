@@ -1,4 +1,4 @@
-package ru.pfr.overpayments.model.overpayment.entity.referenceBook;
+package ru.pfr.overpayments.model.overpayment.entity.referenceBook.department;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +18,8 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    protected Long id;
 
-    private String name;
+    protected String name;
 
 }

@@ -1,13 +1,13 @@
 package ru.pfr.overpayments.service.overpayment.referenceBook;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.referenceBook.ReasonsForOverpaymentsRepository;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.ReasonsForOverpayments;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +22,10 @@ public class ReasonsForOverpaymentsService {
 
     public List<ReasonsForOverpayments> findAll() {
         return repository.findAll();
+    }
+
+    public List<ReasonsForOverpayments> findAll(Pageable pageable) {
+        return repository.findAll(pageable).getContent();
     }
 
     public void update(ReasonsForOverpayments reasonsForOverpayments) {

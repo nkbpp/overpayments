@@ -2,6 +2,9 @@ package ru.pfr.overpayments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 
 @SpringBootApplication
 public class OverpaymentsApplication {
@@ -10,3 +13,9 @@ public class OverpaymentsApplication {
 	}
 
 }
+
+@Configuration
+@EnableJpaAuditing
+class JpaAuditingConfiguration {
+}
+

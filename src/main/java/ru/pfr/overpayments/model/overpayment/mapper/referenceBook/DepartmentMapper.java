@@ -2,7 +2,7 @@ package ru.pfr.overpayments.model.overpayment.mapper.referenceBook;
 
 import org.springframework.stereotype.Component;
 import ru.pfr.overpayments.model.overpayment.dto.referenceBook.DepartmentDto;
-import ru.pfr.overpayments.model.overpayment.entity.referenceBook.Department;
+import ru.pfr.overpayments.model.overpayment.entity.referenceBook.department.Department;
 
 @Component
 public class DepartmentMapper {

@@ -1,6 +1,8 @@
 package ru.pfr.overpayments.controller.overpayment;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,12 +38,16 @@ public class FindCitizenControllerRest {
     ) {
         try {
             List<Pensioner> pensioner = pensionerService
-                    .findBySnils(snils.getSnils());
+                    .findBySnils(snils.getSnils(),
+                            PageRequest.of(
+                                    pagination,
+                                    col,
+                                    Sort.by("id").descending()
+                            )
+                    );
             return new ResponseEntity<>(
                     pensioner.stream()
                             .map(pensionerMapper::toDto)
-                            .skip((long) col * (pagination - 1))
-                            .limit(col)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
@@ -62,12 +68,17 @@ public class FindCitizenControllerRest {
     ) {
         try {
             List<Pensioner> pensioners = pensionerService
-                    .findByDistrict(districtService.findByKod(district.getNumDistrict()));
+                    .findByDistrict(
+                            districtService.findByKod(district.getNumDistrict()),
+                            PageRequest.of(
+                                    pagination,
+                                    col,
+                                    Sort.by("id").descending()
+                            )
+                    );
             return new ResponseEntity<>(
                     pensioners.stream()
                             .map(pensionerMapper::toDto)
-                            .skip((long) col * (pagination - 1))
-                            .limit(col)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {
@@ -84,13 +95,20 @@ public class FindCitizenControllerRest {
     ) {
         try {
             List<Pensioner> pensioners = pensionerService
-                    .findByFioAndDate(fio.getSurname(), fio.getName(), fio.getPatronymic(),
-                            fio.getDateOfBirth());
+                    .findByFioAndDate(
+                            fio.getSurname(),
+                            fio.getName(),
+                            fio.getPatronymic(),
+                            fio.getDateOfBirth(),
+                            PageRequest.of(
+                                    pagination,
+                                    col,
+                                    Sort.by("id").descending()
+                            )
+                    );
             return new ResponseEntity<>(
                     pensioners.stream()
                             .map(pensionerMapper::toDto)
-                            .skip((long) col * (pagination - 1))
-                            .limit(col)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
         } catch (Exception e) {

@@ -1,13 +1,13 @@
 package ru.pfr.overpayments.service.overpayment.referenceBook;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.referenceBook.DepartmentRepository;
-import ru.pfr.overpayments.model.overpayment.entity.referenceBook.Department;
+import ru.pfr.overpayments.model.overpayment.entity.referenceBook.department.Department;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +22,10 @@ public class DepartmentService {
 
     public List<Department> findAll() {
         return repository.findAll();
+    }
+
+    public List<Department> findAll(Pageable pageable) {
+        return repository.findAll(pageable).getContent();
     }
 
     public void update(Department department) {

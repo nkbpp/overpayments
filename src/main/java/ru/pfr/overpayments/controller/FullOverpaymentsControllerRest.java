@@ -131,6 +131,9 @@ public class FullOverpaymentsControllerRest {
 
     }
 
+    /**
+     * Заполняет xwpfRuns информацией
+     */
     private void runs(List<XWPFRun> xwpfRuns, Citizen citizen, FullOverpayment fullOverpayment, UserInfo userInfo) {
         for (int i = 0; i < xwpfRuns.size(); i++) {
             var run = xwpfRuns.get(i);

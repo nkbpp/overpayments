@@ -1,6 +1,8 @@
 package ru.pfr.overpayments.controller.overpayment.referenceBook;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.pfr.overpayments.model.overpayment.dto.referenceBook.SpecificationOfTheReasonsForOverpaymentsDto;
 import ru.pfr.overpayments.model.overpayment.mapper.referenceBook.SpecificationOfTheReasonsForOverpaymentsMapper;
 import ru.pfr.overpayments.service.overpayment.referenceBook.SpecificationOfTheReasonsForOverpaymentsService;
-
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -99,12 +99,16 @@ public class SpecificationOfTheReasonsForOverpaymentsControllerRest {
     ) {
         try {
             return new ResponseEntity<>(
-                    specificationOfTheReasonsForOverpaymentsService.findAll()
+                    specificationOfTheReasonsForOverpaymentsService.findAll(
+                                    PageRequest.of(
+                                            pagination,
+                                            col,
+                                            Sort.by("id").descending()
+                                    )
+                            )
                             .stream()
                             .map(specificationOfTheReasonsForOverpaymentsMapper::toDto)
-                            .skip((long) col * (pagination - 1))
-                            .limit(col)
-                            .collect(Collectors.toList()),
+                            .toList(),
                     HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

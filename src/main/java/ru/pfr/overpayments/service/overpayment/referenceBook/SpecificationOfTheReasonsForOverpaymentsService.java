@@ -1,12 +1,12 @@
 package ru.pfr.overpayments.service.overpayment.referenceBook;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pfr.overpayments.jpaRepository.overpayment.referenceBook.SpecificationOfTheReasonsForOverpaymentsRepository;
 import ru.pfr.overpayments.model.overpayment.entity.referenceBook.SpecificationOfTheReasonsForOverpayments;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(transactionManager = "overpaymentsTransactionManager")
@@ -24,6 +24,10 @@ public class SpecificationOfTheReasonsForOverpaymentsService {
 
     public List<SpecificationOfTheReasonsForOverpayments> findAll() {
         return repository.findAll();
+    }
+
+    public List<SpecificationOfTheReasonsForOverpayments> findAll(Pageable pageable) {
+        return repository.findAll(pageable).getContent();
     }
 
     public void update(SpecificationOfTheReasonsForOverpayments specificationOfTheReasonsForOverpayments) {
